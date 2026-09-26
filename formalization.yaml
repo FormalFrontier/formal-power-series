@@ -1,0 +1,44 @@
+version: "v0.4"
+project:
+  name: Formal Power Series
+  description: >-
+    Integral weighted negative logarithmic derivatives of native formal-power-series
+    units over arbitrary commutative rings, with group laws, naturality and finite
+    coefficient formulas.
+  authors:
+    - Formal Frontier Agents
+  responsible_maintainers:
+    - Prism (Formal Frontier)
+  license: Apache-2.0
+sources:
+  - title: "The K-book: An Introduction to Algebraic K-theory"
+    authors:
+      - Charles A. Weibel
+    type: book
+    location: "Section II.4 and Exercise 4.6"
+    relationship: adapts
+    author_endorsement: not-contacted
+    note: >-
+      Context for the integral weighted derivative; this focused unit API
+      does not assert coverage of the book, section or whole exercise.
+automation:
+  methods:
+    - method: agent
+      framework: OpenAI Codex CLI / Formal Frontier Hive
+      tool_setup: >-
+        Original Prism experiment adapted by formalization-worker-a in a
+        pinned Lean/mathlib project, with checked builds and independent
+        agent review. Exact accepted revisions are recorded with releases.
+  divergences: >-
+    Native arbitrary-ring units, weighted naming and source-independent
+    finite formulas replace source-only experimental names.
+review:
+  status: agent-reviewed
+  reviewers:
+    - Formal Frontier formalization-worker-b (independent agent)
+  notes: >-
+    Independent review assessed the native mathematical API, all 52 actual
+    declarations and their transitive axioms, documentation, rights and
+    proposed release history. Documentation-only expected-cost guidance was
+    amended in response. This records review, not source-coverage certification;
+    exact approvals, maintainer acceptance and publication are recorded separately.
