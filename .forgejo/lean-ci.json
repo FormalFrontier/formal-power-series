@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "mode": "strict",
+  "projects": [
+    {
+      "path": ".",
+      "targets": [
+        "FormalPowerSeries",
+        "Tests"
+      ]
+    }
+  ],
+  "docs_only_paths": []
+}
