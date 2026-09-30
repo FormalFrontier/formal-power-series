@@ -7,7 +7,10 @@ project:
     coefficient formulas; and coefficientwise ideal-adically restricted native
     multivariate power series with finite polynomial reductions, regular-principal
     internal kernels and a polynomial-adic-completion equivalence for adically
-    complete coefficient rings.
+    complete coefficient rings. The restricted subring also has a coefficient-ring
+    algebra structure, all-level surjective scalar-linear polynomial reductions,
+    and regular-principal module-quotient equivalences, including a separate
+    native-integer API for default module instances.
   authors:
     - Formal Frontier Agents
   responsible_maintainers:
@@ -51,16 +54,90 @@ automation:
         combined destination contribution passed an original cache-first
         FormalPowerSeries-and-Tests build and private-inclusive transitive
         standard-axiom audit, then fresh independent contribution review and
-        responsible-maintainer acceptance before integration.
+        responsible-maintainer acceptance before integration. A separate
+        worker-b transfer maps the accepted incubator scalar-linear quotient
+        producer/client into the local PrincipalKernel-based modules without
+        changing mathematical declaration bodies; destination build and
+        complete transitive-axiom evidence remain pending for that new graph.
+        That pending statement records transfer preparation earlier on
+        2026-09-30. Original configured run 1343 for exact destination commit
+        41aa9fa6a4244ba200fe3cdadf9ee9e4113f6540 passed a cache-first
+        both-root build and complete private-inclusive transitive standard-axiom
+        audit. Fresh independent review approved the full destination transfer;
+        Prism accepted its code and integrated it into main on 2026-09-30 at
+        09:32:45 UTC. A separate release review and publication remain pending.
   divergences: >-
     Native arbitrary-ring units, weighted naming and source-independent
     finite formulas replace source-only experimental names. The independent
     multivariate family uses finite sets of surviving monomial indices rather
     than norm/radius bounds or variable-adic restrictions; principal division
     assumes a regular generator, and the completion equivalence assumes
-    adic completeness of coefficients.
+    adic completeness of coefficients. Scalar-linear reduction applies to
+    every ideal and level; only the principal submodule-kernel and quotient
+    equivalences assume a regular generator. The separate integer endpoints
+    target native default module/quotient types, not merely the generic
+    algebra-derived module instance.
+status:
+  scope: >-
+    Reusable weighted negative logarithmic derivative and coefficientwise
+    ideal-adically restricted multivariate series APIs. The 21 curated
+    main_results below enumerate only the newly mapped scalar-linear quotient
+    producer, not an exhaustive inventory of earlier derivative, carrier,
+    principal-kernel or inverse-limit declarations. The generic reductions
+    apply over any commutative ring and ideal at every natural level; principal
+    submodule-quotient equivalences assume a regular generator. These rows do
+    not assert destination build, review, release or source-coverage status.
+    That last sentence describes the curated result rows, not the separate
+    2026-09-30 evidence: exact destination commit
+    41aa9fa6a4244ba200fe3cdadf9ee9e4113f6540 passed original configured
+    both-root build and private-inclusive standard-axiom checks, received fresh
+    independent review and Prism's code acceptance, and entered main on
+    2026-09-30 at 09:32:45 UTC. Release and source coverage remain separate.
+  main_results:
+    - declaration: MvPowerSeries.adicallyRestrictedAlgebra
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.algebraMap_adicallyRestricted_coe
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.coe_smul_adicallyRestricted
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.coeff_smul_adicallyRestricted
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.algebraAdicReduction
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.linearAdicReduction
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.linearAdicReduction_apply
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.coeff_linearAdicReduction
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.linearAdicReduction_surjective
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.principalAdicConstant_mul_eq_smul
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.ker_linearAdicReduction_principal
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.principalLinearQuotientEquiv
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.principalLinearQuotientEquiv_mk
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.intLinearAdicReduction
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.intLinearAdicReduction_apply
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.coeff_intLinearAdicReduction
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.intLinearAdicReduction_surjective
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.principalAdicConstant_mul_eq_int_smul
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.ker_intLinearAdicReduction_principal
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.principalIntLinearQuotientEquiv
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.principalIntLinearQuotientEquiv_mk
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
 review:
-  status: "Unit derivative independently reviewed; combined destination contribution independently reviewed and maintainer-accepted"
+  status: "Unit derivative independently reviewed; combined destination contribution independently reviewed and maintainer-accepted; scalar-linear quotient transfer pending independent destination review and checks; preceding transfer-preparation status dated 2026-09-30, superseded by original exact-Q 1343 both-root/standard-axiom checks, fresh independent full transfer review, Prism code acceptance and 2026-09-30 09:32:45 UTC main integration; separate release review, protected promotion and verified GitHub publication pending; no source-coverage decision"
   reviewers:
     - Formal Frontier formalization-worker-b (independent agent)
     - Formal Frontier formalization-worker-a (independent destination contribution reviewer)
@@ -76,4 +153,18 @@ review:
     formalization-worker-a reviewer approved that exact combined contribution;
     Anchor accepted and integrated it on 2026-09-30. This completed contribution
     review is distinct from independent review and publication of a subsequent
-    official release. No source-coverage claim is made here.
+    official release. The scalar-linear producer/client were previously accepted
+    in the incubator after a default-integer-module objection, native-integer
+    repair, registration and fresh independent review. Those original reviews
+    and native checks are historical inputs, not destination evidence; fresh
+    independent review, applicable complete both-root checks, maintainer
+    acceptance and a separate reviewed release are still required for this
+    transfer. No source-coverage claim is made here.
+    The preceding pending transfer statement describes preparation earlier on
+    2026-09-30. Original configured run 1343 on exact destination commit
+    41aa9fa6a4244ba200fe3cdadf9ee9e4113f6540 passed both aggregate roots
+    and a complete private-inclusive transitive audit allowing only propext,
+    Classical.choice and Quot.sound. Fresh independent full transfer review
+    approved that code; Prism accepted it and integrated it into main on
+    2026-09-30 at 09:32:45 UTC. This is not independent release acceptance,
+    protected release promotion, verified GitHub publication or source coverage.

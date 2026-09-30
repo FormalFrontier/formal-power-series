@@ -74,6 +74,39 @@ in the restricted subring. No arbitrary-ideal internal division is asserted.
 See the [kernel guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrincipalKernel/README.md)
 and its [client](Tests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean).
 
+## Scalar-linear reduction and principal quotients
+
+Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient`.
+The existing restricted subring `S := adicallyRestrictedSubring (σ := σ) I`
+acquires `adicallyRestrictedAlgebra I : Algebra R S`, whose constants and
+coefficientwise scalar action are computed by
+`algebraMap_adicallyRestricted_coe`, `coe_smul_adicallyRestricted`, and
+`coeff_smul_adicallyRestricted`. For every `I : Ideal R`, variable type `σ`,
+`[CommRing R]` and `k : ℕ`, `algebraAdicReduction I k` bundles the existing
+`adicReduction I k` as an `R`-algebra map, while `linearAdicReduction I k`
+bundles it as a surjective `R`-linear map. The `linearAdicReduction_apply`,
+`coeff_linearAdicReduction`, and `linearAdicReduction_surjective` lemmas give
+its value, coefficient law, and surjectivity at **every** level, including zero.
+
+For the principal ideal `I := Ideal.span ({a} : Set R)`,
+`principalAdicConstant_mul_eq_smul` relates multiplication by `a ^ k` to
+scalar multiplication without regularity. With `ha : IsRegular a`,
+`ker_linearAdicReduction_principal`
+identifies the **`R`-submodule** kernel as `I ^ k • (⊤ : Submodule R S)`.
+`principalLinearQuotientEquiv a ha k` is the `R`-linear equivalence
+`S ⧸ (I ^ k • ⊤) ≃ₗ[R] MvPolynomial σ (R ⧸ I ^ k)`;
+`principalLinearQuotientEquiv_mk` sends the class of `f` to
+`adicReduction I k f`. This is not the earlier **ring-ideal** kernel theorem,
+a ring quotient, or automatically an `R ⧸ I ^ k`-linear equivalence.
+
+For `R = ℤ`, use the separately bundled native-default `intLinearAdicReduction`
+and `principalIntLinearQuotientEquiv` for dependent `Submodule ℤ S` and
+quotient types; their `apply`, `coeff`, `surjective`, principal-kernel and
+representative lemmas match the generic laws without overriding module-instance
+priority. See the [linear quotient guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient/README.md)
+and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean)
+for both routes, including zero levels and a regular nonunit over `ℤ × ℤ`.
+
 ## Polynomial adic completion
 
 Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit`.

@@ -74,9 +74,12 @@ lake build Tests.MvPowerSeries.IdealAdicRestricted
 
 Both modules enable `warningAsError` and are imported by the
 `FormalPowerSeries` and `Tests` roots, respectively. The companion
-[regular-principal kernel](PrincipalKernel/README.md) and
-[coefficient-complete inverse-limit](InverseLimit/README.md) modules have
-additional hypotheses. This base module does **not** assert arbitrary-ideal
+[regular-principal kernel](PrincipalKernel/README.md),
+[scalar-linear quotient](LinearQuotient/README.md) and
+[coefficient-complete inverse-limit](InverseLimit/README.md) modules extend the
+API; the principal quotient and inverse-limit equivalences have additional
+hypotheses, while scalar-linear reduction works for any ideal. This base module
+does **not** assert arbitrary-ideal
 internal kernels, norm/radius-weighted `MvPowerSeries.IsRestricted`, variable-adic
 completion, total-degree cutoffs, preparation/division, general coefficient-map
 naturality, or source-specific correspondence and coverage.

@@ -83,6 +83,16 @@ structure, splitting extension or Adams operation here.
   [division theorem](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean#L38),
   [kernel theorem](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean#L82)
   and [kernel guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrincipalKernel/README.md).
+- **Scalar-linear polynomial quotients.** The existing restricted subring has
+  an `R`-algebra structure, and reduction to `MvPolynomial σ (R ⧸ I ^ k)` is
+  surjective and `R`-linear for every ideal, variable type and level, including
+  `k = 0`. For a regular principal generator `a`, its **submodule** kernel is
+  `I ^ k • ⊤`, yielding an `R`-linear equivalence from the corresponding
+  module quotient; it is not a ring-quotient equivalence. A separate native
+  integer endpoint supports default `ℤ`-module quotient types without a
+  priority override. See the [linear quotient module](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean),
+  [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean).
 - **Polynomial adic-completion equivalence.** With actual coefficient
   completeness `[IsAdicComplete I R]`,
   `adicallyRestrictedEquivAdicCompletion I` is a ring equivalence between
@@ -95,7 +105,7 @@ structure, splitting extension or Adams operation here.
   [evaluation](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean#L280)
   and [completion guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit/README.md).
 
-The latter three results concern coefficient-adic series, not norm/radius or
+The latter four results concern coefficient-adic series, not norm/radius or
 variable-adic restrictions, general base change, general preparation or
 arbitrary-ideal division. The two mathematical families remain independent.
 
@@ -115,7 +125,8 @@ The first command fetches the matching mathlib cache; the literal default
 **unit-derivative-only** initial module/default builds on the author's
 September 2026 environment processed 1,743/1,777 Lake jobs on a matching
 warm cache. These are job counts for the earlier graph, **not** measurements
-of this expanded graph, time or peak memory. For the expanded graph, the
+of the later carrier/completion graph, time or peak memory. For the prior
+23-file graph, the
 original September 2026 strict `lean-ci` run on pinned Lean/mathlib fetched
 the matching mathlib cache in **39.5 seconds**, verified its cached Mathlib
 build in **6.5 seconds**, then completed
@@ -123,8 +134,9 @@ build in **6.5 seconds**, then completed
 These are command wall times from that CI runner, not isolated compiler timings
 or local-machine benchmarks. The complete CI run took **2 minutes 46 seconds**
 including setup, build, transitive axiom checks and artifact handling; it is
-not the build command's duration. No expanded-graph peak RAM or disk use was
-measured.
+not the build command's duration. No prior-graph peak RAM or disk use was
+measured. That historical run predates the scalar-linear quotient transfer
+and does not check the new destination graph.
 
 For planning on a typical 4-core Linux machine with the matching mathlib cache
 available, allow roughly **10–45 minutes** for initial toolchain/cache setup
@@ -132,8 +144,8 @@ and the full library-plus-tests build, and **1–10 minutes** for a small
 library/test rebuild with dependencies already cached. Budget approximately
 **16 GiB RAM and 20 GiB free disk** for the pinned toolchain, dependencies,
 cache and outputs, leaving additional headroom if possible. These are
-conservative **estimates**, extending earlier unbenchmarked unit-only guidance
-in light of the expanded CI graph; they are not measured resource peaks,
+conservative **estimates** for the prior graph, extending earlier unbenchmarked
+unit-only guidance in light of its expanded CI graph; they are not measured resource peaks,
 guaranteed limits or desktop timings inferred from CI. Download bandwidth,
 CPU speed, cache state and competing jobs vary. Fetch the matching cache before
 building; these allowances do not cover rebuilding mathlib from source.
@@ -142,11 +154,13 @@ Import `FormalPowerSeries` from a dependent Lake project (declare and pin this
 repository and its dependencies there), or selectively import
 `FormalPowerSeries.UnitLogDerivative`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted`,
-`FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrincipalKernel`, or
+`FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrincipalKernel`,
+`FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient`, or
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit`. The
 `Tests` root imports independent [unit](Tests/UnitLogDerivative.lean),
 [finite-reduction](Tests/MvPowerSeries/IdealAdicRestricted.lean),
-[kernel](Tests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean) and
+[kernel](Tests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean),
+[linear-quotient](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean) and
 [completion](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean)
 clients. The unit client contains this example:
 
@@ -192,3 +206,23 @@ Apache-2.0, **Authors: Formal Frontier Agents** (see [LICENSE](LICENSE));
 mathlib is separately distributed under its own Apache-2.0 license. The
 original work and these adaptations involved AI agents; historical unit-family
 review does not certify the expanded destination graph or source coverage.
+
+The scalar-linear quotient producer and client were first developed by
+Formal Frontier worker-a contributors in the shared incubator; an independent
+worker-b reviewer identified the original default-integer-module mismatch,
+and a distinct worker-a correction provided the native-integer endpoint.
+Another worker-a contributor registered the corrected modules; subsequent
+independent worker-b review preceded incubator acceptance. This bounded
+destination transfer is authored by worker-b, with its own mathematical/API
+review and destination checks still pending. See the
+[quotient guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient/README.md)
+for the interface and dated origin; no original donor check certifies the
+new destination graph.
+That pending statement records transfer preparation earlier on 2026-09-30.
+For exact destination commit `41aa9fa6a4244ba200fe3cdadf9ee9e4113f6540`,
+original configured run 1343 passed the both-root build and complete
+private-inclusive transitive standard-axiom audit. A fresh independent reviewer
+approved the full transfer; Prism accepted its code and integrated it into
+`main` on 2026-09-30 at 09:32:45 UTC. Separate release review, protected
+promotion and verified GitHub publication remain pending. Code acceptance
+does not establish source coverage.

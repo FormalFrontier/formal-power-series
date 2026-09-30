@@ -4,6 +4,7 @@ module
 public import FormalPowerSeries.UnitLogDerivative
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrincipalKernel
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit
 
 /-! # Formal power series
