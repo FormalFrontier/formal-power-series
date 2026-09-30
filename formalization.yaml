@@ -4,11 +4,15 @@ project:
   description: >-
     Integral weighted negative logarithmic derivatives of native formal-power-series
     units over arbitrary commutative rings, with group laws, naturality and finite
-    coefficient formulas.
+    coefficient formulas; and coefficientwise ideal-adically restricted native
+    multivariate power series with finite polynomial reductions, regular-principal
+    internal kernels and a polynomial-adic-completion equivalence for adically
+    complete coefficient rings.
   authors:
     - Formal Frontier Agents
   responsible_maintainers:
     - Prism (Formal Frontier)
+    - Anchor (Formal Frontier)
   license: Apache-2.0
 sources:
   - title: "The K-book: An Introduction to Algebraic K-theory"
@@ -21,6 +25,17 @@ sources:
     note: >-
       Context for the integral weighted derivative; this focused unit API
       does not assert coverage of the book, section or whole exercise.
+  - title: "Foundations of Rigid Geometry I"
+    authors:
+      - Kazuhiro Fujiwara
+      - Fumiharu Kato
+    type: book
+    relationship: background
+    author_endorsement: not-contacted
+    note: >-
+      Motivation for coefficientwise ideal-adic restricted series; the reusable
+      library does not assert correspondence with an appendix or coverage of
+      this source.
 automation:
   methods:
     - method: agent
@@ -28,17 +43,37 @@ automation:
       tool_setup: >-
         Original Prism experiment adapted by formalization-worker-a in a
         pinned Lean/mathlib project, with checked builds and independent
-        agent review. Exact accepted revisions are recorded with releases.
+        agent review; Folio prepared derivative-headline documentation for
+        the combined introduction. Formal Frontier AI workers separately
+        developed the ideal-adic restricted-series, regular-principal kernel
+        and inverse-limit modules in the incubator; their accepted proofs and ordinary-import
+        clients were relocated into independent native series modules. The
+        combined destination contribution passed an original cache-first
+        FormalPowerSeries-and-Tests build and private-inclusive transitive
+        standard-axiom audit, then fresh independent contribution review and
+        responsible-maintainer acceptance before integration.
   divergences: >-
     Native arbitrary-ring units, weighted naming and source-independent
-    finite formulas replace source-only experimental names.
+    finite formulas replace source-only experimental names. The independent
+    multivariate family uses finite sets of surviving monomial indices rather
+    than norm/radius bounds or variable-adic restrictions; principal division
+    assumes a regular generator, and the completion equivalence assumes
+    adic completeness of coefficients.
 review:
-  status: agent-reviewed
+  status: "Unit derivative independently reviewed; combined destination contribution independently reviewed and maintainer-accepted"
   reviewers:
     - Formal Frontier formalization-worker-b (independent agent)
+    - Formal Frontier formalization-worker-a (independent destination contribution reviewer)
   notes: >-
-    Independent review assessed the native mathematical API, all 52 actual
-    declarations and their transitive axioms, documentation, rights and
-    proposed release history. Documentation-only expected-cost guidance was
-    amended in response. This records review, not source-coverage certification;
-    exact approvals, maintainer acceptance and publication are recorded separately.
+    Historical independent review assessed the unit-derivative API, its 52
+    then-actual declarations and their transitive axioms, documentation, rights
+    and proposed release history; documentation-only expected-cost guidance
+    was amended in response. The accepted incubator proof evidence for the
+    ideal-adic family did not certify the renamed destination module/root graph.
+    Original strict destination CI run 1264 checked both FormalPowerSeries and
+    Tests roots, including 171 actual-origin transitive axiom rows (95 private),
+    with only propext, Classical.choice and Quot.sound. An independent
+    formalization-worker-a reviewer approved that exact combined contribution;
+    Anchor accepted and integrated it on 2026-09-30. This completed contribution
+    review is distinct from independent review and publication of a subsequent
+    official release. No source-coverage claim is made here.
