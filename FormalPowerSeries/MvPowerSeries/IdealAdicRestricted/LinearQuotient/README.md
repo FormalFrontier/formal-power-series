@@ -141,8 +141,10 @@ only `propext`, `Classical.choice` and `Quot.sound`. A fresh independent
 reviewer approved the full destination transfer; Prism accepted its code and
 integrated it into `main` on 2026-09-30 at 09:32:45 UTC. These commands remain
 reproduction instructions, not a claim of a new release-candidate build.
-Separate release review, protected promotion and verified GitHub publication
-remain pending; code acceptance does not establish source coverage.
+At preparation of this release snapshot on 2026-09-30, separate release
+review, protected promotion and verified GitHub publication were still
+pending. Code acceptance alone does not establish those later steps or
+source coverage.
 
 ## Provenance and credit
 

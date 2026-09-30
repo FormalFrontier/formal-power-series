@@ -6,6 +6,7 @@ public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrincipalKernel
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension
 
 /-! # Formal power series
 

@@ -10,7 +10,9 @@ project:
     complete coefficient rings. The restricted subring also has a coefficient-ring
     algebra structure, all-level surjective scalar-linear polynomial reductions,
     and regular-principal module-quotient equivalences, including a separate
-    native-integer API for default module instances.
+    native-integer API for default module instances. Over adically complete
+    coefficient rings, every polynomial linear endomorphism extends to the
+    restricted series, with finite-level and kernel-preserving uniqueness laws.
   authors:
     - Formal Frontier Agents
   responsible_maintainers:
@@ -65,7 +67,21 @@ automation:
         both-root build and complete private-inclusive transitive standard-axiom
         audit. Fresh independent review approved the full destination transfer;
         Prism accepted its code and integrated it into main on 2026-09-30 at
-        09:32:45 UTC. A separate release review and publication remain pending.
+        09:32:45 UTC. At preparation of that release snapshot on 2026-09-30,
+        separate release review and publication were still pending. A distinct
+        subsequent worker-b transfer of the accepted generic polynomial linear
+        extension preserves the original proof and ordinary client, mapping
+        its local quotient import to the published destination API. At its
+        earlier 2026-09-30 preparation that transfer had no destination-graph
+        build, audit or review claim. Original configured run 1473 on exact
+        destination commit ea3901676c230babd4af405c3e8d4f089ae7cbc8
+        subsequently passed the pinned cache-first FormalPowerSeries-and-Tests
+        build and a complete actual-origin private/generated-inclusive
+        transitive standard-three axiom audit. A fresh independent worker-a
+        reviewer approved the mathematical/API/provenance transfer; Anchor
+        accepted the contribution and integrated it into main on 2026-09-30
+        at 19:23:34 UTC. This does not accept a later consolidated public
+        release, establish GitHub publication or decide source coverage.
   divergences: >-
     Native arbitrary-ring units, weighted naming and source-independent
     finite formulas replace source-only experimental names. The independent
@@ -76,14 +92,18 @@ automation:
     every ideal and level; only the principal submodule-kernel and quotient
     equivalences assume a regular generator. The separate integer endpoints
     target native default module/quotient types, not merely the generic
-    algebra-derived module instance.
+    algebra-derived module instance. The extension assumes adic completeness
+    of coefficients and its uniqueness requires both polynomial agreement
+    and preservation of every coefficientwise reduction kernel, not agreement
+    alone or an intrinsic arbitrary-ideal restricted-submodule identity.
 status:
   scope: >-
     Reusable weighted negative logarithmic derivative and coefficientwise
-    ideal-adically restricted multivariate series APIs. The 21 curated
-    main_results below enumerate only the newly mapped scalar-linear quotient
-    producer, not an exhaustive inventory of earlier derivative, carrier,
-    principal-kernel or inverse-limit declarations. The generic reductions
+    ideal-adically restricted multivariate series APIs. The 29 curated
+    main_results below enumerate 21 previously mapped scalar-linear quotient
+    declarations and eight generic linear-extension declarations, not an
+    exhaustive inventory of earlier derivative, carrier, principal-kernel or
+    inverse-limit declarations. The generic reductions
     apply over any commutative ring and ideal at every natural level; principal
     submodule-quotient equivalences assume a regular generator. These rows do
     not assert destination build, review, release or source-coverage status.
@@ -92,7 +112,10 @@ status:
     41aa9fa6a4244ba200fe3cdadf9ee9e4113f6540 passed original configured
     both-root build and private-inclusive standard-axiom checks, received fresh
     independent review and Prism's code acceptance, and entered main on
-    2026-09-30 at 09:32:45 UTC. Release and source coverage remain separate.
+    2026-09-30 at 09:32:45 UTC. The separate reviewed official quotient
+    publication followed that historical preparation snapshot. The eight
+    extension rows do not inherit its build, audit or review evidence;
+    release and source coverage remain separate.
   main_results:
     - declaration: MvPowerSeries.adicallyRestrictedAlgebra
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
@@ -136,8 +159,24 @@ status:
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
     - declaration: MvPowerSeries.principalIntLinearQuotientEquiv_mk
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
+    - declaration: MvPowerSeries.polynomialLinearMapMod
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean
+    - declaration: MvPowerSeries.polynomialLinearMapMod_map
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean
+    - declaration: MvPowerSeries.polynomialLinearMapMod_factorPow
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean
+    - declaration: MvPowerSeries.restrictedLinearExtension
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean
+    - declaration: MvPowerSeries.adicReduction_restrictedLinearExtension
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean
+    - declaration: MvPowerSeries.restrictedLinearExtension_polynomial
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean
+    - declaration: MvPowerSeries.restrictedLinearExtension_preserves_ker
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean
+    - declaration: MvPowerSeries.restrictedLinearExtension_unique
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean
 review:
-  status: "Unit derivative independently reviewed; combined destination contribution independently reviewed and maintainer-accepted; scalar-linear quotient transfer pending independent destination review and checks; preceding transfer-preparation status dated 2026-09-30, superseded by original exact-Q 1343 both-root/standard-axiom checks, fresh independent full transfer review, Prism code acceptance and 2026-09-30 09:32:45 UTC main integration; separate release review, protected promotion and verified GitHub publication pending; no source-coverage decision"
+  status: "Unit derivative, combined restricted-series destination, scalar-linear quotient transfer and generic linear-extension transfer independently contribution-reviewed and maintainer-accepted; exact destination build and private-inclusive transitive standard-axiom evidence for the linear extension passed original run 1473 before 2026-09-30 19:23:34 UTC main integration; consolidated release review, protected promotion and verified GitHub publication remain separate and pending at preparation, not self-approved; no source-coverage decision"
   reviewers:
     - Formal Frontier formalization-worker-b (independent agent)
     - Formal Frontier formalization-worker-a (independent destination contribution reviewer)
@@ -168,3 +207,18 @@ review:
     approved that code; Prism accepted it and integrated it into main on
     2026-09-30 at 09:32:45 UTC. This is not independent release acceptance,
     protected release promotion, verified GitHub publication or source coverage.
+    At preparation of that release snapshot on 2026-09-30, these release steps
+    were still pending; this is not a present-tense publication status. The
+    later extension transfer reuses the accepted donor proof and eleven
+    private client lemmas but changes its dependency graph. Its own original
+    configured run 1473 on exact destination commit
+    ea3901676c230babd4af405c3e8d4f089ae7cbc8 passed both aggregate-root
+    builds and the complete actual-origin private/generated-inclusive
+    transitive audit, allowing only propext, Classical.choice and Quot.sound.
+    Fresh independent worker-a contribution review approved its mathematics,
+    API and provenance; Anchor accepted the code and integrated it into main
+    on 2026-09-30 at 19:23:34 UTC. Earlier quotient or incubator computations
+    are not substitutes for these changed-graph checks. Review of the final
+    release artifact, protected release promotion and verified GitHub
+    publication are still separate; none follows from contribution review
+    or determines source coverage.

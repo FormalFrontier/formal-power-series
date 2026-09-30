@@ -107,6 +107,31 @@ priority. See the [linear quotient guide](FormalPowerSeries/MvPowerSeries/IdealA
 and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean)
 for both routes, including zero levels and a regular nonunit over `ℤ × ℤ`.
 
+## Linear polynomial operators on restricted series
+
+Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension`.
+For any `σ`, `[CommRing R]`, ideal `I : Ideal R` and
+`[IsAdicComplete I R]`, every `R`-linear endomorphism
+`F : MvPolynomial σ R →ₗ[R] MvPolynomial σ R` extends to an `R`-linear
+endomorphism of `adicallyRestrictedSubring (σ := σ) I`. Completeness
+is assumed for **coefficients**, not separately for the restricted subring.
+
+| Use | Declaration in `MvPowerSeries` |
+| --- | --- |
+| Finite quotient-polynomial operator, reduction of an original polynomial and compatibility between levels `m ≤ n` | `polynomialLinearMapMod`, `polynomialLinearMapMod_map`, `polynomialLinearMapMod_factorPow` |
+| Canonical `R`-linear restricted-series extension | `restrictedLinearExtension` |
+| Defining reduction law and polynomial agreement | `adicReduction_restrictedLinearExtension`, `restrictedLinearExtension_polynomial` |
+| Preserve every coefficientwise reduction kernel | `restrictedLinearExtension_preserves_ker` |
+| Unique `R`-linear extension **given polynomial agreement and all-level kernel preservation** | `restrictedLinearExtension_unique` |
+
+Each output has finite polynomial reduction at every level. Neither
+finite-variable, Noetherian, domain nor nontriviality assumptions are added.
+No arbitrary-ideal identity with the intrinsic submodule `I ^ n • ⊤`, or
+intrinsic restricted-ring completeness, is claimed. See the
+[extension guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension/README.md)
+and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
+for the identity, level-zero, empty-variable, zero-ideal and zero-ring cases.
+
 ## Polynomial adic completion
 
 Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit`.

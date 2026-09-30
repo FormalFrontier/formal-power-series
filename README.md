@@ -14,8 +14,12 @@ PowerSeries.negXLogDeriv (f : (PowerSeries R)ˣ) =
 The multivariate family works with finite exceptional *monomial indices* at
 each ideal power, not a finite set of coefficient values. Its basic construction
 allows arbitrary variable types and ideals; stronger hypotheses are stated
-separately for internal principal division and adic completion. Neither family
-imports or mathematically depends on the other.
+separately for internal principal division and coefficient completeness. Under
+`[IsAdicComplete I R]`, **every `R`-linear polynomial endomorphism extends
+to an `R`-linear operator on restricted series**, with finite-level equations
+and a uniqueness theorem requiring both polynomial agreement and preservation
+of every coefficientwise reduction kernel. Neither family imports or
+mathematically depends on the other.
 
 ## Headline results
 
@@ -105,7 +109,20 @@ structure, splitting extension or Adams operation here.
   [evaluation](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean#L280)
   and [completion guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit/README.md).
 
-The latter four results concern coefficient-adic series, not norm/radius or
+- **Generic linear extension.** Over `[CommRing R]` and `[IsAdicComplete I R]`,
+  `restrictedLinearExtension I F` extends any polynomial `R`-linear endomorphism
+  `F`, for arbitrary variable type and ideal. The quotient-polynomial operator
+  commutes with reductions and level transitions; the extension preserves
+  each coefficientwise reduction kernel and agrees on polynomials. Its
+  uniqueness assumes **both** polynomial agreement and all-level kernel
+  preservation. Finite polynomial levels keep its output restricted; no
+  finite-variable, Noetherian, domain, nontriviality, intrinsic arbitrary-ideal
+  kernel, or intrinsic restricted-ring completeness claim is added. See the
+  [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean),
+  [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean).
+
+The latter five results concern coefficient-adic series, not norm/radius or
 variable-adic restrictions, general base change, general preparation or
 arbitrary-ideal division. The two mathematical families remain independent.
 
@@ -117,38 +134,55 @@ Install `elan` and Git; `lean-toolchain` pins Lean
 
 ```sh
 lake exe cache get
+LEAN_NUM_THREADS=2 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension
+LEAN_NUM_THREADS=2 lake build Tests.MvPowerSeries.IdealAdicRestricted.LinearExtension
+lake build FormalPowerSeries Tests
 lake build
 ```
 
 The first command fetches the matching mathlib cache; the literal default
-`lake build` includes the public library and all `Tests/` examples. Historical
+`lake build` includes the public library and all `Tests/` examples.
+`LEAN_NUM_THREADS=2` limits Lean's own threads in the two selective commands;
+it is **not** a global bound on concurrent Lake jobs. Historical
 **unit-derivative-only** initial module/default builds on the author's
 September 2026 environment processed 1,743/1,777 Lake jobs on a matching
 warm cache. These are job counts for the earlier graph, **not** measurements
 of the later carrier/completion graph, time or peak memory. For the prior
-23-file graph, the
-original September 2026 strict `lean-ci` run on pinned Lean/mathlib fetched
-the matching mathlib cache in **39.5 seconds**, verified its cached Mathlib
-build in **6.5 seconds**, then completed
+23-file graph, the original September 2026 strict `lean-ci` run on pinned
+Lean/mathlib fetched the matching mathlib cache in **39.5 seconds**, verified
+its cached Mathlib build in **6.5 seconds**, then completed
 `lake build FormalPowerSeries Tests` in **10.8 seconds (1,954 Lake jobs)**.
 These are command wall times from that CI runner, not isolated compiler timings
 or local-machine benchmarks. The complete CI run took **2 minutes 46 seconds**
 including setup, build, transitive axiom checks and artifact handling; it is
-not the build command's duration. No prior-graph peak RAM or disk use was
-measured. That historical run predates the scalar-linear quotient transfer
-and does not check the new destination graph.
+not the build command's duration. No peak RAM or disk use was measured. That
+historical run predates the scalar-linear quotient and generic linear-extension
+transfers and does not check either changed destination graph.
 
-For planning on a typical 4-core Linux machine with the matching mathlib cache
-available, allow roughly **10–45 minutes** for initial toolchain/cache setup
-and the full library-plus-tests build, and **1–10 minutes** for a small
-library/test rebuild with dependencies already cached. Budget approximately
-**16 GiB RAM and 20 GiB free disk** for the pinned toolchain, dependencies,
-cache and outputs, leaving additional headroom if possible. These are
-conservative **estimates** for the prior graph, extending earlier unbenchmarked
-unit-only guidance in light of its expanded CI graph; they are not measured resource peaks,
-guaranteed limits or desktop timings inferred from CI. Download bandwidth,
-CPU speed, cache state and competing jobs vary. Fetch the matching cache before
-building; these allowances do not cover rebuilding mathlib from source.
+For the **current 29-file graph**, the original 2026-09-30 configured strict
+CI run on the pinned Lean/mathlib inputs fetched the matching mathlib cache
+(**8,892 decompressed files**) in **39.5 seconds**, verified the cached
+Mathlib build in **6.3 seconds**, and completed
+`lake build FormalPowerSeries Tests` in **13.8 seconds (1,958 Lake jobs)**.
+These are command wall times on that CI runner, not isolated compiler timings
+or desktop predictions. The **3 minutes 39 seconds** end-to-end CI run
+additionally includes setup, the complete
+private-inclusive transitive axiom audit and artifact handling. Compared with
+the older 1,954-job run, the graph now includes both the quotient and extension
+producer/client pairs and has four more Lake jobs. This comparison does not
+isolate extension cost; job count alone does not measure memory demand or
+general rebuild latency. Neither run measured peak RAM or disk consumption.
+
+For planning on a typical 4-core Linux machine using this pinned graph and a
+matching precompiled mathlib cache (not building mathlib from source), allow
+roughly **10–50 minutes** for initial toolchain/cache setup plus the full
+library-and-tests build, and **1–15 minutes** for a small library/test rebuild
+with dependencies already cached. Provision approximately **16 GiB RAM and
+20 GiB free disk**, with more headroom for concurrent work. These are
+conservative **unvalidated planning estimates**, updated for the two-module
+increment from earlier graph guidance; they are neither measured peaks nor
+guaranteed sufficient limits. CPU, bandwidth, cache state and competing jobs
+can change both time and resources. Fetch the matching cache before building.
 
 Import `FormalPowerSeries` from a dependent Lake project (declare and pin this
 repository and its dependencies there), or selectively import
@@ -156,12 +190,14 @@ repository and its dependencies there), or selectively import
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrincipalKernel`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient`, or
-`FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit`. The
+`FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit`, or
+`FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension`. The
 `Tests` root imports independent [unit](Tests/UnitLogDerivative.lean),
 [finite-reduction](Tests/MvPowerSeries/IdealAdicRestricted.lean),
 [kernel](Tests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean),
-[linear-quotient](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean) and
-[completion](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean)
+[linear-quotient](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean),
+[completion](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean) and
+[linear-extension](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
 clients. The unit client contains this example:
 
 ```lean
@@ -223,6 +259,29 @@ For exact destination commit `41aa9fa6a4244ba200fe3cdadf9ee9e4113f6540`,
 original configured run 1343 passed the both-root build and complete
 private-inclusive transitive standard-axiom audit. A fresh independent reviewer
 approved the full transfer; Prism accepted its code and integrated it into
-`main` on 2026-09-30 at 09:32:45 UTC. Separate release review, protected
-promotion and verified GitHub publication remain pending. Code acceptance
-does not establish source coverage.
+`main` on 2026-09-30 at 09:32:45 UTC. At preparation of that release
+snapshot on 2026-09-30, separate release review, protected promotion and
+verified GitHub publication were still pending. Code acceptance alone does
+not establish those later steps or source coverage.
+
+The separate linear-extension design was developed by worker-a Hive Task
+`hive-request-96f6d32357a1f51f399a39913faeab788ed93acc`
+(UID `3738ef8a-fc35-419e-9c6f-c22f984f7d4c`), and the original producer
+and eleven private ordinary-import client lemmas by worker-b Task
+`hive-request-e1010a8901a682edc7a851fb5f7395aac3fd7689`
+(UID `a104d42c-a577-4aa3-ba24-1a757364d1c9`). A separate worker-b
+execution transferred them into this library, using the existing quotient
+scalar API, inverse-limit equivalence and mathlib's finite polynomial and
+native adic-completion interfaces. The
+[extension guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension/README.md)
+records the standalone interface and reproduction commands. Earlier donor
+acceptance alone is not a build, transitive axiom audit or review of the
+changed destination graph. Original configured run 1473 on exact destination
+commit `ea3901676c230babd4af405c3e8d4f089ae7cbc8` passed both aggregate
+roots and the complete private/generated-inclusive transitive standard-axiom
+audit. Fresh independent review approved the mathematical/API/provenance
+transfer; Anchor accepted its code and integrated it into `main` on
+2026-09-30 at 19:23:34 UTC. An independent review of the consolidated release,
+protected release promotion and verified GitHub publication are separate
+steps, not established by contribution acceptance. No source-coverage decision
+is implied.
