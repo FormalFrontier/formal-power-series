@@ -95,9 +95,7 @@ Carneiro; `Ideal.Quotient.Defs` credits Kenny Lau, Chris Hughes, Mario
 Carneiro and Anne Baanen. Native mathlib remains separately authored work.
 
 Formal Frontier AI contributors developed the restricted-series definition,
-proofs, client and guide in the shared incubator, drawing on source-inspired
-planning while proving a source-independent native series API. This relocation
-does not newly prove the native mathlib results or assert any source-specific
-formalization coverage. Anchor is responsible for this restricted-series
-contribution; see [repository metadata](../../../formalization.yaml) for
-the separate unit-derivative family and source context.
+proofs, client and guide, later adapted here as a source-independent native
+series API. This does not newly prove the native mathlib results or assert
+source-specific coverage. See [repository metadata](../../../formalization.yaml)
+for sources, license and contributors.

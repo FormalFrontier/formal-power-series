@@ -69,31 +69,13 @@ LEAN_NUM_THREADS=2 lake build Tests.MvPowerSeries.IdealAdicRestricted.LinearExte
 lake build FormalPowerSeries Tests
 ```
 
-At the earlier 2026-09-30 pre-check preparation snapshot, these reproduction
-commands did **not** establish a destination build or audit. Subsequently,
-original configured run 1473 on exact destination commit
-`ea3901676c230babd4af405c3e8d4f089ae7cbc8` built both aggregate roots
-in **13.8 seconds (1,958 Lake jobs)** and passed the complete transitive
-standard-three axiom audit, including private/generated declarations. Its
-**219-second** end-to-end CI window includes setup, auditing and artifacts;
-see the [root README build and cost guidance](../../../../README.md#build-and-use)
-for measured command times and explicitly unvalidated planning estimates. No
-peak RAM or disk use was measured. Fresh independent destination contribution
-review and the original checks preceded Anchor's code acceptance and main
-integration; a separate consolidated release review, protected promotion and
-verified GitHub publication remain to be arranged. No source-coverage
-decision follows.
-
-The original fixed-basis/completion design was developed by Formal Frontier
-worker-a Hive Task `hive-request-96f6d32357a1f51f399a39913faeab788ed93acc`
-(UID `3738ef8a-fc35-419e-9c6f-c22f984f7d4c`); the producer and private client
-were implemented by worker-b Task
-`hive-request-e1010a8901a682edc7a851fb5f7395aac3fd7689`
-(UID `a104d42c-a577-4aa3-ba24-1a757364d1c9`). This transfer into
-`FormalPowerSeries` is by a separate worker-b execution; it reuses the existing
-[completion](../InverseLimit/README.md) and
-[linear quotient](../LinearQuotient/README.md) APIs and mathlib's native
-polynomial and adic-completion interfaces. Original development and changed
-destination checks are distinct. Original Formal Frontier files are licensed
-under Apache-2.0; mathlib is an Apache-2.0 dependency. Authors: Formal
-Frontier Agents.
+See the [root build guidance](../../../../README.md#build-and-use) for
+measured full-graph command times and unvalidated smaller-machine estimates.
+Formal Frontier AI contributors developed the fixed-basis/completion design,
+original producer and eleven ordinary-import examples; later contributors
+adapted their work to the [completion](../InverseLimit/README.md) and
+[linear quotient](../LinearQuotient/README.md) APIs here. The proof reuses
+mathlib's native finite-polynomial and adic-completion interfaces, whose
+authors retain credit. Original project files are Apache-2.0 (Authors:
+Formal Frontier Agents), while mathlib is separately Apache-2.0. No
+source-specific coverage follows from this extension.

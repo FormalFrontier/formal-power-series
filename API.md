@@ -107,6 +107,28 @@ priority. See the [linear quotient guide](FormalPowerSeries/MvPowerSeries/IdealA
 and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean)
 for both routes, including zero levels and a regular nonunit over `ℤ × ℤ`.
 
+## Coefficientwise kernel products
+
+Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration`.
+For arbitrary `σ`, `[CommRing R]` and ideals `J K I : Ideal R`, no
+finite-variable, finite-generation, completeness or nontriviality assumption
+is required. With `ρ n := adicReduction I n` on the restricted subring:
+
+| Use | Declaration in `MvPowerSeries` |
+| --- | --- |
+| Coefficients in `J` times coefficients in `K` give product coefficients in `J * K` | `coeff_mul_mem_ideal_mul_ideal` |
+| `ρ n a = 0` and `ρ k b = 0` imply `ρ (n + k) (a * b) = 0` | `adicReduction_mul_eq_zero` |
+| Finite sums of products at fixed levels `n` and `k` | `adicReduction_sum_mul_eq_zero` |
+| Finite sums with the second factors at level one | `adicReduction_sum_mul_eq_zero_succ` |
+
+These are statements about **coefficientwise** reduction kernels, not
+intrinsic ideal powers in the restricted subring. Levels may be zero; the
+[standalone guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration/README.md)
+and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
+also cover empty families and variables, bottom/top ideals and zero rings.
+The producer imports the restricted-series base and pinned mathlib ideal
+operations, independently of linear extension, quotients and completeness.
+
 ## Linear polynomial operators on restricted series
 
 Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension`.

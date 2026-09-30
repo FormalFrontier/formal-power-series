@@ -24,7 +24,7 @@ new carrier nor changes what ideal-adically restricted means: modulo each
   for **every** ideal, variable type and natural-number level, including zero.
 - For `a : R` and `ha : IsRegular a`, put `I := Ideal.span ({a} : Set R)`.
   `principalAdicConstant_mul_eq_smul a k f` identifies multiplication by
-  the accepted restricted constant `a ^ k` with the `R`-scalar action;
+  the restricted constant `a ^ k` with the `R`-scalar action;
   `ker_linearAdicReduction_principal a ha k` states the actual **R-submodule**
   equality `LinearMap.ker (linearAdicReduction I k) = I ^ k • ⊤`.
 - `principalLinearQuotientEquiv a ha k` is the **R-linear equivalence**
@@ -46,10 +46,10 @@ new carrier nor changes what ideal-adically restricted means: modulo each
 
 These signatures require only `[CommRing R]`; regularity is needed only for
 the principal kernel and quotient. `Ideal.span {a}` is an ideal **of `R`**;
-`I ^ k • ⊤` is a submodule **of the restricted-series subtype**. The accepted
+`I ^ k • ⊤` is a submodule **of the restricted-series subtype**. The
 `ker_adicReduction_principal` instead computes a ring ideal of that subtype;
-the new proof bridges those statements rather than identifying their types.
-It uses the accepted restricted-division witness, whose quotient stays *inside*
+the proof bridges those statements rather than identifying their types.
+It uses the restricted-division witness, whose quotient stays *inside*
 `S`, `Ideal.span_singleton_pow`, `Submodule.ideal_span_singleton_smul`, and
 `Submodule.mem_smul_pointwise_iff_exists`. The final equivalence composes
 native `Submodule.quotEquivOfEq` and
@@ -58,7 +58,7 @@ native `Submodule.quotEquivOfEq` and
 The canonical integer result is a separate public endpoint because the generic
 `Algebra.toModule` instance and the native `AddCommGroup.toIntModule` instance
 agree on scalar values but are not definitionally the same inside dependent
-submodule and quotient types. Its short kernel proof reuses the accepted ring
+submodule and quotient types. Its short kernel proof reuses the ring
 kernel and division witness, recasting only the submodule-membership bridge
 under the native action. It does not replace the generic proof or the carrier.
 
@@ -97,11 +97,8 @@ without any sequence transport; native integer kernel and quotient
 representatives at levels `0`, `1`, `2` with regular nonunit `4 : ℤ`;
 native scalar/coefficient action and a native typed quotient equivalence; and
 the unchanged generic level `2` case for regular nonunit
-`(2, 1) : ℤ × ℤ` (a ring with zero divisors). The original `218ecb61` client
-used a private priority-2000 `Algebra.toModule` override and did **not** test
-this default-client case. The accepted corrected donor removed that override;
-the original failed-client logs and independent REQUEST_CHANGES verdict remain
-historical evidence, not passing default-client checks.
+`(2, 1) : ℤ × ℤ` (a ring with zero divisors). The client uses the native
+default integer module without a priority override.
 
 The target is linear over `R`, not automatically bundled as linear over
 `R ⧸ I ^ k`. In particular `R ⧸ I` is not generally the residue ring at
@@ -113,69 +110,34 @@ pointwise multiplication of sequences is not power-series convolution.
 
 ## Build and use
 
-From this repository root, the pinned `lean-toolchain` is Lean
-`v4.34.0-rc2` and `lake-manifest.json` pins mathlib
-`83abb3e776bdefcbc447a1e44d0debe4010039e5`. Fetch the matching
-mathlib cache before building the new producer and ordinary-import client,
-then build both aggregate roots:
+From the repository root, `lean-toolchain` pins Lean `v4.34.0-rc2` and
+`lake-manifest.json` pins mathlib `83abb3e776bdefcbc447a1e44d0debe4010039e5`.
+Fetch its precompiled cache successfully before either build:
 
 ```sh
 lake exe cache get
-LEAN_NUM_THREADS=2 lake build +FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient +Tests.MvPowerSeries.IdealAdicRestricted.LinearQuotient
+lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient \
+  Tests.MvPowerSeries.IdealAdicRestricted.LinearQuotient
 lake build FormalPowerSeries Tests
 ```
 
-Both transferred modules enable `warningAsError` and are included in the
-respective `FormalPowerSeries` and `Tests` roots. A dependent pinned Lake
-project can import the producer directly or the `FormalPowerSeries` root;
-the [API](../../../../API.md#scalar-linear-reduction-and-principal-quotients)
-locates the full library interface. These commands describe reproduction,
-not checks performed on this transfer. New destination build and complete
-transitive axiom evidence, independent review, maintainer acceptance and
-reviewed release remain pending.
-That pending statement records transfer preparation earlier on 2026-09-30.
-Original configured run 1343 on exact destination commit
-`41aa9fa6a4244ba200fe3cdadf9ee9e4113f6540` passed a cache-first
-both-root build and complete private-inclusive transitive axiom audit with
-only `propext`, `Classical.choice` and `Quot.sound`. A fresh independent
-reviewer approved the full destination transfer; Prism accepted its code and
-integrated it into `main` on 2026-09-30 at 09:32:45 UTC. These commands remain
-reproduction instructions, not a claim of a new release-candidate build.
-At preparation of this release snapshot on 2026-09-30, separate release
-review, protected promotion and verified GitHub publication were still
-pending. Code acceptance alone does not establish those later steps or
-source coverage.
+Both modules enable `warningAsError` and are included in the two roots.
+A dependent pinned Lake project can import this producer or the root;
+[API.md](../../../../API.md#scalar-linear-reduction-and-principal-quotients)
+locates the full interface. See the [root build guidance](../../../../README.md#build-and-use)
+for measured full-graph command times and unvalidated planning estimates.
 
 ## Provenance and credit
 
-These source-independent definitions and proofs build on the existing
-[restricted carrier](../README.md) and
+These source-independent definitions and proofs build on the
+[restricted carrier](../README.md),
 [regular-principal division and ring kernel](../PrincipalKernel/README.md)
-and native mathlib algebra, ideal, submodule and first-isomorphism APIs;
-they do not re-prove or relicense those upstream contributions. Anchor is
-responsible for the carrier and principal-kernel transfer. The original
-linear-bridge plan was produced by a Formal Frontier worker-a contributor.
-A distinct worker-a contributor authored the initial linear producer,
-ordinary client and guide; an independent worker-b reviewer found the
-native-default `ℤ`-module mismatch. Another worker-a contributor repaired
-that mismatch with a separate integer endpoint and corrected client;
-a worker-b independently approved that repair. The corrected modules were
-registered by a further worker-a contributor, independently reviewed by
-worker-b at the assembled candidate and accepted in the incubator in
-September 2026. This destination transfer is authored by a different
-worker-b execution; Prism corrected its client's destination namespace before
-destination review. Its own independent review and checks are pending.
-The preceding pending statement records the earlier 2026-09-30
-transfer-preparation state. The corrected destination commit received the
-original both-root check and fresh independent review before Prism's code
-acceptance and 09:32:45 UTC integration on 2026-09-30; neither those checks
-nor that acceptance constitute release approval or source coverage.
-
-The isolated 2026-09-29 repair guide referred to a **26-package** unregistered
-incubator candidate and described its checks as preliminary. Those are
-historical origin facts: the registered donor is accepted at the frozen
-incubator revision, whereas this destination has nine manifest
-packages and adds the two roots' mapped modules without an incubator
-requirement. Historical donor proof evidence is not new destination evidence.
-This library makes no source-specific formalization or coverage claim.
-SPDX-License-Identifier: Apache-2.0; Authors: Formal Frontier Agents.
+and native mathlib algebra, ideal, submodule and first-isomorphism APIs.
+Formal Frontier AI contributors authored the linear-bridge design, original
+producer, ordinary-import client and guide; a separate contribution repaired
+the native-default `ℤ`-module mismatch with the integer endpoint. Later
+contributors adapted and assembled the modules here, including Prism's
+client namespace correction. Relocation does not erase original authorship
+or transfer credit for mathlib's native methods. Original project files are
+Apache-2.0 (Authors: Formal Frontier Agents); mathlib remains separately
+licensed. This library makes no source-specific coverage claim.

@@ -79,7 +79,7 @@ topology, or source-specific coverage is claimed here. The separate
 [inverse-limit module](../InverseLimit/README.md) assumes coefficient adic
 completeness rather than regularity of a generator.
 
-## Reproduction and status
+## Reproduction
 
 Use the repository's pinned Lean `v4.34.0-rc2`, mathlib
 `83abb3e776bdefcbc447a1e44d0debe4010039e5`, and unchanged ordered Lake
@@ -98,12 +98,12 @@ The `FormalPowerSeries` and `Tests` roots import the producer and client.
 ## Provenance
 
 The preceding finite-reduction API and this regular-principal proof were
-developed by distinct Formal Frontier AI contributors in the shared incubator.
-This transfer preserves their mathematical work. Native mathlib supplies
+developed by distinct Formal Frontier AI contributors and later adapted
+into this library. Native mathlib supplies
 `Ideal.span_singleton_pow`,
 `Ideal.mem_span_singleton'`, `IsRegular.pow`, `MvPowerSeries.coeff_C_mul`,
 `Ideal.Quotient.eq_zero_iff_mem`, and the native first-isomorphism theorem;
 their respective native authors retain their credit. The original AI-developed
-proof, ordinary-import client and guide are not newly proved by their relocation.
+proof, ordinary-import client and guide retain their authorship.
 See [repository metadata](../../../../formalization.yaml) for license and
 source context; no source-specific correspondence is asserted here.
