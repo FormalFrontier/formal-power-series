@@ -59,6 +59,35 @@ The result covers `k = 0`, empty or infinite variable types, and bottom or top
 ideals. See the [finite-reduction guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md)
 and its [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted.lean).
 
+## Finite-variable degree cutoffs and finitely generated kernels
+
+Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.DegreeDecay` for
+`MvPowerSeries.isAdicallyRestricted_iff_degree_cutoff I f`: under `[Finite σ]`,
+`IsAdicallyRestricted I f` is equivalent to a cutoff **at each level** `k`
+above which every coefficient of degree at least `d` belongs to `I ^ k`.
+The finite-exception-to-cutoff direction needs no finite-variable assumption,
+but its helper is private; the converse really needs finite variables (the
+[ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
+contains an infinite-variable counterexample). See the
+[degree guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/DegreeDecay/README.md).
+
+Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel`
+for `[CommRing R] [Finite σ]`, `I : Ideal R`, `hI : I.FG`, any `k : ℕ`:
+
+| Use | Public declaration in `MvPowerSeries` |
+| --- | --- |
+| Write a restricted series with coefficients in `I ^ k` as a finite sum of restricted series times constants from `I ^ k` | `exists_restricted_fg_decomposition` |
+| Identify `RingHom.ker (adicReduction (σ := σ) I k)` with `Ideal.map ((polynomialToRestricted (σ := σ) I).comp MvPolynomial.C) (I ^ k)` inside the restricted subring | `ker_adicReduction_fg` |
+
+These are algebraic, **intrinsic** restricted-series identities, not
+closures or ambient-series assertions. No regularity, domain, completeness,
+nontriviality, proper ideal, nonempty variables or positive `k` is assumed.
+The [FG guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel/README.md)
+and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
+give a practical kernel/quotient use and cover zero/top/zero-ring and nonregular
+cases. The quotient equivalence in that client is **private**. The separate
+regular-principal kernel theorem below works for arbitrary `σ`.
+
 ## Regular-principal internal kernel
 
 Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrincipalKernel`.

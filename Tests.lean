@@ -3,6 +3,8 @@ Authors: Formal Frontier Agents -/
 module
 public import Tests.UnitLogDerivative
 public import Tests.MvPowerSeries.IdealAdicRestricted
+public import Tests.MvPowerSeries.IdealAdicRestricted.DegreeDecay
+public import Tests.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel
 public import Tests.MvPowerSeries.IdealAdicRestricted.PrincipalKernel
 public import Tests.MvPowerSeries.IdealAdicRestricted.LinearQuotient
 public import Tests.MvPowerSeries.IdealAdicRestricted.InverseLimit

@@ -15,6 +15,9 @@ project:
     restricted series, with finite-level and kernel-preserving uniqueness laws.
     Independently of completeness, coefficientwise reduction kernels multiply
     into the kernel at the sum of their levels, including finite-sum laws.
+    Over finitely many variables, restrictedness has a degree-cutoff criterion;
+    if the coefficient ideal is finitely generated, every reduction kernel is
+    the intrinsic algebraic image ideal of its corresponding ideal power.
     Separate restricted-series modules add coefficient content, intrinsic
     actual-ring leading terms, division under adic/valuation hypotheses and
     conditional ideal generation by a finite primitive family. A generic
@@ -64,6 +67,10 @@ automation:
         and conditional primitive ideal generation. The pinned
         MultivariatePolynomials library supplies the original polynomial
         linear-division and monic-lifting algorithms, not duplicate proofs.
+        Further contributors developed the finite-variable degree criterion,
+        its infinite-variable regression and the finite-generation kernel
+        argument; separate contributors implemented, reviewed and transferred
+        their Lean producers and ordinary-import clients.
         Folio contributed the derivative documentation. The antidiagonal
         multiplication method adapts Jz Pan's Apache-2.0 mathlib argument.
         Build and axiom evidence applies only to its exact checked inputs; it
@@ -85,6 +92,10 @@ automation:
     Coefficientwise kernel-product laws assume arbitrary commutative rings,
     ideals and variable types, not completeness or finite variables, and do
     not identify intrinsic restricted-ring ideal powers with those kernels.
+    Conversely, the degree-cutoff equivalence assumes finite variables, while
+    the intrinsic algebraic reduction kernel for a finitely generated ideal
+    additionally assumes finite generation; neither assumes regularity or
+    completeness, and neither alters the arbitrary-variable principal kernel.
     Restricted division requires adic completeness and appropriate polynomial
     unit-leading or monic hypotheses; valuation-normalized division additionally
     uses a nonzero maximal-ideal parameter with radical the maximal ideal,
@@ -109,10 +120,20 @@ status:
     require actual coefficient adic completeness, and linear-extension
     uniqueness also assumes all-level kernel preservation. Kernel products
     are coefficientwise, not intrinsic restricted-ring ideal powers.
+    For finite variables the degree-cutoff equivalence applies, and with a
+    finitely generated coefficient ideal the kernel is the intrinsic algebraic
+    image ideal at every level, including zero. Neither result asserts
+    arbitrary-variable finite-generation kernels or source coverage.
     The ideal-generation result assumes, rather than constructs, a finite
     primitive family with the required actual-R leading-term-ideal equality.
     These result locators do not assert whole-source coverage.
   main_results:
+    - declaration: MvPowerSeries.isAdicallyRestricted_iff_degree_cutoff
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean
+    - declaration: MvPowerSeries.exists_restricted_fg_decomposition
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean
+    - declaration: MvPowerSeries.ker_adicReduction_fg
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean
     - declaration: MvPowerSeries.adicallyRestrictedAlgebra
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean
     - declaration: MvPowerSeries.algebraMap_adicallyRestricted_coe

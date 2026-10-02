@@ -23,6 +23,9 @@ of every coefficientwise reduction kernel. Independently of completeness,
 in the kernel at `n + k`**, including finite-sum and level-one laws.
 The multivariate family also supplies content, intrinsic actual-ring leading
 terms, restricted division and **conditional** primitive ideal generation.
+Over finitely many variables it additionally characterizes restrictedness by
+degree cutoffs and identifies the **intrinsic algebraic** reduction kernel
+for finitely generated coefficient ideals at every level.
 A separately importable generic support leaf compares cofinal ideal-adic
 filtrations for arbitrary modules. The two series families are independent.
 
@@ -83,6 +86,18 @@ structure, splitting extension or Adams operation here.
   See the [predicate and polynomial characterization](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted.lean),
   [reduction](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted.lean)
   and [finite-reduction guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md).
+- **Finite-variable degree cutoffs and FG intrinsic kernels.** For finite `σ`,
+  coefficients are restricted exactly when they lie in `I ^ k` above some
+  degree cutoff at each `k`; the converse fails for infinite `σ`, as the
+  [ordinary-import counterexample](Tests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
+  demonstrates. If also `I.FG`, a restricted series with coefficients in
+  `I ^ k` decomposes into finitely many restricted coefficient series times
+  constants from `I ^ k`. Thus the kernel of `adicReduction I k` is the
+  **algebraic image ideal inside the restricted subring**, including `k = 0`;
+  this needs neither completeness nor regularity and makes no ambient-ideal
+  or closure assertion. See the [degree guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/DegreeDecay/README.md),
+  [FG kernel guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel/README.md)
+  and [FG client](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean).
 - **Regular-principal internal kernel.** When `I = Ideal.span {a}` and
   `ha : IsRegular a`, coefficientwise division by `a ^ k` constructs the
   quotient *inside the restricted subring*. The kernel of `adicReduction I k`
@@ -177,7 +192,9 @@ Fetch the matching precompiled mathlib cache successfully **before** any build;
 builds these two roots, including all ordinary-import examples under `Tests/`.
 For a smaller check, use `lake build FormalPowerSeries.UnitLogDerivative` or
 `lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration`;
-its matching test module can be built separately. `LEAN_NUM_THREADS=2` can
+its matching test module can be built separately. The new `DegreeDecay` and
+`FinitelyGeneratedKernel` producer/client leaves can likewise be built by
+their full module names after cache fetch. `LEAN_NUM_THREADS=2` can
 limit Lean's threads for a selective command, but does **not** bound Lake's
 global job concurrency.
 
@@ -202,8 +219,9 @@ published GitHub revisions and import `FormalPowerSeries` for both families
 and the generic cofinal helper,
 or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted` and its
-`PrincipalKernel`, `LinearQuotient`, `InverseLimit`, `LinearExtension`,
-`KernelFiltration`, `PrimitiveStandardBasis` or other restricted-series
+`DegreeDecay`, `FinitelyGeneratedKernel`, `PrincipalKernel`,
+`LinearQuotient`, `InverseLimit`, `LinearExtension`, `KernelFiltration`,
+`PrimitiveStandardBasis` or other restricted-series
 submodules, or `FormalPowerSeries.AdicCompletion.Cofinal`. See [API.md](API.md)
 for signatures and the
 [restricted-series guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md)
@@ -214,8 +232,10 @@ for the navigable family of modules. The [unit](Tests/UnitLogDerivative.lean),
 [completion](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean),
 [linear-extension](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
 and [filtration](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
-clients demonstrate the earlier API; the ten new leaves under the same
-`Tests/MvPowerSeries/IdealAdicRestricted/` directory exercise the added APIs.
+clients demonstrate the earlier API; the degree and FG
+[clients](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
+extend its finite-variable boundaries, while the other leaves under the same
+`Tests/MvPowerSeries/IdealAdicRestricted/` directory exercise further APIs.
 For example:
 
 ```lean
@@ -242,6 +262,10 @@ carrier, principal kernel, completion, scalar-linear quotient, linear
 extension and coefficientwise kernel-filtration proofs; further contributors
 developed content, selected factorization, actual leading terms, normalized
 division, cofinal comparison and conditional primitive ideal generation.
+Additional contributors developed and reviewed the finite-variable degree
+criterion, its infinite-variable counterexample and the finite-generation
+kernel argument; distinct contributors implemented and transferred the
+Lean code and ordinary-import clients.
 This assembly does
 not erase their original authorship. The antidiagonal coefficient-product
 method adapts Jz Pan's 2025 mathlib `PowerSeries.CoeffMulMem` argument,
