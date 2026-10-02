@@ -10,6 +10,7 @@ public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.UnitDetection
 public import FormalPowerSeries.AdicCompletion.Cofinal
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.Content
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.SelectedFactor

@@ -158,6 +158,31 @@ also cover empty families and variables, bottom/top ideals and zero rings.
 The producer imports the restricted-series base and pinned mathlib ideal
 operations, independently of linear extension, quotients and completeness.
 
+## Units in the restricted subring
+
+Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.UnitDetection`
+(or `FormalPowerSeries`). For arbitrary `σ`, `[CommRing R]`, `I : Ideal R`
+and `[IsAdicComplete I R]`, take
+`f : adicallyRestrictedSubring (σ := σ) I`. These results concern **units in
+that subring**, not just units of `MvPowerSeries σ R`.
+
+| Use | Declaration in `MvPowerSeries` |
+| --- | --- |
+| Unit iff `adicReduction I 1 f` is a unit in `MvPolynomial σ (R ⧸ I ^ 1)` | `isUnit_adicallyRestricted_iff_adicReduction_one I f` |
+| Unit iff the constant coefficient modulo `I` is a unit and nonconstant coefficients modulo `I` are nilpotent | `isUnit_adicallyRestricted_iff_coeff_mod_ideal I f` |
+| Scalar unit iff its image in `R ⧸ I` is a unit | `isUnit_iff_quotient_of_isAdicComplete I r` |
+| Unit iff the actual constant coefficient is a unit and all nonconstant coefficients belong to `I.radical` | `isUnit_adicallyRestricted_iff_coeff_radical I f` |
+
+The first criterion lifts a polynomial inverse and uses coefficientwise
+kernel contraction and the geometric inverse to invert inside the restricted
+subring. The quotient-coefficient criterion transports `I ^ 1 = I` explicitly.
+No finite-variable, finitely generated ideal, domain, valuation, nontriviality
+or unproved identification with intrinsic restricted-ring ideal powers is
+assumed. See the [standalone guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/README.md)
+and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean).
+The client's `ZMod 4` witness uses the older polynomial-unit inclusion, not
+the new criterion for a nonzero nilpotent nonconstant coefficient.
+
 ## Linear polynomial operators on restricted series
 
 Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension`.

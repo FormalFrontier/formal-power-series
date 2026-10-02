@@ -23,6 +23,9 @@ of every coefficientwise reduction kernel. Independently of completeness,
 in the kernel at `n + k`**, including finite-sum and level-one laws.
 The multivariate family also supplies content, intrinsic actual-ring leading
 terms, restricted division and **conditional** primitive ideal generation.
+Over an adically complete coefficient ring, units inside the restricted
+subring are detected by the first polynomial reduction, or equivalently by
+a unit constant coefficient and radical containment of all other coefficients.
 Over finitely many variables it additionally characterizes restrictedness by
 degree cutoffs and identifies the **intrinsic algebraic** reduction kernel
 for finitely generated coefficient ideals at every level.
@@ -137,6 +140,20 @@ structure, splitting extension or Adams operation here.
   [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration/README.md)
   and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).
 
+- **Restricted-subring units.** For arbitrary variables and ideals with
+  `[IsAdicComplete I R]`, `isUnit_adicallyRestricted_iff_adicReduction_one`
+  detects units *inside* the existing restricted subring by the unit of
+  `adicReduction I 1 f`. The equivalent
+  `isUnit_adicallyRestricted_iff_coeff_mod_ideal` tests a unit constant
+  coefficient and nilpotent nonconstant coefficients in `R ⧸ I`;
+  `isUnit_iff_quotient_of_isAdicComplete` reflects scalar units from that
+  quotient; and `isUnit_adicallyRestricted_iff_coeff_radical` uses an actual
+  unit constant coefficient and `I.radical` for the remaining coefficients.
+  This requires no finite variables, finite generation, valuation or
+  intrinsic `I*T` kernel identity. See the
+  [unit guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean).
+
 - **Generic linear extension.** Over `[CommRing R]` and `[IsAdicComplete I R]`,
   `restrictedLinearExtension I F` extends any polynomial `R`-linear endomorphism
   `F`, for arbitrary variable type and ideal. The quotient-polynomial operator
@@ -221,7 +238,7 @@ or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted` and its
 `DegreeDecay`, `FinitelyGeneratedKernel`, `PrincipalKernel`,
 `LinearQuotient`, `InverseLimit`, `LinearExtension`, `KernelFiltration`,
-`PrimitiveStandardBasis` or other restricted-series
+`UnitDetection`, `PrimitiveStandardBasis` or other restricted-series
 submodules, or `FormalPowerSeries.AdicCompletion.Cofinal`. See [API.md](API.md)
 for signatures and the
 [restricted-series guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md)
@@ -232,7 +249,11 @@ for the navigable family of modules. The [unit](Tests/UnitLogDerivative.lean),
 [completion](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean),
 [linear-extension](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
 and [filtration](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
-clients demonstrate the earlier API; the degree and FG
+clients demonstrate the earlier API; the
+[restricted-unit client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean)
+exercises the four unit criteria, though its `ZMod 4` polynomial witness
+uses the older polynomial-unit map rather than the new coefficient criterion.
+The degree and FG
 [clients](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
 extend its finite-variable boundaries, while the other leaves under the same
 `Tests/MvPowerSeries/IdealAdicRestricted/` directory exercise further APIs.
@@ -266,8 +287,9 @@ Additional contributors developed and reviewed the finite-variable degree
 criterion, its infinite-variable counterexample and the finite-generation
 kernel argument; distinct contributors implemented and transferred the
 Lean code and ordinary-import clients.
-This assembly does
-not erase their original authorship. The antidiagonal coefficient-product
+Additional contributors developed and transferred the restricted-subring
+unit criteria and their ordinary-import client.
+This assembly does not erase their original authorship. The antidiagonal coefficient-product
 method adapts Jz Pan's 2025 mathlib `PowerSeries.CoeffMulMem` argument,
 Apache-2.0, as credited in the [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).
 Native mathlib polynomial, power-series, ideal, quotient and completion APIs
