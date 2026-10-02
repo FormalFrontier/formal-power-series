@@ -175,4 +175,54 @@ See the [completion guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/I
 and [client](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean).
 These multivariate coefficient-adic APIs are independent of the single-variable
 unit logarithmic derivative. They do not provide norm/radius-weighted or
-variable-adic restrictions, general base change, or preparation/division.
+variable-adic restrictions or general base change. Restricted division under
+additional hypotheses is documented below; there is no preparation theorem.
+
+## Cofinal filtrations and coefficient content
+
+The separately importable `FormalPowerSeries.AdicCompletion.Cofinal` has three
+**global public** results for arbitrary `[CommRing R]`, `[AddCommGroup M]`,
+`[Module R M]`, `I ≤ J`, `1 ≤ N` and `J ^ N ≤ I`:
+`isHausdorff_iff_of_cofinal`, `isPrecomplete_iff_of_cofinal` and
+`isAdicComplete_iff_of_cofinal`. The distinct
+`MvPowerSeries.isAdicallyRestricted_iff_of_cofinal` compares restriction
+of the *same* series to these two ideals. See the
+[module guide](FormalPowerSeries/AdicCompletion/README.md).
+
+Over `[PreValuationRing R]` and `[IsHausdorff I R]`, import the `Content`
+and `SelectedFactor` restricted-series leaves for
+`MvPowerSeries.IsAdicallyRestricted.exists_span_range_eq_span_coeff` and
+`MvPowerSeries.IsAdicallyRestricted.exists_selected_coeff_factor`. Over a
+valuation domain with a separated principal filtration, `LeadingTerm`
+supplies `MvPowerSeries.restrictedContentIndex`, `restrictedResidue` and
+`MonomialOrder.restrictedLeadingExponent`, `restrictedLeadingTerm`,
+`restrictedLeadingTermIdeal`. The residue is a polynomial over `R ⧸ m`;
+**leading terms and their ideal are over `R`**. These constructions allow
+empty or infinite variable types. See the
+[content and division guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/RestrictedDivision/README.md).
+
+## Restricted division and conditional ideal generation
+
+`MonicParameter` chooses a common normalization parameter for a finite
+primitive valuation-domain family. With `[IsAdicComplete I R]`, the
+`PolynomialDivision` leaf extends pinned MultivariatePolynomials fixed
+polynomial quotient/remainder operators to restricted series. The
+`RestrictedGeometricInverse`, `PerturbedDivision` and `MonicDivision` leaves
+correct division by finite restricted divisors, using the existing
+`LinearExtension` and `KernelFiltration` leaves and dependency-provided
+`MultivariatePolynomials.LinearDivision`/`MonicLift`.
+
+For a nonzero `a` in the valuation domain's maximal ideal satisfying
+`(Ideal.span {a}).radical = IsLocalRing.maximalIdeal R` and
+`[IsAdicComplete (Ideal.span {a}) R]`,
+`MonomialOrder.exists_restricted_primitive_division` gives existential
+quotients and a remainder for a finite family with actual coefficient-content
+ideal `⊤`. The remainder has zero **R-valued** coefficients on componentwise
+leading cones. Finally `MonomialOrder.ideal_eq_span_of_primitive_standardBasis`
+assumes a finite primitive family `g i ∈ J` and the equality
+`μ.restrictedLeadingTermIdeal a ham J = Ideal.span (Set.range (fun i => μ.restrictedLeadingTerm a ham (g i)))`;
+it concludes `J = Ideal.span (Set.range g)`. The latter is a *conditional*
+ideal-generation theorem, not existence of a standard basis, unique division,
+preparation or source-specific coverage. See the
+[precise theorem guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis/README.md)
+and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean).

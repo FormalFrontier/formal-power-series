@@ -15,6 +15,10 @@ project:
     restricted series, with finite-level and kernel-preserving uniqueness laws.
     Independently of completeness, coefficientwise reduction kernels multiply
     into the kernel at the sum of their levels, including finite-sum laws.
+    Separate restricted-series modules add coefficient content, intrinsic
+    actual-ring leading terms, division under adic/valuation hypotheses and
+    conditional ideal generation by a finite primitive family. A generic
+    support leaf compares cofinal ideal-adic filtrations on arbitrary modules.
   authors:
     - Formal Frontier Agents
   responsible_maintainers:
@@ -55,10 +59,15 @@ automation:
         adapted it here. Distinct contributors developed and later assembled
         the restricted-series carrier, principal kernel, inverse-limit,
         scalar-linear quotient, linear extension and kernel-filtration modules;
+        distinct contributors developed content, selected factorization,
+        leading terms, monic parameters, restricted division, cofinal transport
+        and conditional primitive ideal generation. The pinned
+        MultivariatePolynomials library supplies the original polynomial
+        linear-division and monic-lifting algorithms, not duplicate proofs.
         Folio contributed the derivative documentation. The antidiagonal
         multiplication method adapts Jz Pan's Apache-2.0 mathlib argument.
-        Build and axiom evidence for accepted mathematical contributions does
-        not by itself approve this documentation/header revision or a release.
+        Build and axiom evidence applies only to its exact checked inputs; it
+        does not replace independent mathematical review or a release decision.
   divergences: >-
     Native arbitrary-ring units, weighted naming and source-independent
     finite formulas replace source-only experimental names. The independent
@@ -76,20 +85,32 @@ automation:
     Coefficientwise kernel-product laws assume arbitrary commutative rings,
     ideals and variable types, not completeness or finite variables, and do
     not identify intrinsic restricted-ring ideal powers with those kernels.
+    Restricted division requires adic completeness and appropriate polynomial
+    unit-leading or monic hypotheses; valuation-normalized division additionally
+    uses a nonzero maximal-ideal parameter with radical the maximal ideal,
+    a finite primitive family and completeness at the original parameter.
+    Intrinsic leading terms use actual coefficients in R, whereas normalized
+    residue polynomials have coefficients in R modulo the maximal ideal.
+    Ideal generation assumes equality of full actual-R leading-term ideals;
+    it does not establish existence of such a finite family or unique division.
 status:
   scope: >-
     Two independent reusable families: the weighted negative logarithmic
     derivative of power-series units over arbitrary commutative rings, and
-    coefficientwise ideal-adically restricted multivariate series. The 33
-    curated main_results below locate 21 scalar-linear quotient, eight
-    generic linear-extension and four coefficientwise kernel-product
-    declarations; earlier derivative, carrier, principal-kernel and
-    inverse-limit interfaces are documented in API.md. Generic reductions
+    coefficientwise ideal-adically restricted multivariate series, with a
+    generic cofinality support leaf. The curated main_results below locate
+    21 scalar-linear quotient, eight generic linear-extension, four
+    coefficientwise kernel-product and fourteen content/cofinality/
+    division/conditional-generation declarations; earlier derivative,
+    carrier, principal-kernel and inverse-limit interfaces are documented in
+    API.md. Generic reductions
     work for arbitrary ideals; internal division and principal quotients
     require a regular generator. Completion and generic linear extension
     require actual coefficient adic completeness, and linear-extension
     uniqueness also assumes all-level kernel preservation. Kernel products
     are coefficientwise, not intrinsic restricted-ring ideal powers.
+    The ideal-generation result assumes, rather than constructs, a finite
+    primitive family with the required actual-R leading-term-ideal equality.
     These result locators do not assert whole-source coverage.
   main_results:
     - declaration: MvPowerSeries.adicallyRestrictedAlgebra
@@ -158,18 +179,47 @@ status:
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean
     - declaration: MvPowerSeries.adicReduction_sum_mul_eq_zero_succ
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean
+    - declaration: MvPowerSeries.IsAdicallyRestricted.exists_span_range_eq_span_coeff
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Content.lean
+    - declaration: MvPowerSeries.IsAdicallyRestricted.exists_selected_coeff_factor
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SelectedFactor.lean
+    - declaration: MonomialOrder.restrictedLeadingTermIdeal
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LeadingTerm.lean
+    - declaration: MvPowerSeries.exists_common_monic_parameter
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/MonicParameter.lean
+    - declaration: MonomialOrder.restrictedDivisionRemainder
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PolynomialDivision.lean
+    - declaration: MvPowerSeries.restrictedGeometricInverse
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/RestrictedGeometricInverse.lean
+    - declaration: MonomialOrder.restrictedPerturbedDivisionRemainder
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PerturbedDivision.lean
+    - declaration: MonomialOrder.exists_restricted_monic_division
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/MonicDivision.lean
+    - declaration: MvPowerSeries.isAdicallyRestricted_iff_of_cofinal
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Cofinal.lean
+    - declaration: isHausdorff_iff_of_cofinal
+      file: FormalPowerSeries/AdicCompletion/Cofinal.lean
+    - declaration: isPrecomplete_iff_of_cofinal
+      file: FormalPowerSeries/AdicCompletion/Cofinal.lean
+    - declaration: isAdicComplete_iff_of_cofinal
+      file: FormalPowerSeries/AdicCompletion/Cofinal.lean
+    - declaration: MonomialOrder.exists_restricted_primitive_division
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/ValuationNormalizedDivision.lean
+    - declaration: MonomialOrder.ideal_eq_span_of_primitive_standardBasis
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean
 review:
   status: >-
-    The constituent mathematical contributions received independent review
-    and responsible-maintainer code acceptance. Previous build and
-    transitive-axiom evidence applies only to its exact inputs. A revised
-    release requires applicable changed-input checks, independent review
-    and maintainer acceptance; source correspondence and coverage are
-    separate decisions.
+    Previous releases received independent mathematical review and
+    responsible-maintainer code acceptance on their own exact inputs. A
+    changed dependency graph or new mathematical declarations require
+    applicable build, full transitive axiom evidence, independent review
+    and responsible-maintainer acceptance before release. Source
+    correspondence and coverage are separate decisions.
   reviewers:
     - Formal Frontier independent mathematical contribution reviewers
   notes: >-
-    The earlier proof checks admitted only propext, Classical.choice and
-    Quot.sound, including private declarations. The public API and limitations
-    are described in README.md and API.md. This metadata does not itself
-    certify an approved release or whole-source coverage.
+    Earlier proof checks admitted only propext, Classical.choice and
+    Quot.sound, including private declarations, on their previous graph.
+    Evidence must match the actual graph, including private and generated
+    declarations. README.md and API.md describe the public API and limits;
+    metadata alone does not certify an approved release or source coverage.

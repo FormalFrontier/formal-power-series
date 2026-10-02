@@ -21,7 +21,10 @@ and a uniqueness theorem requiring both polynomial agreement and preservation
 of every coefficientwise reduction kernel. Independently of completeness,
 **products of coefficientwise reduction kernels at levels `n` and `k` lie
 in the kernel at `n + k`**, including finite-sum and level-one laws.
-Neither family imports or mathematically depends on the other.
+The multivariate family also supplies content, intrinsic actual-ring leading
+terms, restricted division and **conditional** primitive ideal generation.
+A separately importable generic support leaf compares cofinal ideal-adic
+filtrations for arbitrary modules. The two series families are independent.
 
 ## Headline results
 
@@ -132,15 +135,37 @@ structure, splitting extension or Adams operation here.
   [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension/README.md)
   and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean).
 
-The latter six results concern coefficient-adic series, not norm/radius or
-variable-adic restrictions, general base change, general preparation or
-arbitrary-ideal division. The two mathematical families remain independent.
+- **Content and actual-ring leading terms.** Over separated prevaluation
+  rings, restricted coefficient-content ideals have a generating coefficient
+  and admit selected-coefficient factorization. Over a valuation domain,
+  normalizing by content gives an intrinsic leading exponent; the leading
+  **term itself is a polynomial over `R`**, not merely over the residue ring.
+  See the [content and division guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/RestrictedDivision/README.md)
+  and [leading-term client](Tests/MvPowerSeries/IdealAdicRestricted/LeadingTerm.lean).
+- **Restricted division and conditional ideal generation.** Polynomial linear
+  division and monic lifting are supplied by the pinned
+  `multivariate-polynomials` library; this library extends/corrects division
+  for restricted series. A finite primitive family in a restricted-series
+  ideal generates that ideal **if its actual-`R` leading terms generate the
+  full polynomial leading-term ideal**. No standard-basis existence,
+  uniqueness, preparation or finite-variable assertion follows. See the
+  [conditional-generation guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean).
+- **Cofinal ideal-adic modules.** Under `I ≤ J`, `1 ≤ N` and `J ^ N ≤ I`,
+  separation, precompleteness and completeness are equivalent for any
+  `R`-module; this public generic support leaf requires no restricted series.
+  See its [standalone guide](FormalPowerSeries/AdicCompletion/README.md).
+
+The new restricted-series theorems do not assert norm/radius or variable-adic
+restrictions, general base change, standard-basis existence, or source coverage.
 
 ## Build and use
 
 Install Git and `elan`; `lean-toolchain` pins Lean `v4.34.0-rc2`, and
 `lake-manifest.json` pins mathlib to
-`83abb3e776bdefcbc447a1e44d0debe4010039e5`. From the repository root:
+`83abb3e776bdefcbc447a1e44d0debe4010039e5` and
+MultivariatePolynomials to `b2f525056365c513029f3b0fae6d13c000a2b633`.
+From the repository root:
 
 ```sh
 lake exe cache get
@@ -156,7 +181,8 @@ its matching test module can be built separately. `LEAN_NUM_THREADS=2` can
 limit Lean's threads for a selective command, but does **not** bound Lake's
 global job concurrency.
 
-On the pinned 32-file, 16-Lean-module graph, a configured CI runner fetched
+On the **previous** 32-file, 16-Lean-module graph (without this restricted
+division transfer or MultivariatePolynomials), a configured CI runner fetched
 8,892 decompressed mathlib-cache files in **41.558 seconds**, built cached
 Mathlib in **5.586 seconds**, and built both roots in **17.123 seconds**
 (**1,960 Lake jobs**). These are individual command wall times, not a
@@ -168,14 +194,18 @@ allow roughly **10–50 minutes** for first setup and full build,
 **1–15 minutes** for a small cached rebuild, and approximately **16 GiB
 RAM and 20 GiB free disk** plus headroom. These smaller-machine figures are
 **unvalidated estimates**, not measured peaks or guarantees; CPU, network,
-cache state and competing jobs matter.
+cache state and competing jobs matter. These figures have **not** been
+measured or validated on the expanded dependency graph.
 
 In a dependent Lake project, pin this library and its dependencies to
-published GitHub revisions and import `FormalPowerSeries` for both families,
+published GitHub revisions and import `FormalPowerSeries` for both families
+and the generic cofinal helper,
 or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted` and its
-`PrincipalKernel`, `LinearQuotient`, `InverseLimit`, `LinearExtension` or
-`KernelFiltration` submodules. See [API.md](API.md) for signatures and the
+`PrincipalKernel`, `LinearQuotient`, `InverseLimit`, `LinearExtension`,
+`KernelFiltration`, `PrimitiveStandardBasis` or other restricted-series
+submodules, or `FormalPowerSeries.AdicCompletion.Cofinal`. See [API.md](API.md)
+for signatures and the
 [restricted-series guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md)
 for the navigable family of modules. The [unit](Tests/UnitLogDerivative.lean),
 [finite-reduction](Tests/MvPowerSeries/IdealAdicRestricted.lean),
@@ -184,7 +214,9 @@ for the navigable family of modules. The [unit](Tests/UnitLogDerivative.lean),
 [completion](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean),
 [linear-extension](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
 and [filtration](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
-clients demonstrate the ordinary-import API. For example:
+clients demonstrate the earlier API; the ten new leaves under the same
+`Tests/MvPowerSeries/IdealAdicRestricted/` directory exercise the added APIs.
+For example:
 
 ```lean
 theorem signedExample {T : Type*} [CommRing T]
@@ -207,7 +239,10 @@ and developed the independent restricted-series constructions and proofs.
 Folio contributed the derivative headlines and documentation. Distinct Formal
 Frontier contributors produced and later relocated/adapted the restricted
 carrier, principal kernel, completion, scalar-linear quotient, linear
-extension and coefficientwise kernel-filtration proofs; this assembly does
+extension and coefficientwise kernel-filtration proofs; further contributors
+developed content, selected factorization, actual leading terms, normalized
+division, cofinal comparison and conditional primitive ideal generation.
+This assembly does
 not erase their original authorship. The antidiagonal coefficient-product
 method adapts Jz Pan's 2025 mathlib `PowerSeries.CoeffMulMem` argument,
 Apache-2.0, as credited in the [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).

@@ -84,6 +84,12 @@ internal kernels, norm/radius-weighted `MvPowerSeries.IsRestricted`, variable-ad
 completion, total-degree cutoffs, preparation/division, general coefficient-map
 naturality, or source-specific correspondence and coverage.
 
+For separate theorems under stronger valuation/adic assumptions, see the
+[content, leading-term and division guide](RestrictedDivision/README.md) and
+[conditional primitive ideal-generation guide](PrimitiveStandardBasis/README.md).
+The public [cofinal module-filtration comparison](../../AdicCompletion/README.md)
+is independently importable and works for arbitrary modules.
+
 ## Provenance
 
 The definitions and proofs use native mathlib polynomial/power-series rings,

@@ -8,9 +8,22 @@ public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration
+public import FormalPowerSeries.AdicCompletion.Cofinal
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.Content
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.SelectedFactor
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LeadingTerm
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.MonicParameter
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PolynomialDivision
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.RestrictedGeometricInverse
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PerturbedDivision
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.MonicDivision
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.Cofinal
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.ValuationNormalizedDivision
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrimitiveStandardBasis
 
 /-! # Formal power series
 
-The public APIs for logarithmic derivatives of native power-series units and
-ideal-adically restricted multivariate power series.
+The public APIs for logarithmic derivatives of native power-series units,
+ideal-adically restricted multivariate power series, and generic cofinal
+ideal-adic module filtrations.
 -/
