@@ -103,14 +103,26 @@ and the [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstV
 | Unique quotient and finite-polynomial first-variable remainder of degree below `d` | `MvPowerSeries.existsUnique_firstVariable_division_of_scalar_top` in [FirstVariableDivision](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision.lean) |
 | Reflect polynomial-residue units to restricted-series units under radical equality and completeness | `MvPowerSeries.isUnit_of_isUnit_restrictedResidueHom` in [UnitDetection/Residue](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/Residue.lean) |
 | For a supplied division of `X₀^d` by a divisor with regrouped residue degree `d` and nonzero scalar top, and actual remainder supported below `d`, compute the constant-unit quotient residue; reflect it to a unit with radical equality and completeness | `MvPowerSeries.restrictedResidueHom_quotient_of_restrictedFinFirst_division`, `MvPowerSeries.isUnit_quotient_of_restrictedFinFirst_divisionHom` in [FirstVariableUnit](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean) |
+| Prepare a primitive restricted series of scalar-top residue degree `d` as a restricted unit times a monic polynomial of exact degree `d`, with full-pair uniqueness even without a unit assumption on competing multipliers | `MvPowerSeries.existsUnique_firstVariable_preparation_of_scalar_top_of_primitive` in [FirstVariablePreparation](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean) |
+| Derive primitivity from the nonzero scalar top coefficient and obtain the same preparation and uniqueness | `MvPowerSeries.existsUnique_firstVariable_preparation_of_scalar_top` in [FirstVariablePreparation](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean) |
+
+The preparation theorems assume a commutative valuation domain, a nonzero
+parameter in its maximal ideal, equality of the radical of its principal ideal
+with the maximal ideal, completeness for that ideal, and a restricted series
+whose regrouped maximal-ideal residue has degree `d` with nonzero scalar
+coefficient at `d`. The primitive variant additionally assumes the actual
+coefficients generate the unit ideal. They include `d = 0` and `n = 0`.
 
 See the [singleton](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SingletonDivision/README.md),
 [first-variable](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision/README.md),
 and [quotient-unit](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit/README.md)
+and [preparation](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation/README.md)
 guides and the corresponding [singleton](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/SingletonDivision.lean),
 [first-variable](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision.lean)
 and [unit](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean)
-ordinary-import clients. These laws do not assert preparation.
+and [preparation](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean)
+ordinary-import clients. Division and conditional quotient-unit laws alone
+do not construct the prepared pair.
 
 ## Finite-variable degree cutoffs and finitely generated kernels
 
@@ -283,7 +295,7 @@ and [client](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean).
 These multivariate coefficient-adic APIs are independent of the single-variable
 unit logarithmic derivative. They do not provide norm/radius-weighted or
 variable-adic restrictions or general base change. Restricted division under
-additional hypotheses is documented below; there is no preparation theorem.
+additional hypotheses, including first-variable preparation, is documented below.
 
 ## Cofinal filtrations and coefficient content
 

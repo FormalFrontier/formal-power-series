@@ -35,6 +35,12 @@ project:
     division of X₀^d by a divisor with regrouped residue degree d and nonzero
     scalar top, with actual remainder support below d, gives constant-unit
     quotient residue; radical equality and completeness reflect it to a unit.
+    With a nonzero principal-adic parameter in the maximal ideal of a
+    commutative valuation domain, radical equality and completeness,
+    a restricted series whose regrouped residue polynomial has degree d and
+    nonzero scalar top coefficient admits a unique unit multiplier and monic
+    first-variable polynomial of degree d, even among competing multipliers
+    not assumed units; coefficient primitivity is derived from the top term.
   authors:
     - Formal Frontier Agents
   responsible_maintainers:
@@ -324,6 +330,10 @@ status:
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean
     - declaration: MvPowerSeries.isUnit_quotient_of_restrictedFinFirst_division
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean
+    - declaration: MvPowerSeries.existsUnique_firstVariable_preparation_of_scalar_top_of_primitive
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean
+    - declaration: MvPowerSeries.existsUnique_firstVariable_preparation_of_scalar_top
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean
 review:
   status: >-
     The library's Lean mathematics has received independent review. Source

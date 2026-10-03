@@ -28,5 +28,7 @@ first variable. Suppose `F.natDegree = d` and `F.coeff d = C c` with `c ≠ 0`.
 The assertions include `d = 0` and `n = 0`. The degree bound uses `WithBot`
 so the zero polynomial is an admissible remainder at degree zero. Existence
 uses primitive singleton restricted division and the finite-polynomial image
-characterization of **actual** remainder support. No invertible quotient or
-preparation is claimed. Developed by Formal Frontier Agents under Apache-2.0.
+characterization of **actual** remainder support. Division alone does not
+assert an invertible quotient or preparation; the
+[preparation guide](../FirstVariablePreparation/README.md) combines it with
+the quotient-unit law. Developed by Formal Frontier Agents under Apache-2.0.

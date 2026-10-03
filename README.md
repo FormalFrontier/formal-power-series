@@ -22,7 +22,8 @@ of every coefficientwise reduction kernel. Independently of completeness,
 **products of coefficientwise reduction kernels at levels `n` and `k` lie
 in the kernel at `n + k`**, including finite-sum and level-one laws.
 The multivariate family also supplies content, intrinsic actual-ring leading
-terms, restricted division and **conditional** primitive ideal generation.
+terms, restricted division, first-variable polynomial preparation and
+**conditional** primitive ideal generation.
 Over an adically complete coefficient ring, units inside the restricted
 subring are detected by the first polynomial reduction, or equivalently by
 a unit constant coefficient and radical containment of all other coefficients.
@@ -216,6 +217,20 @@ structure, splitting extension or Adams operation here.
   construct a division or preparation. See the
   [quotient-unit guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit/README.md)
   and [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean).
+- **First-variable restricted preparation.** For a commutative valuation domain
+  complete for the principal ideal of a nonzero parameter in its maximal ideal,
+  with that ideal's radical equal to the maximal ideal, suppose an adically
+  restricted series in `Fin (n + 1)` variables has regrouped maximal-ideal
+  residue polynomial of degree `d` and nonzero scalar coefficient `C c` at
+  `d`. Then `MvPowerSeries.existsUnique_firstVariable_preparation_of_scalar_top`
+  gives a restricted unit `u` and a monic polynomial `G` in the first variable
+  of exact degree `d` with `polynomialRestrictedFinFirst _ n G = u * f`.
+  The pair is unique even among competing multipliers not assumed units;
+  actual-coefficient primitivity follows from the scalar-top condition.
+  Both `d = 0` and `n = 0` are included. See the
+  [theorem](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean),
+  [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation/README.md)
+  and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean).
 - **Cofinal ideal-adic modules.** Under `I ≤ J`, `1 ≤ N` and `J ^ N ≤ I`,
   separation, precompleteness and completeness are equivalent for any
   `R`-module; this public generic support leaf requires no restricted series.
@@ -319,10 +334,11 @@ degree criterion, its infinite-variable counterexample and the finite-generation
 kernel argument were distinct from those who formalized these results and wrote
 their ordinary-import clients. Further contributors developed and formalized
 the restricted-subring unit criteria and wrote their ordinary-import client.
-Formal Frontier Agents also developed the intrinsic leading-product,
-singleton and first-variable division, residue reflection and conditional
-quotient-unit arguments and their ordinary-import clients; these results reuse
-the published restricted-series foundation and polynomial lexicographic API.
+Formal Frontier AI contributors also developed the intrinsic leading-product,
+singleton and first-variable division, residue reflection, conditional
+quotient-unit and first-variable preparation arguments and their
+ordinary-import clients; these results reuse the published restricted-series
+foundation and polynomial lexicographic API.
 The antidiagonal coefficient-product method adapts Jz Pan's 2025 mathlib
 `PowerSeries.CoeffMulMem` argument,
 Apache-2.0, as credited in the [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).

@@ -10,5 +10,6 @@ public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVari
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.SingletonDivision
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariableDivision
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariableUnit
+public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariablePreparation
 
 /-! Public-import examples for ideal change, polynomial residue and first-variable regrouping. -/

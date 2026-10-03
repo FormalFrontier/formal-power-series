@@ -82,7 +82,7 @@ ideal of a local ring. The [first-variable guide](FirstVariableRegrouping/README
 describes restricted coefficient slices, polynomial embeddings and `Fin`
 reindexing, without asserting surjectivity onto all iterated power series.
 
-## Singleton division and conditional quotient units
+## Singleton division, quotient units and preparation
 
 The [singleton division guide](SingletonDivision/README.md) separates the
 Hausdorff leading-product and uniqueness laws from primitive existence, which
@@ -93,8 +93,14 @@ degree zero. The [quotient-unit guide](FirstVariableUnit/README.md) records
 polynomial-residue unit reflection and the criterion for a supplied division
 of `X₀^d` by a divisor with regrouped residue degree `d` and nonzero scalar
 top, with actual remainder supported below `d`. Radical equality and
-completeness reflect the computed quotient residue to a unit; no preparation
-is asserted, including at degree zero.
+completeness reflect the computed quotient residue to a unit. The
+[preparation guide](FirstVariablePreparation/README.md) combines these laws:
+for a restricted divisor with regrouped maximal-ideal residue degree `d` and
+nonzero scalar coefficient at `d`, a nonzero principal-adic parameter in the
+maximal ideal, radical equality and completeness, it constructs a restricted
+unit and a unique monic polynomial of degree `d`, including `d = 0` and
+`n = 0`. Its [client](../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean)
+uses uniqueness without assuming a competing multiplier is a unit.
 
 ## Reproduction and scope
 

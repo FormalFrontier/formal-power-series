@@ -27,4 +27,6 @@ valuation residue. The statements include `d = 0` and `n = 0`.
 The actual-support condition is essential: a unit divisor can divide the
 degree-zero monomial with quotient zero and remainder one, but this quotient
 is not a unit. These conditional laws do **not** construct division or
-preparation. Developed by Formal Frontier Agents under Apache-2.0.
+preparation; the [preparation guide](../FirstVariablePreparation/README.md)
+combines them with division and its uniqueness. Developed by Formal Frontier
+Agents under Apache-2.0.

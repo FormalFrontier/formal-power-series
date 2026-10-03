@@ -31,6 +31,7 @@ public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.SingletonDivis
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FirstVariableDivision
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.UnitDetection.Residue
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FirstVariableUnit
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FirstVariablePreparation
 
 /-! # Formal power series
 
