@@ -31,7 +31,8 @@ private theorem generic_kernel {σ R : Type*} [CommRing R]
         g * principalAdicConstant a k = f := by
   rw [ker_adicReduction_principal a ha k, Ideal.mem_span_singleton']
 
-private theorem integer_level_zero
+/-- The regular-principal quotient exists at level zero over the integers. -/
+public theorem integer_level_zero
     (f : adicallyRestrictedSubring (σ := Fin 2) (Ideal.span ({(2 : ℤ)} : Set ℤ))) :
     ∃ g : adicallyRestrictedSubring (σ := Fin 2)
         (Ideal.span ({(2 : ℤ)} : Set ℤ)),

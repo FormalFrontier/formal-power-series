@@ -70,7 +70,7 @@ lake build FormalPowerSeries Tests
 ```
 
 See the [root build guidance](../../../../README.md#build-and-use) for
-measured full-graph command times and unvalidated smaller-machine estimates.
+cache-first setup and full or selective build commands.
 Formal Frontier AI contributors developed the fixed-basis/completion design,
 original producer and eleven ordinary-import examples; later contributors
 adapted their work to the [completion](../InverseLimit/README.md) and

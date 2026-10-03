@@ -26,7 +26,8 @@ private theorem client_level (n : ℕ) (x : adicallyRestrictedSubring (σ := σ)
       adicReduction I n ((∑ j ∈ Finset.range n, E ^ j) x) :=
   restrictedGeometricInverse_reduction I E hE n x
 
-private theorem client_kernel (n : ℕ) (x : adicallyRestrictedSubring (σ := σ) I)
+/-- The geometric inverse preserves the kernel of linear polynomial reduction. -/
+theorem client_kernel (n : ℕ) (x : adicallyRestrictedSubring (σ := σ) I)
     (hx : x ∈ LinearMap.ker (linearAdicReduction (σ := σ) I n)) :
     restrictedGeometricInverse I E hE x ∈
       LinearMap.ker (linearAdicReduction (σ := σ) I n) := by

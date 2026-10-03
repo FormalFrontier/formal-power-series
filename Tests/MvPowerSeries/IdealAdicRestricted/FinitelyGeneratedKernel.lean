@@ -3,7 +3,7 @@ Authors: Formal Frontier Agents -/
 module
 
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel
-import Mathlib.Data.ZMod.Defs
+public import Mathlib.Data.ZMod.Defs
 import Mathlib.Algebra.Regular.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 
@@ -80,7 +80,8 @@ private theorem mod_four_nonregular : ¬ IsRegular (2 : ZMod 4) := by
   have hbad : (2 : ZMod 4) = 0 := h.left hzero
   exact (by decide : (2 : ZMod 4) ≠ 0) hbad
 
-private theorem nonregular_ideal (k : ℕ) :
+/-- The finitely generated kernel formula holds for a nonregular ideal in `ZMod 4`. -/
+public theorem nonregular_ideal (k : ℕ) :
     RingHom.ker (adicReduction (σ := Fin 2)
       (Ideal.span ({(2 : ZMod 4)} : Set (ZMod 4))) k) =
       Ideal.map

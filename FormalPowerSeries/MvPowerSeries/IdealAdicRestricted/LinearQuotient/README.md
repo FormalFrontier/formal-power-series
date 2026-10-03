@@ -125,7 +125,7 @@ Both modules enable `warningAsError` and are included in the two roots.
 A dependent pinned Lake project can import this producer or the root;
 [API.md](../../../../API.md#scalar-linear-reduction-and-principal-quotients)
 locates the full interface. See the [root build guidance](../../../../README.md#build-and-use)
-for measured full-graph command times and unvalidated planning estimates.
+for cache-first setup and selective-module build instructions.
 
 ## Provenance and credit
 

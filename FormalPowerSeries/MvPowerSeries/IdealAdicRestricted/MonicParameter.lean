@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.IdealChange
 public import Mathlib.RingTheory.MvPolynomial.MonomialOrder
 public import Mathlib.RingTheory.Valuation.ValuationRing
 public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
@@ -29,14 +29,6 @@ namespace MvPowerSeries
 open scoped MonomialOrder
 
 variable {σ R : Type*} [CommRing R]
-
-private theorem restricted_of_le {I J : Ideal R} (hIJ : I ≤ J)
-    {f : MvPowerSeries σ R} (hf : IsAdicallyRestricted I f) :
-    IsAdicallyRestricted J f := by
-  intro k
-  exact (hf k).subset (by
-    intro d hd hI
-    exact hd ((pow_le_pow_left' hIJ k) hI))
 
 private theorem exists_polynomial_mod (I : Ideal R) (f : MvPowerSeries σ R)
     (hf : IsAdicallyRestricted I f) :
@@ -113,9 +105,9 @@ theorem exists_common_monic_parameter {ι : Type*} [Finite ι]
     change Ideal.span {a} ≤ IsLocalRing.maximalIdeal R
     exact Ideal.span_le.mpr (Set.singleton_subset_iff.mpr ham)
   let p : ι → MvPolynomial σ (R ⧸ m) := fun i =>
-    Classical.choose (exists_polynomial_mod m (g i) (restricted_of_le hAm (hg i)))
+    Classical.choose (exists_polynomial_mod m (g i) ((hg i).mono hAm))
   have hp (i : ι) (d : σ →₀ ℕ) : (p i).coeff d = Ideal.Quotient.mk m (coeff d (g i)) :=
-    Classical.choose_spec (exists_polynomial_mod m (g i) (restricted_of_le hAm (hg i))) d
+    Classical.choose_spec (exists_polynomial_mod m (g i) ((hg i).mono hAm)) d
   have hpne (i : ι) : p i ≠ 0 := by
     intro hzero
     have hcoeff (d : σ →₀ ℕ) : coeff d (g i) ∈ m := by
@@ -198,7 +190,7 @@ theorem exists_common_monic_parameter {ι : Type*} [Finite ι]
   intro i
   refine ⟨hu i, ?_⟩
   let B : Ideal R := Ideal.span {b}
-  have hgr : IsAdicallyRestricted B (g i) := restricted_of_le hAb (hg i)
+  have hgr : IsAdicallyRestricted B (g i) := (hg i).mono hAb
   have hscaled : IsAdicallyRestricted B (C (↑((u i)⁻¹) : R) * g i) := by
     intro k
     exact (hgr k).subset (by

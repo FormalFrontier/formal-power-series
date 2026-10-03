@@ -1,6 +1,12 @@
 name = "formal-power-series"
 version = "0.1.0"
-defaultTargets = ["FormalPowerSeries", "Tests"]
+defaultTargets = ["FormalPowerSeries", "Tests", "FormalPowerSeriesTests"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+weak.linter.style.header = false
 
 [[require]]
 name = "mathlib"
@@ -17,3 +23,6 @@ name = "FormalPowerSeries"
 
 [[lean_lib]]
 name = "Tests"
+
+[[lean_lib]]
+name = "FormalPowerSeriesTests"

@@ -37,7 +37,8 @@ private theorem two_members {σ R : Type*} [CommRing R] [IsDomain R]
   exact ⟨p, b, N, u, h₀, h₁, hbnz, hN, hAb, hpow,
     heq₀, heq₁, hmon₀, hmon₁, hdeg₀, hdeg₁⟩
 
-private theorem empty_family {σ R : Type*} [CommRing R] [IsDomain R]
+/-- A cofinal monic parameter can be chosen for an empty primitive family. -/
+public theorem empty_family {σ R : Type*} [CommRing R] [IsDomain R]
     [ValuationRing R] (μ : MonomialOrder σ) (a : R)
     (ha : a ≠ 0) (ham : a ∈ IsLocalRing.maximalIdeal R)
     (hrad : (Ideal.span {a}).radical = IsLocalRing.maximalIdeal R) :

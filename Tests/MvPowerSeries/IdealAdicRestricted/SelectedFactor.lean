@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.SelectedFactor
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.SelectedFactor
 
 set_option warningAsError true
 
@@ -95,7 +95,8 @@ private theorem infinite_variables_each_index {R : Type*} [CommRing R]
       MvPowerSeries.coeff j g = 1 :=
   each_generating_index I f hf j hj
 
-private theorem rational_polynomial_selected_factor (p : MvPolynomial (Fin 2) ℚ) :
+/-- A rational polynomial has a restricted selected-coefficient factorization. -/
+public theorem rational_polynomial_selected_factor (p : MvPolynomial (Fin 2) ℚ) :
     ∃ (j : Fin 2 →₀ ℕ) (g : MvPowerSeries (Fin 2) ℚ),
       Ideal.span (Set.range (fun m : Fin 2 →₀ ℕ =>
         MvPowerSeries.coeff m (p : MvPowerSeries (Fin 2) ℚ))) =

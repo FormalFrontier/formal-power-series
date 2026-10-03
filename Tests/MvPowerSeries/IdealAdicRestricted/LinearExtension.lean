@@ -10,7 +10,7 @@ public section
 /-!
 # Ordinary-import clients for the restricted linear extension
 
-These private lemmas exercise the published interface without importing implementation internals.
+These examples exercise polynomial and linear compatibility through public imports.
 -/
 
 set_option warningAsError true
@@ -34,7 +34,8 @@ private theorem client_level (n : ℕ) (f : adicallyRestrictedSubring (σ := σ)
       polynomialLinearMapMod I n F (adicReduction I n f) :=
   adicReduction_restrictedLinearExtension I F n f
 
-private theorem client_polynomial (p : MvPolynomial σ R) :
+/-- Linear extension acts on an embedded polynomial by the polynomial operator. -/
+theorem client_polynomial (p : MvPolynomial σ R) :
     restrictedLinearExtension I F (polynomialToRestricted I p) =
       polynomialToRestricted I (F p) :=
   restrictedLinearExtension_polynomial I F p

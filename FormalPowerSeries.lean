@@ -23,6 +23,9 @@ public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.MonicDivision
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.Cofinal
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.ValuationNormalizedDivision
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrimitiveStandardBasis
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.IdealChange
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.ValuationResidue
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FirstVariableRegrouping.Fin
 
 /-! # Formal power series
 

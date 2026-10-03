@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.SelectedFactor
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.IdealChange
 public import Mathlib.RingTheory.MvPolynomial.MonomialOrder
 public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
 import Mathlib.RingTheory.Ideal.Operations
@@ -93,15 +94,6 @@ theorem restrictedContentCoefficient_ne_zero (a : R)
   apply Subtype.ext
   simpa using hzraw
 
-omit [IsDomain R] [ValuationRing R] in
-private theorem restricted_of_le {I J : Ideal R} (hIJ : I ≤ J)
-    {f : MvPowerSeries σ R} (hf : IsAdicallyRestricted I f) :
-    IsAdicallyRestricted J f := by
-  intro k
-  exact (hf k).subset (by
-    intro d hd hI
-    exact hd ((pow_le_pow_left' hIJ k) hI))
-
 private theorem parameter_le_maximalIdeal (a : R)
     (ham : a ∈ IsLocalRing.maximalIdeal R) :
     Ideal.span {a} ≤ IsLocalRing.maximalIdeal R :=
@@ -119,7 +111,7 @@ noncomputable def restrictedResidue (a : R)
     (mem_adicallyRestrictedSubring _ _).mp z.property
   have hzm : (z : MvPowerSeries σ R) ∈ adicallyRestrictedSubring m :=
     (mem_adicallyRestrictedSubring _ _).mpr
-      (restricted_of_le (parameter_le_maximalIdeal a ham) hz)
+      (hz.mono (parameter_le_maximalIdeal a ham))
   exact MvPolynomial.map (Ideal.Quotient.factor (le_of_eq (Submodule.pow_one m)))
     (adicReduction m 1 ⟨z, hzm⟩)
 

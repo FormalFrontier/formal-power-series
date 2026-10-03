@@ -2,7 +2,7 @@
 Authors: Formal Frontier Agents -/
 module
 
-import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration
 import Mathlib.Data.ZMod.Defs
 
 set_option warningAsError true
@@ -17,7 +17,8 @@ private theorem arbitrary_variables {σ R : Type*} [CommRing R] (I : Ideal R)
     adicReduction I (n + k) (a * b) = 0 :=
   adicReduction_mul_eq_zero I a b n k ha hb
 
-private theorem unequal_positive_levels {σ R : Type*} [CommRing R] (I : Ideal R)
+/-- Kernel levels two and three multiply into kernel level five. -/
+public theorem unequal_positive_levels {σ R : Type*} [CommRing R] (I : Ideal R)
     (a b : adicallyRestrictedSubring (σ := σ) I)
     (ha : adicReduction I 2 a = 0) (hb : adicReduction I 3 b = 0) :
     adicReduction I 5 (a * b) = 0 :=

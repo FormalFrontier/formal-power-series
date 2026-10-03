@@ -22,7 +22,8 @@ private theorem integer_polynomial_lift (I : Ideal ℤ) (k : ℕ)
       MvPowerSeries.adicReduction I k f = p :=
   MvPowerSeries.adicReduction_surjective I k p
 
-private theorem integer_linear_polynomial (I : Ideal ℤ) (k : ℕ) :
+/-- Reducing a linear polynomial in two variables commutes with coefficient reduction. -/
+public theorem integer_linear_polynomial (I : Ideal ℤ) (k : ℕ) :
     MvPowerSeries.adicReduction I k
       (MvPowerSeries.polynomialToRestricted I
         (MvPolynomial.X (0 : Fin 2) + MvPolynomial.C (7 : ℤ))) =

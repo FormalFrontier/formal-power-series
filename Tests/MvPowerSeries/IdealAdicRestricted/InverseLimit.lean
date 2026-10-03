@@ -2,7 +2,7 @@
 Authors: Formal Frontier Agents -/
 module
 
-import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit
 import Mathlib.Data.ZMod.Basic
 
 set_option warningAsError true
@@ -109,7 +109,8 @@ private theorem infinitely_many_variables (I : Ideal ℤ) [IsAdicComplete I ℤ]
       MvPowerSeries.adicReduction I n f :=
   generic_forward I n f
 
-private theorem zero_divisor_ring (p : MvPolynomial (Fin 2) (ZMod 6)) :
+/-- Polynomial inclusion agrees with adic completion over a ring with zero divisors. -/
+public theorem zero_divisor_ring (p : MvPolynomial (Fin 2) (ZMod 6)) :
     MvPowerSeries.adicallyRestrictedEquivAdicCompletion (⊥ : Ideal (ZMod 6))
         (MvPowerSeries.polynomialToRestricted ⊥ p) =
       AdicCompletion.of

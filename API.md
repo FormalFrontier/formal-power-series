@@ -59,6 +59,40 @@ The result covers `k = 0`, empty or infinite variable types, and bottom or top
 ideals. See the [finite-reduction guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md)
 and its [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted.lean).
 
+## Ideal change and polynomial residue
+
+For `I ≤ J`, `restrictAlongIdeal I J` includes the `I`-restricted subring in
+the `J`-restricted subring, preserving coefficients and polynomial inclusions;
+its identity and composition laws allow chains of ideals. The surjective
+`reductionAtLargerIdeal I J` maps to `MvPolynomial σ (R ⧸ J)` and has
+coefficient, polynomial, vanishing, and quotient-factor compatibility laws.
+See [ideal change](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange.lean)
+and its [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/IdealChange.lean).
+
+Over a commutative local ring, `restrictedResidueHom a ham` specializes this
+map to the maximal ideal for `a` in that ideal. It is surjective without a
+valuation or completeness assumption; under valuation-domain assumptions
+`restrictedResidueHom_apply` identifies it with `restrictedResidue`. See
+[residue compatibility](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/ValuationResidue.lean)
+and its [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/ValuationResidue.lean).
+
+## First-variable coefficients and regrouping
+
+`restrictedFirstCoeff I n` extracts a restricted coefficient series from
+`Option τ` variables. `restrictedFirstRegroup I` is an injective ring map to
+`PowerSeries (adicallyRestrictedSubring (σ := τ) I)`, compatible with the raw
+`optionEquivLeft`. The embedding `polynomialRestrictedFirst I` has a coefficient
+formula, is a left inverse to regrouping on polynomials, and gives the
+bounded-degree support criterion `restrictedFirst_actual_support_iff`.
+`restrictedRenameEquiv I e` transports restriction across a bijection of
+variables. `restrictedFinSuccEquiv I n`, `restrictedFinFirstCoeff`, and
+`polynomialRestrictedFinFirst` provide the `Fin (n + 1)` bridge, including
+`n = 0`. These maps do not assert surjectivity of unrestricted iterated
+power-series regrouping. See [regrouping](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping.lean),
+[renaming](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Rename.lean),
+[Fin regrouping](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping/Fin.lean)
+and the [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping.lean).
+
 ## Finite-variable degree cutoffs and finitely generated kernels
 
 Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.DegreeDecay` for

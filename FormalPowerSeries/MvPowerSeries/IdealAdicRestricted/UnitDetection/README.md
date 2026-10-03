@@ -32,11 +32,11 @@ The [ordinary-import client](../../../../Tests/MvPowerSeries/IdealAdicRestricted
 exercises arbitrary ideals and variable types, empty and infinite variables,
 the zero ideal and the zero ring. Its `ZMod 4` example demonstrates an
 existing polynomial-unit inclusion with a nonzero nilpotent linear
-coefficient; it does **not** exercise the new coefficient criterion in
+coefficient; it does **not** exercise the coefficient criterion in
 that nonvacuous case. The direct mod-`I` criterion client uses empty variables.
 
 These results provide no incomplete-base Jacobson-radical criterion, preparation
 theorem, norm/radius restriction or source-specific coverage. Formal Frontier
-AI contributors developed and transferred the proofs, client and guide;
+AI contributors developed the criteria, their formal proofs, client and guide;
 mathlib's polynomial-unit and adic-completeness results retain their
 respective authorship and license.

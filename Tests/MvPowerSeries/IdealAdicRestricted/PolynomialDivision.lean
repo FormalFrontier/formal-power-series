@@ -102,7 +102,8 @@ private theorem level_zero (f : adicallyRestrictedSubring (σ := σ) I)
   intro index
   exact @Subsingleton.elim _ hzero _ _
 
-private theorem X_divisor_cone (I : Ideal R) [IsAdicComplete I R]
+/-- Division by `X` has remainder with vanishing coefficients in the `X` cone. -/
+theorem X_divisor_cone (I : Ideal R) [IsAdicComplete I R]
     (m : MonomialOrder (Fin 1))
     (f : adicallyRestrictedSubring (σ := Fin 1) I) (α : Fin 1 →₀ ℕ)
     (hα : m.degree (MvPolynomial.X 0 : MvPolynomial (Fin 1) R) ≤ α) :

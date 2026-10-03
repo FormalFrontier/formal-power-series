@@ -77,7 +77,8 @@ private theorem allVariables_not_restricted :
   rintro m ⟨n, rfl⟩
   simp [MvPowerSeries.coeff_apply, allVariables, Finsupp.degree_single]
 
-private theorem infinite_variables_counterexample :
+/-- With infinitely many variables, a degree cutoff need not imply restrictedness. -/
+public theorem infinite_variables_counterexample :
     ∃ f : MvPowerSeries ℕ ℤ,
       (∀ k : ℕ, ∃ d : ℕ, ∀ m : ℕ →₀ ℕ,
         d ≤ m.degree → MvPowerSeries.coeff m f ∈ (⊥ : Ideal ℤ) ^ k) ∧

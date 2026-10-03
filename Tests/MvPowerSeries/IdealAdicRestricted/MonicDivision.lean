@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.MonicDivision
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.MonicDivision
 import Mathlib.Data.ZMod.Defs
 
 set_option warningAsError true
@@ -27,7 +27,8 @@ private theorem client_cone
           m.degree (adicReduction I 1 (g i)) ≤ α → coeff α (r : MvPowerSeries σ R) = 0 :=
   m.exists_restricted_monic_division I g hg f
 
-private theorem client_polynomial_over_infinite_variables
+/-- Monic affine-polynomial division also applies with infinitely many variables. -/
+public theorem client_polynomial_over_infinite_variables
     (m : MonomialOrder ℕ) (c : R)
     (f : adicallyRestrictedSubring (σ := ℕ) I) :
     ∃ (q : Fin 1 → adicallyRestrictedSubring (σ := ℕ) I)

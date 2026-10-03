@@ -89,6 +89,18 @@ structure, splitting extension or Adams operation here.
   See the [predicate and polynomial characterization](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted.lean),
   [reduction](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted.lean)
   and [finite-reduction guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md).
+- **Ideal change and local residue.** An inclusion `I ≤ J` induces an injective
+  map between restricted subrings and a surjective polynomial reduction modulo
+  `J`. For a parameter in the maximal ideal of a local ring this gives a
+  polynomial-valued residue homomorphism, agreeing with the existing residue
+  function over valuation domains. See the [ideal-change guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange/README.md)
+  and [residue guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/ValuationResidue/README.md).
+- **First-variable regrouping.** A restricted series in `Option τ` variables
+  maps injectively into a power series of restricted series in `τ`; polynomial
+  expressions in the distinguished variable embed in the reverse direction.
+  Bijective renaming and the `Fin (n + 1)` bridge preserve coefficients and
+  bounded-degree support. No equivalence with all iterated restricted series
+  is asserted. See the [regrouping guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping/README.md).
 - **Finite-variable degree cutoffs and FG intrinsic kernels.** For finite `σ`,
   coefficients are restricted exactly when they lie in `I ^ k` above some
   degree cutoff at each `k`; the converse fails for infinite `σ`, as the
@@ -188,10 +200,23 @@ structure, splitting extension or Adams operation here.
   `R`-module; this public generic support leaf requires no restricted series.
   See its [standalone guide](FormalPowerSeries/AdicCompletion/README.md).
 
-The new restricted-series theorems do not assert norm/radius or variable-adic
+These restricted-series theorems do not assert norm/radius or variable-adic
 restrictions, general base change, standard-basis existence, or source coverage.
 
 ## Build and use
+
+In a dependent Lake project, add:
+
+```toml
+[[require]]
+name = "formal-power-series"
+git = "https://github.com/FormalFrontier/formal-power-series.git"
+rev = "main"
+```
+
+Lake pins the resolved release commit in `lake-manifest.json` until you update
+the dependency; replace `main` with a particular release commit to pin it
+explicitly.
 
 Install Git and `elan`; `lean-toolchain` pins Lean `v4.34.0-rc2`, and
 `lake-manifest.json` pins mathlib to
@@ -201,39 +226,26 @@ From the repository root:
 
 ```sh
 lake exe cache get
-lake build FormalPowerSeries Tests
+lake build FormalPowerSeries Tests FormalPowerSeriesTests
 ```
 
 Fetch the matching precompiled mathlib cache successfully **before** any build;
 `lake build` alone is not a cache-fetch step. The default `lake build` also
-builds these two roots, including all ordinary-import examples under `Tests/`.
+builds all three roots, including the ordinary-import examples under `Tests/`
+and `FormalPowerSeriesTests/`.
 For a smaller check, use `lake build FormalPowerSeries.UnitLogDerivative` or
 `lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration`;
-its matching test module can be built separately. The new `DegreeDecay` and
+its matching test module can be built separately. The `DegreeDecay` and
 `FinitelyGeneratedKernel` producer/client leaves can likewise be built by
 their full module names after cache fetch. `LEAN_NUM_THREADS=2` can
 limit Lean's threads for a selective command, but does **not** bound Lake's
 global job concurrency.
 
-On the **previous** 32-file, 16-Lean-module graph (without this restricted
-division transfer or MultivariatePolynomials), a configured CI runner fetched
-8,892 decompressed mathlib-cache files in **41.558 seconds**, built cached
-Mathlib in **5.586 seconds**, and built both roots in **17.123 seconds**
-(**1,960 Lake jobs**). These are individual command wall times, not a
-small-machine benchmark. The entire workflow took about **3 minutes
-53 seconds** including setup, an axiom audit and artifact handling; it is
-not the build command's duration. No peak RAM or disk use was measured.
-For planning on a 4-core Linux machine with a matching precompiled cache,
-allow roughly **10–50 minutes** for first setup and full build,
-**1–15 minutes** for a small cached rebuild, and approximately **16 GiB
-RAM and 20 GiB free disk** plus headroom. These smaller-machine figures are
-**unvalidated estimates**, not measured peaks or guarantees; CPU, network,
-cache state and competing jobs matter. These figures have **not** been
-measured or validated on the expanded dependency graph.
+Fetch the matching precompiled cache to avoid building mathlib from source;
+for a narrower library check, build the relevant producer and test modules
+separately.
 
-In a dependent Lake project, pin this library and its dependencies to
-published GitHub revisions and import `FormalPowerSeries` for both families
-and the generic cofinal helper,
+Import `FormalPowerSeries` for both families and the generic cofinal helper,
 or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted` and its
 `DegreeDecay`, `FinitelyGeneratedKernel`, `PrincipalKernel`,
@@ -249,10 +261,10 @@ for the navigable family of modules. The [unit](Tests/UnitLogDerivative.lean),
 [completion](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean),
 [linear-extension](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
 and [filtration](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
-clients demonstrate the earlier API; the
+clients demonstrate the API; the
 [restricted-unit client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean)
 exercises the four unit criteria, though its `ZMod 4` polynomial witness
-uses the older polynomial-unit map rather than the new coefficient criterion.
+uses the polynomial-unit map rather than the coefficient criterion.
 The degree and FG
 [clients](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
 extend its finite-variable boundaries, while the other leaves under the same
@@ -274,23 +286,20 @@ An Introduction to Algebraic K-theory* (2013), Section II.4 and Exercise
 4.6. Kazuhiro Fujiwara and Fumiharu Kato, *Foundations of Rigid Geometry I*,
 provide background for coefficientwise restricted series. Neither reference
 implies formal coverage of the source. Prism authored the original derivative
-proof expression; Formal Frontier AI contributors adapted it into this
-source-independent library, wrote the ordinary-import client and guides,
-and developed the independent restricted-series constructions and proofs.
+proof expression; Formal Frontier AI contributors adapted its mathematical
+argument for this library and wrote its ordinary-import client and guides.
 Folio contributed the derivative headlines and documentation. Distinct Formal
-Frontier contributors produced and later relocated/adapted the restricted
-carrier, principal kernel, completion, scalar-linear quotient, linear
-extension and coefficientwise kernel-filtration proofs; further contributors
-developed content, selected factorization, actual leading terms, normalized
-division, cofinal comparison and conditional primitive ideal generation.
-Additional contributors developed and reviewed the finite-variable degree
-criterion, its infinite-variable counterexample and the finite-generation
-kernel argument; distinct contributors implemented and transferred the
-Lean code and ordinary-import clients.
-Additional contributors developed and transferred the restricted-subring
-unit criteria and their ordinary-import client.
-This assembly does not erase their original authorship. The antidiagonal coefficient-product
-method adapts Jz Pan's 2025 mathlib `PowerSeries.CoeffMulMem` argument,
+Frontier contributors developed the restricted carrier, principal kernel,
+completion, scalar-linear quotient, linear extension and coefficientwise
+kernel-filtration proofs; other contributors developed content, selected
+factorization, actual leading terms, normalized division, cofinal comparison
+and conditional primitive ideal generation. Contributors to the finite-variable
+degree criterion, its infinite-variable counterexample and the finite-generation
+kernel argument were distinct from those who formalized these results and wrote
+their ordinary-import clients. Further contributors developed and formalized
+the restricted-subring unit criteria and wrote their ordinary-import client.
+The antidiagonal coefficient-product method adapts Jz Pan's 2025 mathlib
+`PowerSeries.CoeffMulMem` argument,
 Apache-2.0, as credited in the [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).
 Native mathlib polynomial, power-series, ideal, quotient and completion APIs
 retain their respective authors and license; using these methods is not a
@@ -299,6 +308,5 @@ claim to their original proofs.
 Original project files carry **SPDX-License-Identifier: Apache-2.0** and
 **Authors: Formal Frontier Agents**; see the complete [LICENSE](LICENSE).
 mathlib is separately licensed under Apache-2.0. The project used AI agents
-for formalization and documentation. No source-coverage or publication decision
-follows from these descriptions; the appropriate reviewed release and current
-published revision are determined by the repository's official release record.
+for formalization and documentation. These credits do not assert formal
+coverage of either mathematical source.

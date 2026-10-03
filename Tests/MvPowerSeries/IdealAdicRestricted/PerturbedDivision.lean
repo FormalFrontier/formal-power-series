@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PerturbedDivision
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PerturbedDivision
 import Mathlib.Data.ZMod.Defs
 
 set_option warningAsError true
@@ -33,7 +33,8 @@ private theorem client_cone (f : adicallyRestrictedSubring (σ := σ) I)
       adicallyRestrictedSubring (σ := σ) I) : MvPowerSeries σ R) = 0 :=
   m.coeff_restrictedPerturbedDivisionRemainder_eq_zero I b hb g hg f α i hi
 
-private theorem client_kernels (n : ℕ)
+/-- Perturbed-division quotients and remainders preserve reduction kernels. -/
+public theorem client_kernels (n : ℕ)
     (f : adicallyRestrictedSubring (σ := σ) I)
     (hf : adicReduction I n f = 0) (i : ι) :
     adicReduction I n (m.restrictedPerturbedDivisionQuotient I b hb g hg f i) = 0 ∧

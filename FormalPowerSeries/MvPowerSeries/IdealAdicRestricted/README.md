@@ -73,6 +73,15 @@ checks the finite decomposition and degenerate/nonregular cases. Neither
 restriction is imposed on this base module or the separate regular-principal
 kernel result.
 
+## Ideal change, residue and first-variable regrouping
+
+The [ideal-change guide](IdealChange/README.md) describes restriction along
+`I ≤ J` and surjective finite-polynomial reduction modulo `J`. The
+[residue guide](ValuationResidue/README.md) specializes it to the maximal
+ideal of a local ring. The [first-variable guide](FirstVariableRegrouping/README.md)
+describes restricted coefficient slices, polynomial embeddings and `Fin`
+reindexing, without asserting surjectivity onto all iterated power series.
+
 ## Reproduction and scope
 
 From the repository root, use the pinned Lean `v4.34.0-rc2`, mathlib

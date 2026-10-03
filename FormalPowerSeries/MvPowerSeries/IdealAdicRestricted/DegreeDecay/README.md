@@ -49,9 +49,7 @@ lake build Tests.MvPowerSeries.IdealAdicRestricted.DegreeDecay
 ```
 
 These modules use `warningAsError`. The repository [README](../../../../README.md#build-and-use)
-gives unvalidated setup/build and resource planning estimates; neither these
-leaves' elapsed time nor their peak RAM/disk has been measured separately.
-In particular, the older planning estimates do not prove an 8 GiB build suffices.
+gives cache-first build guidance and selective-module reproduction instructions.
 The argument uses mathlib's native `Finsupp.degree` and
 `Finsupp.finite_of_degree_lt` (whose contributors include Antoine
 Chambert-Loir and María Inés de Frutos-Fernández), not copied proofs.

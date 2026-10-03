@@ -91,7 +91,7 @@ private theorem span_primitive_restrictedLeadingTerm_eq_monomial
 when its actual-coefficient polynomial leading terms generate the polynomial
 leading-term ideal. The variable type may be empty or infinite. -/
 theorem ideal_eq_span_of_primitive_standardBasis
-    [Fintype ι] (μ : MonomialOrder σ) (a : R)
+    [Finite ι] (μ : MonomialOrder σ) (a : R)
     (ha : a ≠ 0) (ham : a ∈ IsLocalRing.maximalIdeal R)
     (hrad : (Ideal.span {a}).radical = IsLocalRing.maximalIdeal R)
     [IsAdicComplete (Ideal.span {a}) R]
@@ -104,6 +104,7 @@ theorem ideal_eq_span_of_primitive_standardBasis
       Ideal.span (Set.range (fun i : ι => μ.restrictedLeadingTerm a ham (g i)))) :
     J = Ideal.span (Set.range g) := by
   classical
+  let : Fintype ι := Fintype.ofFinite ι
   have hspan := μ.span_primitive_restrictedLeadingTerm_eq_monomial a ham g hprim
   have hcone (z : adicallyRestrictedSubring (σ := σ) (Ideal.span {a}))
       (hz : z ∈ J) (hnonzero : z ≠ 0) :

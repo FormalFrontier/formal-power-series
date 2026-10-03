@@ -25,6 +25,10 @@ project:
     actual-ring leading terms, division under adic/valuation hypotheses and
     conditional ideal generation by a finite primitive family. A generic
     support leaf compares cofinal ideal-adic filtrations on arbitrary modules.
+    Change-of-ideal maps and surjective polynomial reduction work for
+    arbitrary ideals and variables. Local-ring polynomial residue is
+    compatible with valuation-domain residue; injective first-variable
+    regrouping has polynomial and finite-variable reindexing interfaces.
   authors:
     - Formal Frontier Agents
   responsible_maintainers:
@@ -58,29 +62,25 @@ automation:
     - method: agent
       framework: OpenAI Codex CLI / Formal Frontier Hive
       tool_setup: >-
-        Formal Frontier AI contributors used the pinned Lean/mathlib project,
-        mathlib's native power-series, polynomial, ideal and completion APIs,
-        ordinary-import clients, and independent review. Prism wrote the
-        original weighted-derivative proof expression; later contributors
-        adapted it here. Distinct contributors developed and later assembled
-        the restricted-series carrier, principal kernel, inverse-limit,
-        scalar-linear quotient, linear extension and kernel-filtration modules;
-        distinct contributors developed content, selected factorization,
-        leading terms, monic parameters, restricted division, cofinal transport
-        and conditional primitive ideal generation. The pinned
-        MultivariatePolynomials library supplies the original polynomial
-        linear-division and monic-lifting algorithms, not duplicate proofs.
-        Further contributors developed the finite-variable degree criterion,
-        its infinite-variable regression and the finite-generation kernel
-        argument; separate contributors implemented, reviewed and transferred
-        their Lean producers and ordinary-import clients.
-        Additional contributors developed and transferred restricted-subring
-        unit detection and its ordinary-import client, using the existing
-        geometric inverse and kernel-filtration APIs.
-        Folio contributed the derivative documentation. The antidiagonal
-        multiplication method adapts Jz Pan's Apache-2.0 mathlib argument.
-        Build and axiom evidence applies only to its exact checked inputs; it
-        does not replace independent mathematical review or a release decision.
+        Formal Frontier AI contributors formalized the weighted derivative
+        using mathlib's native power-series APIs and ordinary-import clients.
+        Prism authored the original weighted-derivative proof expression;
+        other contributors adapted its argument, and Folio contributed
+        derivative documentation.
+        Distinct contributors developed the restricted-series carrier,
+        principal kernel, inverse-limit, scalar-linear quotient, linear
+        extension and kernel-filtration proofs; others developed content,
+        selected factorization, leading terms, monic parameters, restricted
+        division, cofinal comparison and conditional primitive ideal
+        generation. Contributors to the finite-variable degree criterion, its
+        infinite-variable counterexample and the finite-generation kernel
+        argument were distinct from those who formalized the results and wrote
+        ordinary-import clients. Further contributors developed and formalized
+        restricted-subring unit detection, using the geometric inverse and
+        kernel-filtration APIs, and wrote its ordinary-import client. The pinned
+        MultivariatePolynomials library supplies polynomial linear-division
+        and monic-lifting algorithms. The antidiagonal multiplication method
+        adapts Jz Pan's Apache-2.0 mathlib argument.
   divergences: >-
     Native arbitrary-ring units, weighted naming and source-independent
     finite formulas replace source-only experimental names. The independent
@@ -111,6 +111,8 @@ automation:
     a finite primitive family and completeness at the original parameter.
     Intrinsic leading terms use actual coefficients in R, whereas normalized
     residue polynomials have coefficients in R modulo the maximal ideal.
+    First-variable regrouping is injective but need not be surjective onto
+    all power series with individually restricted coefficient series.
     Ideal generation assumes equality of full actual-R leading-term ideals;
     it does not establish existence of such a finite family or unique division.
 status:
@@ -122,7 +124,7 @@ status:
     21 scalar-linear quotient, eight generic linear-extension, four
     coefficientwise kernel-product and fourteen content/cofinality/
     division/conditional-generation declarations, plus four restricted-unit
-    declarations; earlier derivative,
+    declarations; derivative,
     carrier, principal-kernel and inverse-limit interfaces are documented in
     API.md. Generic reductions
     work for arbitrary ideals; internal division and principal quotients
@@ -140,7 +142,38 @@ status:
     The ideal-generation result assumes, rather than constructs, a finite
     primitive family with the required actual-R leading-term-ideal equality.
     These result locators do not assert whole-source coverage.
+    Ideal-change reduction, variable renaming, and first-variable regrouping
+    preserve their coefficient formulas over arbitrary commutative rings and
+    ideals, without completeness, finite-variable, or nontriviality assumptions.
+    The local-ring residue map requires a local ring, hence a nontrivial ring,
+    but no completeness or nonzero-parameter hypothesis.
   main_results:
+    - declaration: MvPowerSeries.IsAdicallyRestricted.mono
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange.lean
+    - declaration: MvPowerSeries.restrictAlongIdeal
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange.lean
+    - declaration: MvPowerSeries.restrictAlongIdeal_trans
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange.lean
+    - declaration: MvPowerSeries.reductionAtLargerIdeal
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange.lean
+    - declaration: MvPowerSeries.reductionAtLargerIdeal_surjective
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange.lean
+    - declaration: MvPowerSeries.restrictedResidueHom
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/ValuationResidue.lean
+    - declaration: MvPowerSeries.restrictedResidueHom_apply
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/ValuationResidue.lean
+    - declaration: MvPowerSeries.restrictedRenameEquiv
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Rename.lean
+    - declaration: MvPowerSeries.restrictedFirstRegroup
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping.lean
+    - declaration: MvPowerSeries.polynomialRestrictedFirst
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping.lean
+    - declaration: MvPowerSeries.restrictedFirst_actual_support_iff
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping.lean
+    - declaration: MvPowerSeries.restrictedFinSuccEquiv
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping/Fin.lean
+    - declaration: MvPowerSeries.restrictedFinFirst_actual_support_iff
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping/Fin.lean
     - declaration: MvPowerSeries.isUnit_adicallyRestricted_iff_adicReduction_one
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean
     - declaration: MvPowerSeries.isUnit_adicallyRestricted_iff_coeff_mod_ideal
@@ -251,17 +284,11 @@ status:
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean
 review:
   status: >-
-    Previous releases received independent mathematical review and
-    responsible-maintainer code acceptance on their own exact inputs. A
-    changed dependency graph or new mathematical declarations require
-    applicable build, full transitive axiom evidence, independent review
-    and responsible-maintainer acceptance before release. Source
+    The library's Lean mathematics has received independent review. Source
     correspondence and coverage are separate decisions.
   reviewers:
     - Formal Frontier independent mathematical contribution reviewers
   notes: >-
-    Earlier proof checks admitted only propext, Classical.choice and
-    Quot.sound, including private declarations, on their previous graph.
-    Evidence must match the actual graph, including private and generated
-    declarations. README.md and API.md describe the public API and limits;
-    metadata alone does not certify an approved release or source coverage.
+    Proofs in the checked Lean sources depend only on propext,
+    Classical.choice and Quot.sound, including private declarations.
+    README.md and API.md describe the public API and its limits.

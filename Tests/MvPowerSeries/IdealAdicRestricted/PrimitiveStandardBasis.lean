@@ -4,10 +4,10 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrimitiveStandardBasis
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrimitiveStandardBasis
 
 /-!
-# Private clients of primitive standard-basis ideal generation
+# Clients of primitive standard-basis ideal generation
 
 The client imports the restricted-series leading-term and division APIs.
 -/
@@ -20,7 +20,7 @@ open _root_.MvPowerSeries
 open scoped MonomialOrder
 
 variable {σ ι R : Type*} [CommRing R] [IsDomain R] [ValuationRing R]
-variable [Fintype ι] (a : R)
+variable [Finite ι] (a : R)
   (ha : a ≠ 0) (ham : a ∈ IsLocalRing.maximalIdeal R)
   (hrad : (Ideal.span {a}).radical = IsLocalRing.maximalIdeal R)
   [IsAdicComplete (Ideal.span {a}) R]
@@ -61,7 +61,8 @@ private theorem empty_variables (μ : MonomialOrder Empty)
     J = Ideal.span (Set.range g) :=
   arbitrary_variables a ha ham hrad μ J g hgJ hprim hLT
 
-private theorem empty_family_zero_ideal (μ : MonomialOrder σ) (a : R)
+/-- An empty primitive family generates the zero ideal under the leading-term criterion. -/
+public theorem empty_family_zero_ideal (μ : MonomialOrder σ) (a : R)
     (ha : a ≠ 0) (ham : a ∈ IsLocalRing.maximalIdeal R)
     (hrad : (Ideal.span {a}).radical = IsLocalRing.maximalIdeal R)
     [IsAdicComplete (Ideal.span {a}) R] :

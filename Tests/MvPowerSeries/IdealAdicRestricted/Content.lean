@@ -47,7 +47,8 @@ private theorem infinite_variables {R : Type*} [CommRing R] [PreValuationRing R]
         Ideal.span {MvPowerSeries.coeff m f} :=
   arbitrary_variables I f hf
 
-private theorem rational_polynomial_content (p : MvPolynomial (Fin 2) ℚ) :
+/-- The coefficient ideal of a two-variable rational polynomial has a coefficient generator. -/
+public theorem rational_polynomial_content (p : MvPolynomial (Fin 2) ℚ) :
     ∃ m : Fin 2 →₀ ℕ,
       Ideal.span (Set.range (fun j : Fin 2 →₀ ℕ =>
         MvPowerSeries.coeff j (p : MvPowerSeries (Fin 2) ℚ))) =

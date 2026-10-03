@@ -64,12 +64,10 @@ lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FinitelyGenerated
 lake build Tests.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel
 ```
 
-Both modules enable `warningAsError`; the [repository README](../../../../README.md#build-and-use)
-has unvalidated time/memory/disk planning estimates for the library, not
-measurements for these new leaves or proof that an 8 GiB machine suffices.
+Both modules enable `warningAsError`; see the [repository README](../../../../README.md#build-and-use)
+for cache-first build guidance.
 The finite ideal-smul/span, `Nat.findGreatest`, `Ideal.FG.pow` and
-bounded-degree tools are native mathlib APIs. Different Formal Frontier
-contributors wrote and independently reviewed the original mathematical
-argument, implemented its Lean theorem and ordinary-import clients, and
-later transferred the accepted code to this source-independent library.
-That attribution does not imply source-specific coverage.
+bounded-degree tools are native mathlib APIs. Formal Frontier contributors
+developed the mathematical argument; distinct contributors formalized the
+theorem and wrote its ordinary-import clients. These credits do not assert
+source-specific coverage.

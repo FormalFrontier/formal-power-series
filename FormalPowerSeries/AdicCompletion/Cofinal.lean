@@ -24,7 +24,7 @@ private theorem cofinal_smul_le {R M : Type*} [CommRing R] [AddCommGroup M]
   Submodule.smul_mono_left (Ideal.pow_right_mono hIJ n)
 
 private theorem cofinal_smul_pow_le {R M : Type*} [CommRing R] [AddCommGroup M]
-    [Module R M] {I J : Ideal R} (hJI : J ^ N ≤ I) (n : ℕ) :
+    [Module R M] {I J : Ideal R} {N : ℕ} (hJI : J ^ N ≤ I) (n : ℕ) :
     (J ^ (N * n) • ⊤ : Submodule R M) ≤ I ^ n • ⊤ := by
   rw [pow_mul]
   exact Submodule.smul_mono_left (pow_le_pow_left' hJI n)

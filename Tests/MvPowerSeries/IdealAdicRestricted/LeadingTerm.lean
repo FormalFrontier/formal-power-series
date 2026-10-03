@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LeadingTerm
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LeadingTerm
 
 set_option warningAsError true
 
@@ -60,7 +60,8 @@ private theorem empty_variables {R : Type*}
   obtain ⟨z, hz⟩ := primitive_unit_constant μ a ham u
   exact ⟨z, by simp, hz⟩
 
-private theorem residue_polynomial_interface {σ R : Type*}
+/-- The leading exponent agrees with the degree of a matching residue polynomial. -/
+public theorem residue_polynomial_interface {σ R : Type*}
     [CommRing R] [IsDomain R] [ValuationRing R]
     (μ : MonomialOrder σ) (a : R)
     [IsHausdorff (Ideal.span {a} : Ideal R) R]

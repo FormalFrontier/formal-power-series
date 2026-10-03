@@ -28,7 +28,8 @@ private theorem general_reduction_scalar {σ R : Type*} [CommRing R]
     linearAdicReduction I k (r • f) = r • linearAdicReduction I k f := by
   exact map_smul (linearAdicReduction (σ := σ) I k) r f
 
-private theorem general_reduction_coefficient {σ R : Type*} [CommRing R]
+/-- Scalar multiplication and polynomial reduction commute coefficientwise. -/
+public theorem general_reduction_coefficient {σ R : Type*} [CommRing R]
     (I : Ideal R) (k : ℕ) (r : R)
     (f : adicallyRestrictedSubring (σ := σ) I) (m : σ →₀ ℕ) :
     (linearAdicReduction I k (r • f)).coeff m =

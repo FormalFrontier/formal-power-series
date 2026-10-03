@@ -18,12 +18,13 @@ without cancellation or regularity assumptions.
 -/
 
 set_option warningAsError true
-set_option maxHeartbeats 800000
 
 namespace MvPowerSeries
 
 variable {σ R : Type*} [CommRing R] [Finite σ]
 
+set_option maxHeartbeats 800000 in
+-- The finite coefficient decomposition has nested existence and support proofs.
 /-- A restricted series whose coefficients lie in an ideal power admits a finite
 decomposition by constant generators of that power, with restricted coefficients. -/
 theorem exists_restricted_fg_decomposition (I : Ideal R) (hI : I.FG) (k : ℕ)
@@ -99,6 +100,8 @@ theorem exists_restricted_fg_decomposition (I : Ideal R) (hI : I.FG) (k : ℕ)
   change (f : MvPowerSeries σ R) m = ∑ j, v j * a m j
   simpa only [coeff_apply, mul_comm] using heq.symm
 
+set_option maxHeartbeats 800000 in
+-- The kernel identification elaborates a finite polynomial decomposition.
 /-- The kernel of reduction is the algebraic image ideal *inside* the restricted
 series subring, at every ideal power including level zero. -/
 theorem ker_adicReduction_fg (I : Ideal R) (hI : I.FG) (k : ℕ) :
