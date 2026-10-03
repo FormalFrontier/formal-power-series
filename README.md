@@ -195,6 +195,27 @@ structure, splitting extension or Adams operation here.
   uniqueness, preparation or finite-variable assertion follows. See the
   [conditional-generation guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis/README.md)
   and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean).
+- **Singleton and first-variable division.** The intrinsic leading exponent of
+  a product of nonzero restricted series is additive over a Hausdorff principal
+  valuation domain. For a nonzero singleton divisor, any two supplied division
+  equations with actual-supported remainders have the same quotient and
+  remainder; existence is not asserted for arbitrary divisors. A primitive
+  divisor admits such a pair under a nonzero parameter, radical equality and
+  adic completeness. Under those same existence hypotheses, a primitive
+  first-variable divisor with nonzero scalar top residue admits a unique
+  finite-polynomial remainder even in degree zero. See the [singleton](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SingletonDivision/README.md)
+  and [first-variable](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision/README.md)
+  guides and their ordinary-import clients.
+- **Conditional quotient units.** Over a commutative local ring, for a parameter
+  in its maximal ideal, a supplied division of the distinguished first-variable
+  monomial `X₀^d` by a divisor whose regrouped residue has degree `d` and
+  nonzero scalar top coefficient
+  `C c`, with remainder coefficients vanishing at first exponents at least
+  `d`, gives quotient residue `C (c⁻¹)`. Radical equality and adic completeness
+  then reflect this to a unit of the restricted subring. The theorem does not
+  construct a division or preparation. See the
+  [quotient-unit guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit/README.md)
+  and [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean).
 - **Cofinal ideal-adic modules.** Under `I ≤ J`, `1 ≤ N` and `J ^ N ≤ I`,
   separation, precompleteness and completeness are equivalent for any
   `R`-module; this public generic support leaf requires no restricted series.
@@ -221,7 +242,7 @@ explicitly.
 Install Git and `elan`; `lean-toolchain` pins Lean `v4.34.0-rc2`, and
 `lake-manifest.json` pins mathlib to
 `83abb3e776bdefcbc447a1e44d0debe4010039e5` and
-MultivariatePolynomials to `b2f525056365c513029f3b0fae6d13c000a2b633`.
+MultivariatePolynomials to `c8c241ff6c686368aac35f8c3b4eed502d714bbd`.
 From the repository root:
 
 ```sh
@@ -298,6 +319,10 @@ degree criterion, its infinite-variable counterexample and the finite-generation
 kernel argument were distinct from those who formalized these results and wrote
 their ordinary-import clients. Further contributors developed and formalized
 the restricted-subring unit criteria and wrote their ordinary-import client.
+Formal Frontier Agents also developed the intrinsic leading-product,
+singleton and first-variable division, residue reflection and conditional
+quotient-unit arguments and their ordinary-import clients; these results reuse
+the published restricted-series foundation and polynomial lexicographic API.
 The antidiagonal coefficient-product method adapts Jz Pan's 2025 mathlib
 `PowerSeries.CoeffMulMem` argument,
 Apache-2.0, as credited in the [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).

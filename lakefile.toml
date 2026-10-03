@@ -16,7 +16,7 @@ rev = "83abb3e776bdefcbc447a1e44d0debe4010039e5"
 [[require]]
 name = "multivariate-polynomials"
 git = "https://github.com/FormalFrontier/multivariate-polynomials.git"
-rev = "b2f525056365c513029f3b0fae6d13c000a2b633"
+rev = "c8c241ff6c686368aac35f8c3b4eed502d714bbd"
 
 [[lean_lib]]
 name = "FormalPowerSeries"

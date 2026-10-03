@@ -93,6 +93,25 @@ power-series regrouping. See [regrouping](FormalPowerSeries/MvPowerSeries/IdealA
 [Fin regrouping](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping/Fin.lean)
 and the [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping.lean).
 
+## Singleton division, first-variable division and quotient units
+
+| Use | Declaration |
+| --- | --- |
+| Intrinsic leading-exponent product over a Hausdorff principal valuation domain | `MonomialOrder.restrictedLeadingExponent_mul_of_ne_zero` in [LeadingTerm/Product](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LeadingTerm/Product.lean) |
+| Uniqueness for any nonzero singleton divisor with actual-supported remainders | `MonomialOrder.restricted_singleton_division_unique` in [SingletonDivision](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SingletonDivision.lean) |
+| Existence and uniqueness for a primitive singleton divisor, nonzero parameter, radical equality and adic completeness | `MonomialOrder.existsUnique_restricted_primitive_singleton_division` in [SingletonDivision](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SingletonDivision.lean) |
+| Unique quotient and finite-polynomial first-variable remainder of degree below `d` | `MvPowerSeries.existsUnique_firstVariable_division_of_scalar_top` in [FirstVariableDivision](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision.lean) |
+| Reflect polynomial-residue units to restricted-series units under radical equality and completeness | `MvPowerSeries.isUnit_of_isUnit_restrictedResidueHom` in [UnitDetection/Residue](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/Residue.lean) |
+| For a supplied division of `X₀^d` by a divisor with regrouped residue degree `d` and nonzero scalar top, and actual remainder supported below `d`, compute the constant-unit quotient residue; reflect it to a unit with radical equality and completeness | `MvPowerSeries.restrictedResidueHom_quotient_of_restrictedFinFirst_division`, `MvPowerSeries.isUnit_quotient_of_restrictedFinFirst_divisionHom` in [FirstVariableUnit](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean) |
+
+See the [singleton](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SingletonDivision/README.md),
+[first-variable](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision/README.md),
+and [quotient-unit](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit/README.md)
+guides and the corresponding [singleton](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/SingletonDivision.lean),
+[first-variable](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision.lean)
+and [unit](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean)
+ordinary-import clients. These laws do not assert preparation.
+
 ## Finite-variable degree cutoffs and finitely generated kernels
 
 Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.DegreeDecay` for

@@ -29,6 +29,12 @@ project:
     arbitrary ideals and variables. Local-ring polynomial residue is
     compatible with valuation-domain residue; injective first-variable
     regrouping has polynomial and finite-variable reindexing interfaces.
+    Intrinsic leading products and singleton division have separate
+    Hausdorff uniqueness and complete primitive-existence interfaces;
+    first-variable division yields finite-polynomial remainders. A supplied
+    division of X₀^d by a divisor with regrouped residue degree d and nonzero
+    scalar top, with actual remainder support below d, gives constant-unit
+    quotient residue; radical equality and completeness reflect it to a unit.
   authors:
     - Formal Frontier Agents
   responsible_maintainers:
@@ -147,6 +153,14 @@ status:
     ideals, without completeness, finite-variable, or nontriviality assumptions.
     The local-ring residue map requires a local ring, hence a nontrivial ring,
     but no completeness or nonzero-parameter hypothesis.
+    Intrinsic leading-exponent products and singleton uniqueness require
+    Hausdorffness, not completeness. Primitive singleton and first-variable
+    division add the nonzero parameter, radical identity and completeness.
+    Conditional quotient-residue computation starts from a division of the
+    distinguished first-variable monomial X₀^d by a divisor whose regrouped
+    residue has degree d and nonzero scalar top, with an actual remainder
+    supported below d. Radical equality and completeness reflect this to a
+    unit; these results do not construct a division.
   main_results:
     - declaration: MvPowerSeries.IsAdicallyRestricted.mono
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange.lean
@@ -282,6 +296,34 @@ status:
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/ValuationNormalizedDivision.lean
     - declaration: MonomialOrder.ideal_eq_span_of_primitive_standardBasis
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean
+    - declaration: MonomialOrder.restrictedLeadingExponent_mul_of_ne_zero
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LeadingTerm/Product.lean
+    - declaration: MonomialOrder.restricted_singleton_division_unique
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SingletonDivision.lean
+    - declaration: MonomialOrder.existsUnique_restricted_primitive_singleton_division
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SingletonDivision.lean
+    - declaration: MvPowerSeries.restrictedLeadingExponent_lex_eq_cons_of_scalar_top
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision.lean
+    - declaration: MvPowerSeries.existsUnique_firstVariable_division_of_leadingExponent
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision.lean
+    - declaration: MvPowerSeries.existsUnique_firstVariable_division_of_scalar_top
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision.lean
+    - declaration: MvPowerSeries.exists_firstVariable_monomial_division_of_scalar_top
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision.lean
+    - declaration: MvPowerSeries.isUnit_of_isUnit_restrictedResidueHom
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/Residue.lean
+    - declaration: MvPowerSeries.isUnit_of_isUnit_restrictedResidue
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/Residue.lean
+    - declaration: MvPowerSeries.finSuccEquiv_restrictedResidueHom_polynomialRestrictedFinFirst
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean
+    - declaration: MvPowerSeries.restrictedResidueHom_quotient_of_restrictedFinFirst_division
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean
+    - declaration: MvPowerSeries.isUnit_quotient_of_restrictedFinFirst_divisionHom
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean
+    - declaration: MvPowerSeries.restrictedResidue_quotient_of_restrictedFinFirst_division
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean
+    - declaration: MvPowerSeries.isUnit_quotient_of_restrictedFinFirst_division
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean
 review:
   status: >-
     The library's Lean mathematics has received independent review. Source

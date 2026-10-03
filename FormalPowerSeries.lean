@@ -26,6 +26,11 @@ public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrimitiveStand
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.IdealChange
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.ValuationResidue
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FirstVariableRegrouping.Fin
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LeadingTerm.Product
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.SingletonDivision
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FirstVariableDivision
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.UnitDetection.Residue
+public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FirstVariableUnit
 
 /-! # Formal power series
 

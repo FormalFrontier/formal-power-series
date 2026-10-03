@@ -82,6 +82,20 @@ ideal of a local ring. The [first-variable guide](FirstVariableRegrouping/README
 describes restricted coefficient slices, polynomial embeddings and `Fin`
 reindexing, without asserting surjectivity onto all iterated power series.
 
+## Singleton division and conditional quotient units
+
+The [singleton division guide](SingletonDivision/README.md) separates the
+Hausdorff leading-product and uniqueness laws from primitive existence, which
+additionally requires completeness, a nonzero parameter and radical equality.
+The [first-variable division guide](FirstVariableDivision/README.md) explains
+the scalar-top residue criterion and finite-polynomial remainder, including
+degree zero. The [quotient-unit guide](FirstVariableUnit/README.md) records
+polynomial-residue unit reflection and the criterion for a supplied division
+of `X₀^d` by a divisor with regrouped residue degree `d` and nonzero scalar
+top, with actual remainder supported below `d`. Radical equality and
+completeness reflect the computed quotient residue to a unit; no preparation
+is asserted, including at degree zero.
+
 ## Reproduction and scope
 
 From the repository root, use the pinned Lean `v4.34.0-rc2`, mathlib
