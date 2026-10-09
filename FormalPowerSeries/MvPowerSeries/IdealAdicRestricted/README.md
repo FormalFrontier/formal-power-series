@@ -95,7 +95,8 @@ of `X₀^d` by a divisor with regrouped residue degree `d` and nonzero scalar
 top, with actual remainder supported below `d`. Radical equality and
 completeness reflect the computed quotient residue to a unit. The
 [preparation guide](FirstVariablePreparation/README.md) combines these laws:
-for a restricted divisor with regrouped maximal-ideal residue degree `d` and
+over a commutative valuation domain, for a restricted divisor with regrouped
+maximal-ideal residue degree `d` and
 nonzero scalar coefficient at `d`, a nonzero principal-adic parameter in the
 maximal ideal, radical equality and completeness, it constructs a restricted
 unit and a unique monic polynomial of degree `d`, including `d = 0` and
