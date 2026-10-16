@@ -2,7 +2,10 @@
 Authors: Formal Frontier Agents -/
 module
 public import FormalPowerSeries.UnitLogDerivative
+public import FormalPowerSeries.Binomial
 public import FormalPowerSeries.ArtinHasse
+public import FormalPowerSeries.ArtinHasse.Padic
+public import FormalPowerSeries.ArtinHasseEulerProduct
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.DegreeDecay
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel

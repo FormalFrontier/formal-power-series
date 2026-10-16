@@ -12,5 +12,6 @@ public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.Singleton
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariableDivision
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariableUnit
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariablePreparation
+public import FormalPowerSeriesTests.ArtinHasseEulerProduct
 
 /-! Public-import examples for power-series coefficients, residue and first-variable operations. -/

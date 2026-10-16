@@ -5,15 +5,19 @@ Authors: Formal Frontier Agents
 module
 
 import FormalPowerSeries.ArtinHasse
+import FormalPowerSeries.ArtinHasse.Padic
 import Mathlib.Tactic.NormNum
 
 /-!
 # Low-degree coefficients of the Artin–Hasse exponential
 
 The recurrence computes coefficients at primes two and three. The prime-two
-example has a noninteger rational coefficient. The boundary at `p = 1` shows
-why the recurrence requires `2 ≤ p`.
+example has a noninteger rational coefficient satisfying the prime-two
+valuation bound. The boundary at `p = 1` shows why the recurrence requires `2 ≤ p`.
 -/
+
+-- These private mathematical examples do not export an API.
+set_option linter.privateModule false
 
 open PowerSeries
 
@@ -33,6 +37,15 @@ private theorem artinHasseExp_two_coeff_three_and_den
   rw [h]
   exact Int.ofNat_inj.mp
     (Rat.den_div_eq_of_coprime (a := 2) (b := 3) (by decide) (by decide))
+
+private theorem artinHasseExp_two_coeff_three_integral_noninteger :
+    coeff 3 (artinHasseExp 2) = (2 / 3 : ℚ) ∧
+    (coeff 3 (artinHasseExp 2)).den = 3 ∧
+    Rat.padicValuation 2 (2 / 3 : ℚ) ≤ 1 := by
+  obtain ⟨hcoeff, hden⟩ := artinHasseExp_two_coeff_three_and_den
+  refine ⟨hcoeff, hden, ?_⟩
+  rw [← hcoeff]
+  exact artinHasseExp_coeff_padicValuation_le_one 2 3
 
 private theorem artinHasseExp_three_coeff_two : coeff 2 (artinHasseExp 3) = (1 / 2 : ℚ) := by
   apply (eq_div_iff (by norm_num : (2 : ℚ) ≠ 0)).mpr

@@ -98,8 +98,31 @@ structure, splitting extension or Adams operation here.
   `coeff 2 (artinHasseExp 3) = 1/2`, and show that the recurrence fails at
   `p = 1`, degree two.
 
-This rational construction and characterization do not prove p-integrality of
-all coefficients or the Euler-product identity.
+- **Coefficientwise Euler product.** For prime `p`, the coefficient in degree
+  `k` agrees with every finite product of `(1 - X^n)^(-μ(n)/n)` over positive
+  `n ≤ N` coprime to `p`, whenever `k ≤ N`. The factors use Mathlib's formal
+  binomial series; no infinite-product operation, coefficient integrality or
+  analytic convergence is assumed. See the
+  [Euler-product theorem](FormalPowerSeries/ArtinHasseEulerProduct.lean).
+  The [examples](FormalPowerSeriesTests/ArtinHasseEulerProduct.lean) independently
+  calculate the cubic coefficient `2/3` at prime two, instantiate the theorem
+  on that example, and show failure at the composite parameter four.
+
+- **Coefficient p-integrality.** For prime `p`,
+  `PowerSeries.artinHasseExp_coeff_padicValuation_le_one` proves that every
+  rational coefficient has multiplicative p-adic valuation at most one.
+  The proof uses the standard Dieudonné–Dwork method, the functional equation
+  `E(X)^p = E(X^p) exp(pX)`, and Mathlib's divided powers on the ideal `(p)`
+  of the p-adic integers. The theorem is in the separate
+  [p-adic module](FormalPowerSeries/ArtinHasse/Padic.lean); the rational core
+  does not import p-adic theory. The integrality proof does not use the
+  Euler-product identity.
+
+| Module | Artin–Hasse API |
+| --- | --- |
+| `FormalPowerSeries.ArtinHasse` | Rational construction, normalization, derivative, recurrence and uniqueness |
+| `FormalPowerSeries.ArtinHasseEulerProduct` | Coefficientwise Euler-product identity for prime `p` |
+| `FormalPowerSeries.ArtinHasse.Padic` | Coefficient p-integrality for prime `p` |
 
 ### Ideal-adically restricted multivariate series
 
@@ -305,7 +328,8 @@ separately.
 
 Import `FormalPowerSeries` for these constructions and the generic cofinal
 helper, or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
-`FormalPowerSeries.ArtinHasse`,
+`FormalPowerSeries.ArtinHasse`, `FormalPowerSeries.ArtinHasseEulerProduct`,
+`FormalPowerSeries.ArtinHasse.Padic`, `FormalPowerSeries.Binomial`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted` and its
 `DegreeDecay`, `FinitelyGeneratedKernel`, `PrincipalKernel`,
 `LinearQuotient`, `InverseLimit`, `LinearExtension`, `KernelFiltration`,
@@ -346,7 +370,9 @@ The integral unit formulas are related to Charles A. Weibel, *The K-book:
 An Introduction to Algebraic K-theory* (2013), Section II.4 and Exercise
 4.6. The rational Artin–Hasse exponential is described by I. B. Fesenko and
 S. V. Vostokov, *Local Fields and Their Extensions*, second edition (2002),
-Chapter I, (9.1); its coefficient-integrality assertion is not proved here.
+Chapter I, (9.1); its coefficient-integrality assertion is proved here by the
+standard Dieudonné–Dwork method using Mathlib's p-adic divided powers, rather
+than by the book's Euler-product argument.
 Kazuhiro Fujiwara and Fumiharu Kato, *Foundations of Rigid Geometry I*, provide
 background for coefficientwise restricted series. These references do not
 imply formal coverage of the sources. Prism authored the original derivative

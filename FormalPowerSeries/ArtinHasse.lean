@@ -75,7 +75,9 @@ theorem artinHasseExp_eq_subst (p : ℕ) :
   exact (constantCoeff_subst_of_constantCoeff_zero
     (constantCoeff_artinHasseLog p) (exp ℚ)).trans (by simp)
 
-private theorem derivative_artinHasseExp (p : ℕ) :
+/-- The formal derivative of the Artin–Hasse exponential is its product with
+the derivative of the Artin–Hasse logarithm. -/
+theorem derivative_artinHasseExp (p : ℕ) :
     derivative (artinHasseExp p) = artinHasseExp p * derivative (artinHasseLog p) := by
   rw [artinHasseExp_eq_subst,
     derivative_subst (HasSubst.of_constantCoeff_zero' (constantCoeff_artinHasseLog p)),
@@ -97,7 +99,9 @@ theorem isUnit_artinHasseExp (p : ℕ) : IsUnit (artinHasseExp p) := by
   exact isUnit_iff_constantCoeff.mpr (by simp)
 
 open Classical in
-private theorem coeff_X_mul_derivative_artinHasseLog (p : ℕ) (hp : 2 ≤ p) (n : ℕ) :
+/-- The weighted derivative of the Artin–Hasse logarithm has coefficient one
+exactly in the degrees that are powers of `p`, when `p ≥ 2`. -/
+theorem coeff_X_mul_derivative_artinHasseLog (p : ℕ) (hp : 2 ≤ p) (n : ℕ) :
     coeff n (X * derivative (artinHasseLog p)) =
       if ∃ i : ℕ, p ^ i = n then (1 : ℚ) else 0 := by
   classical
@@ -138,23 +142,16 @@ private theorem coeff_X_mul_derivative_artinHasseLog_eq_sum
     intro i hi
     simp [show k ≠ p ^ i from fun he => h ⟨i, he.symm⟩]
 
-/-- The coefficient recurrence characterizing the Artin–Hasse exponential
-when `p ≥ 2`. This identity holds at composite values as well as at primes. -/
-theorem artinHasseExp_coeff_recurrence (p : ℕ) (hp : 2 ≤ p) (n : ℕ) :
-    (n : ℚ) * coeff n (artinHasseExp p) =
-      ∑ i ∈ Finset.range n,
-        if p ^ i ≤ n then coeff (n - p ^ i) (artinHasseExp p) else 0 := by
+/-- Multiplication by the weighted derivative of the Artin–Hasse logarithm
+sums the coefficients shifted by powers of `p`. -/
+theorem coeff_mul_X_derivative_artinHasseLog (p : ℕ) (hp : 2 ≤ p)
+    (f : PowerSeries ℚ) (n : ℕ) :
+    coeff n (f * (X * derivative (artinHasseLog p))) =
+      ∑ i ∈ Finset.range n, if p ^ i ≤ n then coeff (n - p ^ i) f else 0 := by
   classical
-  have hcoeff : (n : ℚ) * coeff n (artinHasseExp p) =
-      coeff n (X * derivative (artinHasseExp p)) := by
-    cases n with
-    | zero => simp
-    | succ n => simp [coeff_derivative, mul_comm]
-  rw [hcoeff, derivative_artinHasseExp, mul_left_comm]
   calc
-    coeff n (artinHasseExp p * (X * derivative (artinHasseLog p))) =
-        coeff n (artinHasseExp p *
-          ∑ i ∈ Finset.range n, (X : PowerSeries ℚ) ^ (p ^ i)) := by
+    coeff n (f * (X * derivative (artinHasseLog p))) =
+        coeff n (f * ∑ i ∈ Finset.range n, (X : PowerSeries ℚ) ^ (p ^ i)) := by
       rw [coeff_mul, coeff_mul]
       apply Finset.sum_congr rfl
       intro ij hij
@@ -162,6 +159,20 @@ theorem artinHasseExp_coeff_recurrence (p : ℕ) (hp : 2 ≤ p) (n : ℕ) :
         (by have := Finset.mem_antidiagonal.mp hij; omega)]
     _ = _ := by
       simp only [Finset.mul_sum, map_sum, coeff_mul_X_pow']
+
+/-- The coefficient recurrence characterizing the Artin–Hasse exponential
+when `p ≥ 2`. This identity holds at composite values as well as at primes. -/
+theorem artinHasseExp_coeff_recurrence (p : ℕ) (hp : 2 ≤ p) (n : ℕ) :
+    (n : ℚ) * coeff n (artinHasseExp p) =
+      ∑ i ∈ Finset.range n,
+        if p ^ i ≤ n then coeff (n - p ^ i) (artinHasseExp p) else 0 := by
+  have hcoeff : (n : ℚ) * coeff n (artinHasseExp p) =
+      coeff n (X * derivative (artinHasseExp p)) := by
+    cases n with
+    | zero => simp
+    | succ n => simp [coeff_derivative, mul_comm]
+  rw [hcoeff, derivative_artinHasseExp, mul_left_comm]
+  exact coeff_mul_X_derivative_artinHasseLog p hp (artinHasseExp p) n
 
 /-- A normalized rational series satisfying the Artin–Hasse recurrence is the
 Artin–Hasse exponential. The constant coefficient condition is essential,
