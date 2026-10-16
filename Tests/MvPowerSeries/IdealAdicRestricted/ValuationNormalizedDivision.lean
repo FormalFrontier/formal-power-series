@@ -18,36 +18,47 @@ variables, and infinitely many variables without extra finiteness hypotheses.
 
 set_option warningAsError true
 
+-- These private mathematical examples have no exported API.
+set_option linter.privateModule false
+
 section Cofinal
 
 variable {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
 variable {I J : Ideal R} (hIJ : I ≤ J) (N : ℕ) (hN : 1 ≤ N) (hJI : J ^ N ≤ I)
 
-example (h : IsPrecomplete I M) : IsPrecomplete J M :=
+include hIJ N hN hJI in
+private theorem isPrecomplete_of_cofinal_le (h : IsPrecomplete I M) : IsPrecomplete J M :=
   (isPrecomplete_iff_of_cofinal hIJ N hN hJI).mp h
 
-example (h : IsPrecomplete J M) : IsPrecomplete I M :=
+include hIJ N hN hJI in
+private theorem isPrecomplete_of_cofinal_ge (h : IsPrecomplete J M) : IsPrecomplete I M :=
   (isPrecomplete_iff_of_cofinal hIJ N hN hJI).mpr h
 
-example (h : IsHausdorff I M) : IsHausdorff J M :=
+include hIJ N hN hJI in
+private theorem isHausdorff_of_cofinal_le (h : IsHausdorff I M) : IsHausdorff J M :=
   (isHausdorff_iff_of_cofinal hIJ N hN hJI).mp h
 
-example (h : IsHausdorff J M) : IsHausdorff I M :=
+include hIJ N hN hJI in
+private theorem isHausdorff_of_cofinal_ge (h : IsHausdorff J M) : IsHausdorff I M :=
   (isHausdorff_iff_of_cofinal hIJ N hN hJI).mpr h
 
-example (h : IsAdicComplete I M) : IsAdicComplete J M :=
+include hIJ N hN hJI in
+private theorem isAdicComplete_of_cofinal_le (h : IsAdicComplete I M) : IsAdicComplete J M :=
   (isAdicComplete_iff_of_cofinal hIJ N hN hJI).mp h
 
-example (h : IsAdicComplete J M) : IsAdicComplete I M :=
+include hIJ N hN hJI in
+private theorem isAdicComplete_of_cofinal_ge (h : IsAdicComplete J M) : IsAdicComplete I M :=
   (isAdicComplete_iff_of_cofinal hIJ N hN hJI).mpr h
 
 variable {σ : Type*} (f : MvPowerSeries σ R)
 
-example (h : MvPowerSeries.IsAdicallyRestricted I f) :
+include hIJ N hN hJI in
+private theorem isAdicallyRestricted_of_cofinal_le (h : MvPowerSeries.IsAdicallyRestricted I f) :
     MvPowerSeries.IsAdicallyRestricted J f :=
   (MvPowerSeries.isAdicallyRestricted_iff_of_cofinal hIJ N hN hJI f).mp h
 
-example (h : MvPowerSeries.IsAdicallyRestricted J f) :
+include hIJ N hN hJI in
+private theorem isAdicallyRestricted_of_cofinal_ge (h : MvPowerSeries.IsAdicallyRestricted J f) :
     MvPowerSeries.IsAdicallyRestricted I f :=
   (MvPowerSeries.isAdicallyRestricted_iff_of_cofinal hIJ N hN hJI f).mpr h
 
@@ -62,7 +73,9 @@ variable (a : R) (ha : a ≠ 0) (ham : a ∈ IsLocalRing.maximalIdeal R)
   (hrad : (Ideal.span {a}).radical = IsLocalRing.maximalIdeal R)
   [IsAdicComplete (Ideal.span {a}) R]
 
-example (μ : MonomialOrder ℕ) (f : MvPowerSeries ℕ R)
+include ha ham hrad in
+private theorem exists_restricted_remainder_empty_divisors
+    (μ : MonomialOrder ℕ) (f : MvPowerSeries ℕ R)
     (hf : MvPowerSeries.IsAdicallyRestricted (Ideal.span {a}) f) :
     ∃ r : MvPowerSeries ℕ R,
       MvPowerSeries.IsAdicallyRestricted (Ideal.span {a}) r ∧ f = r := by
@@ -76,7 +89,9 @@ example (μ : MonomialOrder ℕ) (f : MvPowerSeries ℕ R)
   obtain ⟨_, r, _, hr, heq, _⟩ := hdivide f hf
   exact ⟨r, hr, by simpa using heq⟩
 
-example (μ : MonomialOrder Empty) (g : Fin 1 → MvPowerSeries Empty R)
+include ha ham hrad in
+private theorem exists_restricted_division_empty_variables
+    (μ : MonomialOrder Empty) (g : Fin 1 → MvPowerSeries Empty R)
     (hg : ∀ i, MvPowerSeries.IsAdicallyRestricted (Ideal.span {a}) (g i))
     (hprim : ∀ i, Ideal.span (Set.range
       (fun d : Empty →₀ ℕ => MvPowerSeries.coeff d (g i))) = ⊤)
@@ -91,7 +106,9 @@ example (μ : MonomialOrder Empty) (g : Fin 1 → MvPowerSeries Empty R)
   obtain ⟨q, r, hq, hr, heq, _⟩ := hdivide f hf
   exact ⟨q, r, hq, hr, heq⟩
 
-example (μ : MonomialOrder ℕ) (g : Fin 1 → MvPowerSeries ℕ R)
+include ha ham hrad in
+private theorem exists_restricted_division_nat_singleton
+    (μ : MonomialOrder ℕ) (g : Fin 1 → MvPowerSeries ℕ R)
     (hg : ∀ i, MvPowerSeries.IsAdicallyRestricted (Ideal.span {a}) (g i))
     (hprim : ∀ i, Ideal.span (Set.range
       (fun d : ℕ →₀ ℕ => MvPowerSeries.coeff d (g i))) = ⊤) :

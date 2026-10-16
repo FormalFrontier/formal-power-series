@@ -18,6 +18,9 @@ public section
 
 set_option warningAsError true
 
+-- These private mathematical examples have no exported API.
+set_option linter.privateModule false
+
 open MvPowerSeries
 
 section EmptyVariables
@@ -27,10 +30,11 @@ variable {R : Type*} [CommRing R] [IsDomain R] [ValuationRing R]
     [IsHausdorff (Ideal.span {a} : Ideal R) R]
     (ham : a ∈ IsLocalRing.maximalIdeal R)
 
-example (g : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a})) :
+private theorem restrictedLeadingExponent_empty_eq_zero
+    (g : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a})) :
     μ.restrictedLeadingExponent a ham g = 0 := Subsingleton.elim _ _
 
-example :
+private theorem exists_restricted_unit_constant_empty :
     ∃ g : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a}),
       g ≠ 0 ∧ IsUnit (coeff 0 (g : MvPowerSeries Empty R)) ∧
         μ.restrictedLeadingExponent a ham g = 0 := by
@@ -45,7 +49,7 @@ example :
   · rw [hcoeff]
     exact isUnit_one
 
-example :
+private theorem restrictedLeadingExponent_empty_one_mul :
     (1 * 1 : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a})) ≠ 0 ∧
       μ.restrictedLeadingExponent a ham
         (1 * 1 : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a})) = 0 := by
@@ -53,7 +57,7 @@ example :
     (1 : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a})) 1 one_ne_zero one_ne_zero
   exact ⟨hproduct, by rw [hadd]; exact Subsingleton.elim _ _⟩
 
-example (ha : a ≠ 0) :
+private theorem restricted_singleton_division_empty_nonprimitive_zero (ha : a ≠ 0) :
     ∃ g : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a}),
       g = polynomialToRestricted (Ideal.span {a}) (MvPolynomial.C a) ∧
         g ≠ 0 ∧
@@ -100,7 +104,8 @@ variable {σ R : Type*} [CommRing R] [IsDomain R] [ValuationRing R]
     (μ : MonomialOrder σ)
     [IsHausdorff (Ideal.span {0} : Ideal R) R]
 
-example (f g : adicallyRestrictedSubring (σ := σ) (Ideal.span {0}))
+private theorem restrictedLeadingExponent_zero_parameter_mul
+    (f g : adicallyRestrictedSubring (σ := σ) (Ideal.span {0}))
     (hf : f ≠ 0) (hg : g ≠ 0) :
     f * g ≠ 0 ∧
       μ.restrictedLeadingExponent (0 : R) (Ideal.zero_mem _) (f * g) =
@@ -108,7 +113,8 @@ example (f g : adicallyRestrictedSubring (σ := σ) (Ideal.span {0}))
           μ.restrictedLeadingExponent (0 : R) (Ideal.zero_mem _) g :=
   μ.restrictedLeadingExponent_mul_of_ne_zero 0 (Ideal.zero_mem _) f g hf hg
 
-example (g : adicallyRestrictedSubring (σ := σ) (Ideal.span {0})) (hg : g ≠ 0)
+private theorem restricted_singleton_division_zero_parameter_unique
+    (g : adicallyRestrictedSubring (σ := σ) (Ideal.span {0})) (hg : g ≠ 0)
     (f q r q' r' : adicallyRestrictedSubring (σ := σ) (Ideal.span {0}))
     (h : f = q * g + r) (h' : f = q' * g + r')
     (hr : ∀ index : σ →₀ ℕ,
@@ -129,7 +135,7 @@ variable {R : Type*} [CommRing R] [IsDomain R] [ValuationRing R]
     (ham : a ∈ IsLocalRing.maximalIdeal R)
     [IsAdicComplete (Ideal.span {a} : Ideal R) R]
 
-example (ha : a ≠ 0)
+private theorem existsUnique_restricted_singleton_division_empty_one (ha : a ≠ 0)
     (hrad : (Ideal.span {a} : Ideal R).radical = IsLocalRing.maximalIdeal R)
     (f : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a})) :
     ∃! qr : adicallyRestrictedSubring (σ := Empty) (Ideal.span {a}) ×

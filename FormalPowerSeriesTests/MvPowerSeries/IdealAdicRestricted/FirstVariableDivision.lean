@@ -19,7 +19,7 @@ set_option warningAsError true
 
 open MvPowerSeries
 
-example (n d : ℕ) :
+private theorem lex_degree_firstVariable_X_pow (n d : ℕ) :
     (MonomialOrder.lex : MonomialOrder (Fin (n + 1))).degree
         ((MvPolynomial.X 0 : MvPolynomial (Fin (n + 1)) ℤ) ^ d) =
       (0 : Fin n →₀ ℕ).cons d := by
@@ -102,7 +102,8 @@ variable (n : ℕ) (a : V) (ham : a ∈ IsLocalRing.maximalIdeal V)
     (ha : a ≠ 0)
     (hrad : (Ideal.span {a} : Ideal V).radical = IsLocalRing.maximalIdeal V)
 
-example :
+include ham ha hrad in
+private theorem existsUnique_firstVariable_division_X_by_X_add_one :
     ∃! qr : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {a}) ×
         Polynomial (adicallyRestrictedSubring (σ := Fin n) (Ideal.span {a})),
       polynomialToRestricted (Ideal.span {a})
@@ -140,7 +141,9 @@ example :
     exact (hunique candidate ⟨hcand.1, hcand.2.1⟩).trans
       (hunique (1, -1) hcandidate).symm
 
-example (h : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {a})) :
+include ham ha hrad in
+private theorem existsUnique_firstVariable_division_by_one
+    (h : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {a})) :
     ∃! q : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {a}),
       h = q * (1 : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {a})) := by
   apply uniqueQuotient_degreeZero n a ham ha hrad 1
@@ -149,7 +152,9 @@ example (h : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {a})) :
   · simp
   · exact one_ne_zero
 
-example (h : adicallyRestrictedSubring (σ := Fin (0 + 1)) (Ideal.span {a})) :
+include ham ha hrad in
+private theorem existsUnique_firstVariable_division_by_one_finOne
+    (h : adicallyRestrictedSubring (σ := Fin (0 + 1)) (Ideal.span {a})) :
     ∃! q : adicallyRestrictedSubring (σ := Fin (0 + 1)) (Ideal.span {a}),
       h = q * (1 : adicallyRestrictedSubring (σ := Fin (0 + 1)) (Ideal.span {a})) := by
   apply uniqueQuotient_degreeZero 0 a ham ha hrad 1
@@ -160,7 +165,8 @@ example (h : adicallyRestrictedSubring (σ := Fin (0 + 1)) (Ideal.span {a})) :
 
 end ConcreteDivisors
 
-example : ¬ ∃ c : ℤ, (MvPolynomial.finSuccEquiv ℤ 1
+private theorem finSuccEquiv_X_succ_constantCoeff_not_scalar
+    : ¬ ∃ c : ℤ, (MvPolynomial.finSuccEquiv ℤ 1
     (MvPolynomial.X (Fin.succ (0 : Fin 1)) : MvPolynomial (Fin 2) ℤ)).coeff 0 =
       MvPolynomial.C c := by
   rintro ⟨c, hc⟩

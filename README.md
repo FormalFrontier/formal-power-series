@@ -1,9 +1,9 @@
 # Formal power series
 
-A Lean library with two independent families: the **weighted negative logarithmic
-derivative** of native single-variable power-series units over an arbitrary
-commutative ring `R`, and coefficientwise **ideal-adically restricted native
-multivariate power series**:
+A Lean library for the **weighted negative logarithmic derivative** of native
+single-variable power-series units over an arbitrary commutative ring `R`,
+the **rational Artin–Hasse exponential**, and coefficientwise **ideal-adically
+restricted native multivariate power series**. The weighted derivative is:
 
 ```lean
 PowerSeries.negXLogDeriv (f : (PowerSeries R)ˣ) =
@@ -31,7 +31,7 @@ Over finitely many variables it additionally characterizes restrictedness by
 degree cutoffs and identifies the **intrinsic algebraic** reduction kernel
 for finitely generated coefficient ideals at every level.
 A separately importable generic support leaf compares cofinal ideal-adic
-filtrations for arbitrary modules. The two series families are independent.
+filtrations for arbitrary modules. These constructions are independent.
 
 ## Headline results
 
@@ -78,6 +78,28 @@ identity is `∑ (i,j) ∈ antidiagonal (n+1), b_i * a_j = -(a_(n+1) * (n+1))`.
 See [API.md](API.md) for the conventions; the pin-specific `derivative_map`
 helper remains private, not a separate derivative API. There is no lambda/Witt
 structure, splitting extension or Adams operation here.
+
+### Rational Artin–Hasse exponential
+
+- **Formal construction and normalization.** For every natural `p`,
+  `PowerSeries.artinHasseLog p` has coefficient `1/n` at powers of `p` and zero
+  elsewhere, and `PowerSeries.artinHasseExp p` substitutes this zero-constant
+  series into Mathlib's formal exponential. The exponential has constant and
+  linear coefficients one and is a unit. For `p ≥ 2`, this is the rational
+  series `exp (∑ i ≥ 0, X^(p^i) / p^i)`. See the
+  [construction and basic API](FormalPowerSeries/ArtinHasse.lean).
+- **Coefficient recurrence and normalized uniqueness.** For `2 ≤ p`, including
+  composite `p`, the coefficients `a_n` satisfy
+  `n * a_n = ∑ i ∈ range n, if p^i ≤ n then a_(n - p^i) else 0`.
+  Conversely, this recurrence and `a_0 = 1` determine the exponential uniquely
+  among rational power series. No primeness or coefficient integrality is
+  assumed. The [ordinary-import examples](FormalPowerSeriesTests/ArtinHasse.lean)
+  compute `coeff 3 (artinHasseExp 2) = 2/3` with reduced denominator three and
+  `coeff 2 (artinHasseExp 3) = 1/2`, and show that the recurrence fails at
+  `p = 1`, degree two.
+
+This rational construction and characterization do not prove p-integrality of
+all coefficients or the Euler-product identity.
 
 ### Ideal-adically restricted multivariate series
 
@@ -281,8 +303,9 @@ Fetch the matching precompiled cache to avoid building mathlib from source;
 for a narrower library check, build the relevant producer and test modules
 separately.
 
-Import `FormalPowerSeries` for both families and the generic cofinal helper,
-or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
+Import `FormalPowerSeries` for these constructions and the generic cofinal
+helper, or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
+`FormalPowerSeries.ArtinHasse`,
 `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted` and its
 `DegreeDecay`, `FinitelyGeneratedKernel`, `PrincipalKernel`,
 `LinearQuotient`, `InverseLimit`, `LinearExtension`, `KernelFiltration`,
@@ -298,6 +321,8 @@ for the navigable family of modules. The [unit](Tests/UnitLogDerivative.lean),
 [linear-extension](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
 and [filtration](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
 clients demonstrate the API; the
+[Artin–Hasse client](FormalPowerSeriesTests/ArtinHasse.lean) computes initial
+rational coefficients from the recurrence. The
 [restricted-unit client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean)
 exercises the four unit criteria, though its `ZMod 4` polynomial witness
 uses the polynomial-unit map rather than the coefficient criterion.
@@ -319,9 +344,12 @@ theorem signedExample {T : Type*} [CommRing T]
 
 The integral unit formulas are related to Charles A. Weibel, *The K-book:
 An Introduction to Algebraic K-theory* (2013), Section II.4 and Exercise
-4.6. Kazuhiro Fujiwara and Fumiharu Kato, *Foundations of Rigid Geometry I*,
-provide background for coefficientwise restricted series. Neither reference
-implies formal coverage of the source. Prism authored the original derivative
+4.6. The rational Artin–Hasse exponential is described by I. B. Fesenko and
+S. V. Vostokov, *Local Fields and Their Extensions*, second edition (2002),
+Chapter I, (9.1); its coefficient-integrality assertion is not proved here.
+Kazuhiro Fujiwara and Fumiharu Kato, *Foundations of Rigid Geometry I*, provide
+background for coefficientwise restricted series. These references do not
+imply formal coverage of the sources. Prism authored the original derivative
 proof expression; Formal Frontier AI contributors adapted its mathematical
 argument for this library and wrote its ordinary-import client and guides.
 Folio contributed the derivative headlines and documentation. Distinct Formal
@@ -350,4 +378,4 @@ Original project files carry **SPDX-License-Identifier: Apache-2.0** and
 **Authors: Formal Frontier Agents**; see the complete [LICENSE](LICENSE).
 mathlib is separately licensed under Apache-2.0. The project used AI agents
 for formalization and documentation. These credits do not assert formal
-coverage of either mathematical source.
+coverage of these mathematical sources.

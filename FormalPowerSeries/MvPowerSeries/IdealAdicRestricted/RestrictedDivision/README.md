@@ -77,8 +77,7 @@ family and empty-variable cases are exercised there. The old
 
 Formal Frontier AI contributors originally developed these separate content,
 factorization, leading-term, polynomial and adic-correction, normalized-division
-and ideal-generation proofs; their mathematical contributions are retained
-through module relocation. The polynomial algorithms are original work of the
+and ideal-generation proofs. The polynomial algorithms are original work of the
 separately licensed MultivariatePolynomials library, and the foundational
 polynomial, valuation, ideal and completion APIs remain separately authored
 mathlib work. These modules assert neither preparation nor standard-basis

@@ -57,7 +57,7 @@ private theorem monomial_preparation (n d : ℕ) :
     rfl
   · exact one_ne_zero
 
-example (n d : ℕ) :
+private theorem monomial_preparation_pair_eq_one_X_pow (n d : ℕ) :
     ∃ (u : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {a}))
       (G : Polynomial (adicallyRestrictedSubring (σ := Fin n) (Ideal.span {a}))),
       IsUnit u ∧ G.Monic ∧ G.degree = (d : WithBot ℕ) ∧
@@ -86,7 +86,7 @@ theorem monomial_preparation_unique (n d : ℕ) :
   obtain ⟨hv, hH⟩ := hunique v H hmonic hdegree heq
   exact ⟨hv.trans hcandidate.1.symm, hH.trans hcandidate.2.symm⟩
 
-example (d : ℕ) :
+private theorem monomial_preparation_unique_finOne (d : ℕ) :
     ∀ (v : adicallyRestrictedSubring (σ := Fin (0 + 1)) (Ideal.span {a}))
       (H : Polynomial (adicallyRestrictedSubring (σ := Fin 0) (Ideal.span {a}))),
       H.Monic → H.degree = (d : WithBot ℕ) →
@@ -100,7 +100,7 @@ example (d : ℕ) :
   obtain ⟨hv, hH⟩ := hunique v H hmonic hdegree heq
   exact ⟨hv.trans hcandidate.1.symm, hH.trans hcandidate.2.symm⟩
 
-example (n : ℕ) :
+private theorem monomial_preparation_unique_degreeZero (n : ℕ) :
     ∀ (v : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {a}))
       (H : Polynomial (adicallyRestrictedSubring (σ := Fin n) (Ideal.span {a}))),
       H.Monic → H.degree = (0 : WithBot ℕ) →

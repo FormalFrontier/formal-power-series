@@ -4,6 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
+public import FormalPowerSeriesTests.ArtinHasse
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.IdealChange
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.ValuationResidue
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariableRegrouping
@@ -12,4 +13,4 @@ public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVari
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariableUnit
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FirstVariablePreparation
 
-/-! Public-import examples for ideal change, polynomial residue and first-variable regrouping. -/
+/-! Public-import examples for power-series coefficients, residue and first-variable operations. -/

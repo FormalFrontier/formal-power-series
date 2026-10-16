@@ -14,6 +14,9 @@ public section
 
 set_option warningAsError true
 
+-- These private mathematical examples have no exported API.
+set_option linter.privateModule false
+
 open MvPowerSeries
 
 section LocalRing
@@ -21,15 +24,18 @@ section LocalRing
 variable {σ R : Type*} [CommRing R] [IsLocalRing R]
     (a : R) (ham : a ∈ IsLocalRing.maximalIdeal R)
 
-example (f g : adicallyRestrictedSubring (σ := σ) (Ideal.span {a})) :
+private theorem restrictedResidueHom_mul_localRing
+    (f g : adicallyRestrictedSubring (σ := σ) (Ideal.span {a})) :
     restrictedResidueHom a ham (f * g) =
       restrictedResidueHom a ham f * restrictedResidueHom a ham g :=
   map_mul _ _ _
 
-example : Function.Surjective (restrictedResidueHom (σ := σ) a ham) :=
+private theorem restrictedResidueHom_surjective_localRing
+    : Function.Surjective (restrictedResidueHom (σ := σ) a ham) :=
   restrictedResidueHom_surjective _ _
 
-example (f : adicallyRestrictedSubring (σ := σ) (Ideal.span {a})) (d : σ →₀ ℕ) :
+private theorem coeff_restrictedResidueHom_localRing
+    (f : adicallyRestrictedSubring (σ := σ) (Ideal.span {a})) (d : σ →₀ ℕ) :
     (restrictedResidueHom a ham f).coeff d =
       Ideal.Quotient.mk (IsLocalRing.maximalIdeal R)
         (coeff d (f : MvPowerSeries σ R)) :=
@@ -43,17 +49,19 @@ variable {σ R : Type*} [CommRing R] [IsDomain R] [ValuationRing R]
     (a : R) (ham : a ∈ IsLocalRing.maximalIdeal R)
 
 -- This identifies the existing function without a Hausdorff instance.
-example (f g : adicallyRestrictedSubring (σ := σ) (Ideal.span {a})) :
+private theorem restrictedResidue_mul_add_one
+    (f g : adicallyRestrictedSubring (σ := σ) (Ideal.span {a})) :
     restrictedResidue a ham (f * g + 1) =
       restrictedResidue a ham f * restrictedResidue a ham g + 1 := by
   simp only [restrictedResidue_add, restrictedResidue_mul, restrictedResidue_one]
 
-example (f : adicallyRestrictedSubring (σ := σ) (Ideal.span {a})) (hf : IsUnit f) :
+private theorem isUnit_restrictedResidue_valuation
+    (f : adicallyRestrictedSubring (σ := σ) (Ideal.span {a})) (hf : IsUnit f) :
     IsUnit (restrictedResidue a ham f) :=
   isUnit_restrictedResidue_of_isUnit _ _ _ hf
 
 -- Empty variables and the zero parameter are allowed; no nonzero parameter is inferred.
-example (p : MvPolynomial Empty R) :
+private theorem restrictedResidue_empty_zero_polynomial (p : MvPolynomial Empty R) :
     restrictedResidue (0 : R) (Ideal.zero_mem _) (polynomialToRestricted (Ideal.span {0}) p) =
       MvPolynomial.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R)) p :=
   restrictedResidue_polynomial _ _ _
@@ -61,10 +69,12 @@ example (p : MvPolynomial Empty R) :
 end ValuationDomain
 
 -- Infinite variables over a concrete field still give finite polynomial residues.
-example : Function.Surjective (restrictedResidueHom (σ := ℕ) (0 : ZMod 2) (Ideal.zero_mem _)) :=
+private theorem restrictedResidueHom_zmodTwo_nat_surjective
+    : Function.Surjective (restrictedResidueHom (σ := ℕ) (0 : ZMod 2) (Ideal.zero_mem _)) :=
   restrictedResidueHom_surjective _ _
 
 -- A two-variable formal-series coefficient ring needs only its local-ring instance.
-example : Function.Surjective (restrictedResidueHom (σ := ℕ)
+private theorem restrictedResidueHom_series_zmodTwo_surjective
+    : Function.Surjective (restrictedResidueHom (σ := ℕ)
     (0 : MvPowerSeries (Fin 2) (ZMod 2)) (Ideal.zero_mem _)) :=
   restrictedResidueHom_surjective _ _

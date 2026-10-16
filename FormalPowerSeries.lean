@@ -2,6 +2,7 @@
 Authors: Formal Frontier Agents -/
 module
 public import FormalPowerSeries.UnitLogDerivative
+public import FormalPowerSeries.ArtinHasse
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.DegreeDecay
 public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel
@@ -35,7 +36,7 @@ public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FirstVariableP
 
 /-! # Formal power series
 
-The public APIs for logarithmic derivatives of native power-series units,
+The public APIs for the Artin–Hasse exponential, logarithmic derivatives of power-series units,
 ideal-adically restricted multivariate power series, and generic cofinal
 ideal-adic module filtrations.
 -/

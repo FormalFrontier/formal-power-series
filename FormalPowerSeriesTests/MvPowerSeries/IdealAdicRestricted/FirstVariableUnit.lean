@@ -76,7 +76,7 @@ private theorem isUnit_monomial_quotient (n d : ℕ)
   · exact heq
   · exact hactual
 
-example (n d : ℕ)
+private theorem isUnit_monomial_quotient_of_bounded_remainder (n d : ℕ)
     (q r : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {b}))
     (heq : polynomialRestrictedFinFirst (Ideal.span {b}) n (Polynomial.X ^ d) =
       q * polynomialRestrictedFinFirst (Ideal.span {b}) n (Polynomial.X ^ d) + r)
@@ -85,7 +85,7 @@ example (n d : ℕ)
     IsUnit q :=
   isUnit_monomial_quotient b hbm hbrad n d q r heq hactual
 
-example (n : ℕ)
+private theorem isUnit_monomial_quotient_degreeZero (n : ℕ)
     (q r : adicallyRestrictedSubring (σ := Fin (n + 1)) (Ideal.span {b}))
     (heq : polynomialRestrictedFinFirst (Ideal.span {b}) n (Polynomial.X ^ 0) =
       q * polynomialRestrictedFinFirst (Ideal.span {b}) n (Polynomial.X ^ 0) + r)
@@ -96,7 +96,7 @@ example (n : ℕ)
   intro i β _
   exact hactual i β
 
-example (d : ℕ)
+private theorem isUnit_monomial_quotient_finOne (d : ℕ)
     (q r : adicallyRestrictedSubring (σ := Fin (0 + 1)) (Ideal.span {b}))
     (heq : polynomialRestrictedFinFirst (Ideal.span {b}) 0 (Polynomial.X ^ d) =
       q * polynomialRestrictedFinFirst (Ideal.span {b}) 0 (Polynomial.X ^ d) + r)
@@ -117,7 +117,7 @@ private instance : IsAdicComplete (Ideal.span {(0 : ℚ)}) ℚ := by
   rw [Ideal.span_singleton_eq_bot.mpr rfl]
   infer_instance
 
-example :
+private theorem isUnit_firstVariable_quotient_one_rat :
     IsUnit (1 : adicallyRestrictedSubring (σ := Fin (0 + 1))
       (Ideal.span {(0 : ℚ)})) := by
   have hzero : Ideal.span {(0 : ℚ)} = (⊥ : Ideal ℚ) :=
@@ -139,7 +139,7 @@ example :
   · intro i β _
     simp
 
-example :
+private theorem firstVariable_division_rat_zero_quotient_missing_support :
     polynomialRestrictedFinFirst (Ideal.span {(0 : ℚ)}) 0 (Polynomial.X ^ 0) =
       (0 : adicallyRestrictedSubring (σ := Fin (0 + 1)) (Ideal.span {(0 : ℚ)})) * 1 + 1 ∧
     (1 : IsLocalRing.ResidueField ℚ) ≠ 0 ∧

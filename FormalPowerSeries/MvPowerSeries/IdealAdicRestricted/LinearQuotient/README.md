@@ -135,9 +135,9 @@ These source-independent definitions and proofs build on the
 and native mathlib algebra, ideal, submodule and first-isomorphism APIs.
 Formal Frontier AI contributors authored the linear-bridge design, original
 producer, ordinary-import client and guide; a separate contribution repaired
-the native-default `ℤ`-module mismatch with the integer endpoint. Later
-contributors adapted and assembled the modules here, including Prism's
-client namespace correction. Relocation does not erase original authorship
-or transfer credit for mathlib's native methods. Original project files are
+the native-default `ℤ`-module mismatch with the integer endpoint. Other
+contributors adapted the modules, including Prism's client namespace correction.
+The original contributors retain authorship; mathlib retains credit for its
+methods. Original project files are
 Apache-2.0 (Authors: Formal Frontier Agents); mathlib remains separately
 licensed. This library makes no source-specific coverage claim.

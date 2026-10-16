@@ -99,9 +99,7 @@ The construction reuses native mathlib `Ideal.map_pow`, quotient transports,
 restricted-series finite-reduction API; it introduces no competing quotient or
 inverse-limit framework. Native mathlib retains its authorship and license.
 The underlying restricted-series API and this inverse-limit proof, client
-and guide were developed by distinct Formal Frontier AI contributors in the
-shared incubator. This relocation preserves their proof work and does not
-claim new proofs of the native mathlib results, a newly established source
-correspondence or whole-source coverage. Anchor is responsible for the
-restricted-series contribution; see [repository metadata](../../../../formalization.yaml)
-for license and source context.
+and guide are by distinct Formal Frontier AI contributors. Mathlib retains
+credit for its foundational results, and no source-specific coverage is claimed.
+Anchor contributed the restricted-series API; see
+[repository metadata](../../../../formalization.yaml) for license and source context.
