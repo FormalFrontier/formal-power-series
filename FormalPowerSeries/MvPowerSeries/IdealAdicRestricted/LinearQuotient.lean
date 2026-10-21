@@ -75,7 +75,6 @@ theorem linearAdicReduction_apply (I : Ideal R) (k : ℕ)
   simp only [linearAdicReduction, AlgHom.toLinearMap_apply]
   rfl
 
-@[simp]
 theorem coeff_linearAdicReduction (I : Ideal R) (k : ℕ)
     (f : adicallyRestrictedSubring (σ := σ) I) (m : σ →₀ ℕ) :
     (linearAdicReduction I k f).coeff m =
@@ -157,7 +156,6 @@ theorem intLinearAdicReduction_apply (I : Ideal ℤ) (k : ℕ)
   change (adicReduction I k).toAddMonoidHom f = adicReduction I k f
   rfl
 
-@[simp]
 theorem coeff_intLinearAdicReduction (I : Ideal ℤ) (k : ℕ)
     (f : adicallyRestrictedSubring (σ := σ) I) (m : σ →₀ ℕ) :
     (intLinearAdicReduction I k f).coeff m =

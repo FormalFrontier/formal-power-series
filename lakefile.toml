@@ -1,6 +1,7 @@
 name = "formal-power-series"
 version = "0.1.0"
 defaultTargets = ["FormalPowerSeries", "Tests", "FormalPowerSeriesTests"]
+lintDriver = "batteries/runLinter"
 
 [leanOptions]
 autoImplicit = false

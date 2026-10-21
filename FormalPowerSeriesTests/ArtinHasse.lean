@@ -16,43 +16,40 @@ example has a noninteger rational coefficient satisfying the prime-two
 valuation bound. The boundary at `p = 1` shows why the recurrence requires `2 ≤ p`.
 -/
 
--- These private mathematical examples do not export an API.
-set_option linter.privateModule false
 
 open PowerSeries
 
-private theorem artinHasseExp_two_coeff_three_and_den
-    : coeff 3 (artinHasseExp 2) = (2 / 3 : ℚ) ∧
-    (coeff 3 (artinHasseExp 2)).den = 3 := by
-  have h₂ : coeff 2 (artinHasseExp 2) = 1 := by
-    have hr := artinHasseExp_coeff_recurrence 2 (by decide) 2
-    norm_num [Finset.sum_range_succ] at hr
-    exact hr
-  have h : coeff 3 (artinHasseExp 2) = (2 / 3 : ℚ) := by
-    apply (eq_div_iff (by norm_num : (3 : ℚ) ≠ 0)).mpr
-    have hr := artinHasseExp_coeff_recurrence 2 (by decide) 3
-    norm_num [Finset.sum_range_succ, h₂] at hr
-    simpa only [mul_comm] using hr
-  refine ⟨h, ?_⟩
-  rw [h]
-  exact Int.ofNat_inj.mp
-    (Rat.den_div_eq_of_coprime (a := 2) (b := 3) (by decide) (by decide))
-
-private theorem artinHasseExp_two_coeff_three_integral_noninteger :
+example :
     coeff 3 (artinHasseExp 2) = (2 / 3 : ℚ) ∧
     (coeff 3 (artinHasseExp 2)).den = 3 ∧
     Rat.padicValuation 2 (2 / 3 : ℚ) ≤ 1 := by
+  have artinHasseExp_two_coeff_three_and_den
+      : coeff 3 (artinHasseExp 2) = (2 / 3 : ℚ) ∧
+      (coeff 3 (artinHasseExp 2)).den = 3 := by
+    have h₂ : coeff 2 (artinHasseExp 2) = 1 := by
+      have hr := artinHasseExp_coeff_recurrence 2 (by decide) 2
+      norm_num [Finset.sum_range_succ] at hr
+      exact hr
+    have h : coeff 3 (artinHasseExp 2) = (2 / 3 : ℚ) := by
+      apply (eq_div_iff (by norm_num : (3 : ℚ) ≠ 0)).mpr
+      have hr := artinHasseExp_coeff_recurrence 2 (by decide) 3
+      norm_num [Finset.sum_range_succ, h₂] at hr
+      simpa only [mul_comm] using hr
+    refine ⟨h, ?_⟩
+    rw [h]
+    exact Int.ofNat_inj.mp
+      (Rat.den_div_eq_of_coprime (a := 2) (b := 3) (by decide) (by decide))
   obtain ⟨hcoeff, hden⟩ := artinHasseExp_two_coeff_three_and_den
   refine ⟨hcoeff, hden, ?_⟩
   rw [← hcoeff]
   exact artinHasseExp_coeff_padicValuation_le_one 2 3
 
-private theorem artinHasseExp_three_coeff_two : coeff 2 (artinHasseExp 3) = (1 / 2 : ℚ) := by
+example : coeff 2 (artinHasseExp 3) = (1 / 2 : ℚ) := by
   apply (eq_div_iff (by norm_num : (2 : ℚ) ≠ 0)).mpr
   simpa [Finset.sum_range_succ, mul_comm] using
     artinHasseExp_coeff_recurrence 3 (by decide) 2
 
-private theorem artinHasseExp_one_recurrence_failure_two : (2 : ℚ) * coeff 2 (artinHasseExp 1) ≠
+example : (2 : ℚ) * coeff 2 (artinHasseExp 1) ≠
     ∑ i ∈ Finset.range 2,
       if 1 ^ i ≤ 2 then coeff (2 - 1 ^ i) (artinHasseExp 1) else 0 := by
   have hlog : artinHasseLog 1 = X := by

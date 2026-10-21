@@ -1,0 +1,293 @@
+# Detailed results
+
+## Scope and conventions
+
+A Lean library for the **weighted negative logarithmic derivative** of native
+single-variable power-series units over an arbitrary commutative ring `R`,
+the **rational Artin–Hasse exponential**, and coefficientwise **ideal-adically
+restricted native multivariate power series**. The weighted derivative is:
+
+```lean
+PowerSeries.negXLogDeriv (f : (PowerSeries R)ˣ) =
+  -PowerSeries.X * PowerSeries.derivative (f : PowerSeries R) *
+    ((f⁻¹ : (PowerSeries R)ˣ) : PowerSeries R)
+```
+
+The multivariate family works with finite exceptional *monomial indices* at
+each ideal power, not a finite set of coefficient values. Its basic construction
+allows arbitrary variable types and ideals; stronger hypotheses are stated
+separately for internal principal division and coefficient completeness. Under
+`[IsAdicComplete I R]`, **every `R`-linear polynomial endomorphism extends
+to an `R`-linear operator on restricted series**, with finite-level equations
+and a uniqueness theorem requiring both polynomial agreement and preservation
+of every coefficientwise reduction kernel. Independently of completeness,
+**products of coefficientwise reduction kernels at levels `n` and `k` lie
+in the kernel at `n + k`**, including finite-sum and level-one laws.
+The multivariate family also supplies content, intrinsic actual-ring leading
+terms, restricted division, first-variable polynomial preparation and
+**conditional** primitive ideal generation.
+Over an adically complete coefficient ring, units inside the restricted
+subring are detected by the first polynomial reduction, or equivalently by
+a unit constant coefficient and radical containment of all other coefficients.
+Over finitely many variables it additionally characterizes restrictedness by
+degree cutoffs and identifies the **intrinsic algebraic** reduction kernel
+for finitely generated coefficient ideals at every level.
+A separately importable generic support leaf compares cofinal ideal-adic
+filtrations for arbitrary modules. These constructions are independent.
+
+The intrinsic-leading-term construction uses a valuation domain separated
+for the principal ideal of a parameter in its maximal ideal. Conditional
+primitive-family ideal generation additionally assumes a nonzero parameter,
+that this ideal has radical equal to the maximal ideal, and adic completeness.
+The detailed module guides below give the corresponding signatures.
+
+## Results by family
+
+### Weighted unit derivative
+
+- **Products become sums, naturally in the coefficient ring.** Over any
+  commutative ring, `PowerSeries.negXLogDeriv` takes multiplication of native
+  units to addition, inverses to negatives and integer powers to integer
+  multiples. It commutes with arbitrary coefficient-ring homomorphisms, also
+  between different universes, and bundles as a homomorphism from the unit
+  group written additively. For a supplied unit `f`, the equation
+  `g * f = -X * f'` characterizes `g = negXLogDeriv f` without normalizing its
+  constant coefficient. See the [definition](FormalPowerSeries/UnitLogDerivative.lean#L27),
+  [laws](FormalPowerSeries/UnitLogDerivative.lean#L39),
+  [naturality](FormalPowerSeries/UnitLogDerivative.lean#L81) and
+  [characterization](FormalPowerSeries/UnitLogDerivative.lean#L98).
+- **Integral coefficient formulas.** A finite convolution identity works for
+  every native unit, including nonnormalized ones. If the constant coefficient
+  is one, a **forward** recurrence determines each next coefficient of the
+  weighted derivative from the coefficients of `f` and preceding derivative
+  coefficients, without division by positive integers. Thus torsion and zero
+  rings are allowed; this does not reconstruct `f` from its derivative. See
+  [convolution](FormalPowerSeries/UnitLogDerivative.lean#L115) and
+  [recurrence](FormalPowerSeries/UnitLogDerivative.lean#L124).
+- **Linear factors and finite signed products.** `oneSubCXUnit a` represents
+  `1 - C a * X` for every `a`; its inverse has coefficient `a^n` in degree
+  `n`, and its weighted derivative has coefficient `a^(n+1)` in degree `n+1`.
+  The product and integer-power laws yield a signed power-sum formula for
+  finite products of these factors, including inverse factors and the empty
+  family. The [signed-product example](Tests/UnitLogDerivative.lean#L127) is a
+  client in the `Tests` root, not a theorem splitting arbitrary units. See the
+  [factor](FormalPowerSeries/UnitLogDerivative.lean#L139) and
+  [coefficient formula](FormalPowerSeries/UnitLogDerivative.lean#L160).
+
+This is weighted by **negative `X`**, not an unweighted analytic logarithmic
+derivative or a formal logarithm. Constant units lie in its kernel; under
+`[CharP R p]` for any natural `p`, so do `p`-th powers. Even a normalized
+nonidentity unit can lie in the kernel, as the
+[characteristic-two client](Tests/UnitLogDerivative.lean#L96) shows.
+For `a_n = coeff n f` and `b_n = coeff n (negXLogDeriv f)`, the unnormalized
+identity is `∑ (i,j) ∈ antidiagonal (n+1), b_i * a_j = -(a_(n+1) * (n+1))`.
+**Only if** `a_0 = 1`, the forward recurrence is
+`b_(n+1) + ∑ i ∈ range n, a_(i+1) * b_(n-i) = -(a_(n+1) * (n+1))`.
+See [API.md](API.md) for the conventions; the pin-specific `derivative_map`
+helper remains private, not a separate derivative API. There is no lambda/Witt
+structure, splitting extension or Adams operation here.
+
+### Rational Artin–Hasse exponential
+
+- **Formal construction and normalization.** For every natural `p`,
+  `PowerSeries.artinHasseLog p` has coefficient `1/n` at powers of `p` and zero
+  elsewhere, and `PowerSeries.artinHasseExp p` substitutes this zero-constant
+  series into Mathlib's formal exponential. The exponential has constant and
+  linear coefficients one and is a unit. For `p ≥ 2`, this is the rational
+  series `exp (∑ i ≥ 0, X^(p^i) / p^i)`. See the
+  [construction and basic API](FormalPowerSeries/ArtinHasse.lean).
+- **Coefficient recurrence and normalized uniqueness.** For `2 ≤ p`, including
+  composite `p`, the coefficients `a_n` satisfy
+  `n * a_n = ∑ i ∈ range n, if p^i ≤ n then a_(n - p^i) else 0`.
+  Conversely, this recurrence and `a_0 = 1` determine the exponential uniquely
+  among rational power series. No primeness or coefficient integrality is
+  assumed. The [ordinary-import examples](FormalPowerSeriesTests/ArtinHasse.lean)
+  compute `coeff 3 (artinHasseExp 2) = 2/3` with reduced denominator three and
+  `coeff 2 (artinHasseExp 3) = 1/2`, and show that the recurrence fails at
+  `p = 1`, degree two.
+
+- **Coefficientwise Euler product.** For prime `p`, the coefficient in degree
+  `k` agrees with every finite product of `(1 - X^n)^(-μ(n)/n)` over positive
+  `n ≤ N` coprime to `p`, whenever `k ≤ N`. The factors use Mathlib's formal
+  binomial series; no infinite-product operation, coefficient integrality or
+  analytic convergence is assumed. See the
+  [Euler-product theorem](FormalPowerSeries/ArtinHasseEulerProduct.lean).
+  The [examples](FormalPowerSeriesTests/ArtinHasseEulerProduct.lean) independently
+  calculate the cubic coefficient `2/3` at prime two, instantiate the theorem
+  on that example, and show failure at the composite parameter four.
+
+- **Coefficient p-integrality.** For prime `p`,
+  `PowerSeries.artinHasseExp_coeff_padicValuation_le_one` proves that every
+  rational coefficient has multiplicative p-adic valuation at most one.
+  The proof uses the standard Dieudonné–Dwork method, the functional equation
+  `E(X)^p = E(X^p) exp(pX)`, and Mathlib's divided powers on the ideal `(p)`
+  of the p-adic integers. The theorem is in the separate
+  [p-adic module](FormalPowerSeries/ArtinHasse/Padic.lean); the rational core
+  does not import p-adic theory. The integrality proof does not use the
+  Euler-product identity.
+
+| Module | Artin–Hasse API |
+| --- | --- |
+| `FormalPowerSeries.ArtinHasse` | Rational construction, normalization, derivative, recurrence and uniqueness |
+| `FormalPowerSeries.ArtinHasseEulerProduct` | Coefficientwise Euler-product identity for prime `p` |
+| `FormalPowerSeries.ArtinHasse.Padic` | Coefficient p-integrality for prime `p` |
+
+### Ideal-adically restricted multivariate series
+
+- **Finite-index reduction.** For any variable type `σ`, commutative ring
+  `R` and ideal `I`, `IsAdicallyRestricted I f` requires that at each `k : ℕ`,
+  only finitely many monomial indices have coefficients outside `I ^ k`.
+  A polynomial-range characterization yields a restricted subring and a
+  **surjective** ring homomorphism
+  `adicReduction I k : _ →+* MvPolynomial σ (R ⧸ I ^ k)`, including at `k = 0`.
+  See the [predicate and polynomial characterization](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted.lean),
+  [reduction](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted.lean)
+  and [finite-reduction guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md).
+- **Ideal change and local residue.** An inclusion `I ≤ J` induces an injective
+  map between restricted subrings and a surjective polynomial reduction modulo
+  `J`. For a parameter in the maximal ideal of a local ring this gives a
+  polynomial-valued residue homomorphism, agreeing with the existing residue
+  function over valuation domains. See the [ideal-change guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange/README.md)
+  and [residue guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/ValuationResidue/README.md).
+- **First-variable regrouping.** A restricted series in `Option τ` variables
+  maps injectively into a power series of restricted series in `τ`; polynomial
+  expressions in the distinguished variable embed in the reverse direction.
+  Bijective renaming and the `Fin (n + 1)` bridge preserve coefficients and
+  bounded-degree support. No equivalence with all iterated restricted series
+  is asserted. See the [regrouping guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableRegrouping/README.md).
+- **Finite-variable degree cutoffs and FG intrinsic kernels.** For finite `σ`,
+  coefficients are restricted exactly when they lie in `I ^ k` above some
+  degree cutoff at each `k`; the converse fails for infinite `σ`, as the
+  [ordinary-import counterexample](Tests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
+  demonstrates. If also `I.FG`, a restricted series with coefficients in
+  `I ^ k` decomposes into finitely many restricted coefficient series times
+  constants from `I ^ k`. Thus the kernel of `adicReduction I k` is the
+  **algebraic image ideal inside the restricted subring**, including `k = 0`;
+  this needs neither completeness nor regularity and makes no ambient-ideal
+  or closure assertion. See the [degree guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/DegreeDecay/README.md),
+  [FG kernel guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel/README.md)
+  and [FG client](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean).
+- **Regular-principal internal kernel.** When `I = Ideal.span {a}` and
+  `ha : IsRegular a`, coefficientwise division by `a ^ k` constructs the
+  quotient *inside the restricted subring*. The kernel of `adicReduction I k`
+  is the ideal generated there by the restricted constant `a ^ k`. This is
+  not arbitrary-ideal internal division. See the
+  [division and kernel theorems](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean)
+  and [kernel guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrincipalKernel/README.md).
+- **Scalar-linear polynomial quotients.** The existing restricted subring has
+  an `R`-algebra structure, and reduction to `MvPolynomial σ (R ⧸ I ^ k)` is
+  surjective and `R`-linear for every ideal, variable type and level, including
+  `k = 0`. For a regular principal generator `a`, its **submodule** kernel is
+  `I ^ k • ⊤`, yielding an `R`-linear equivalence from the corresponding
+  module quotient; it is not a ring-quotient equivalence. A separate native
+  integer endpoint supports default `ℤ`-module quotient types without a
+  priority override. See the [linear quotient module](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean),
+  [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean).
+- **Polynomial adic-completion equivalence.** With actual coefficient
+  completeness `[IsAdicComplete I R]`,
+  `adicallyRestrictedEquivAdicCompletion I` is a ring equivalence between
+  the restricted subring and native
+  `AdicCompletion (I.map MvPolynomial.C) (MvPolynomial σ R)`. It preserves
+  finite-level evaluation and polynomial inclusion. Neither finite variables
+  nor finite generation of `I` is assumed; completeness of arbitrary
+  non-finitely-generated polynomial completions is **not** asserted. See the
+  [equivalence and evaluation](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean)
+  and [completion guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit/README.md).
+
+- **Coefficientwise kernel filtration.** For arbitrary variables, ideals and
+  commutative coefficient rings, multiplying series whose coefficients lie in `J`
+  and `K` gives coefficients in `J * K`. Hence products of restricted series
+  vanishing under `adicReduction I n` and `adicReduction I k` vanish at
+  `n + k`; finite sums and level-one errors obey the same law. This is **not**
+  an identification with intrinsic restricted-ring ideal powers and does not
+  require completeness or finite generation. See the
+  [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean),
+  [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).
+
+- **Restricted-subring units.** For arbitrary variables and ideals with
+  `[IsAdicComplete I R]`, `isUnit_adicallyRestricted_iff_adicReduction_one`
+  detects units *inside* the existing restricted subring by the unit of
+  `adicReduction I 1 f`. The equivalent
+  `isUnit_adicallyRestricted_iff_coeff_mod_ideal` tests a unit constant
+  coefficient and nilpotent nonconstant coefficients in `R ⧸ I`;
+  `isUnit_iff_quotient_of_isAdicComplete` reflects scalar units from that
+  quotient; and `isUnit_adicallyRestricted_iff_coeff_radical` uses an actual
+  unit constant coefficient and `I.radical` for the remaining coefficients.
+  This requires no finite variables, finite generation, valuation or
+  intrinsic `I*T` kernel identity. See the
+  [unit guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean).
+
+- **Generic linear extension.** Over `[CommRing R]` and `[IsAdicComplete I R]`,
+  `restrictedLinearExtension I F` extends any polynomial `R`-linear endomorphism
+  `F`, for arbitrary variable type and ideal. The quotient-polynomial operator
+  commutes with reductions and level transitions; the extension preserves
+  each coefficientwise reduction kernel and agrees on polynomials. Its
+  uniqueness assumes **both** polynomial agreement and all-level kernel
+  preservation. Finite polynomial levels keep its output restricted; no
+  finite-variable, Noetherian, domain, nontriviality, intrinsic arbitrary-ideal
+  kernel, or intrinsic restricted-ring completeness claim is added. See the
+  [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean),
+  [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean).
+
+- **Content and actual-ring leading terms.** Over separated prevaluation
+  rings, restricted coefficient-content ideals have a generating coefficient
+  and admit selected-coefficient factorization. Over a valuation domain,
+  normalizing by content gives an intrinsic leading exponent; the leading
+  **term itself is a polynomial over `R`**, not merely over the residue ring.
+  See the [content and division guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/RestrictedDivision/README.md)
+  and [leading-term client](Tests/MvPowerSeries/IdealAdicRestricted/LeadingTerm.lean).
+- **Restricted division and conditional ideal generation.** Polynomial linear
+  division and monic lifting are supplied by the pinned
+  `multivariate-polynomials` library; this library extends/corrects division
+  for restricted series. A finite primitive family in a restricted-series
+  ideal generates that ideal **if its actual-`R` leading terms generate the
+  full polynomial leading-term ideal**. No standard-basis existence,
+  uniqueness, preparation or finite-variable assertion follows. See the
+  [conditional-generation guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis/README.md)
+  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean).
+- **Singleton and first-variable division.** The intrinsic leading exponent of
+  a product of nonzero restricted series is additive over a Hausdorff principal
+  valuation domain. For a nonzero singleton divisor, any two supplied division
+  equations with actual-supported remainders have the same quotient and
+  remainder; existence is not asserted for arbitrary divisors. A primitive
+  divisor admits such a pair under a nonzero parameter, radical equality and
+  adic completeness. Under those same existence hypotheses, a primitive
+  first-variable divisor with nonzero scalar top residue admits a unique
+  finite-polynomial remainder even in degree zero. See the [singleton](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/SingletonDivision/README.md)
+  and [first-variable](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableDivision/README.md)
+  guides and their ordinary-import clients.
+- **Conditional quotient units.** Over a commutative local ring, for a parameter
+  in its maximal ideal, a supplied division of the distinguished first-variable
+  monomial `X₀^d` by a divisor whose regrouped residue has degree `d` and
+  nonzero scalar top coefficient
+  `C c`, with remainder coefficients vanishing at first exponents at least
+  `d`, gives quotient residue `C (c⁻¹)`. Radical equality and adic completeness
+  then reflect this to a unit of the restricted subring. The theorem does not
+  construct a division or preparation. See the
+  [quotient-unit guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit/README.md)
+  and [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariableUnit.lean).
+- **First-variable restricted preparation.** For a commutative valuation domain
+  complete for the principal ideal of a nonzero parameter in its maximal ideal,
+  with that ideal's radical equal to the maximal ideal, suppose an adically
+  restricted series in `Fin (n + 1)` variables has regrouped maximal-ideal
+  residue polynomial of degree `d` and nonzero scalar coefficient `C c` at
+  `d`. Then `MvPowerSeries.existsUnique_firstVariable_preparation_of_scalar_top`
+  gives a restricted unit `u` and a monic polynomial `G` in the first variable
+  of exact degree `d` with `polynomialRestrictedFinFirst _ n G = u * f`.
+  The pair is unique even among competing multipliers not assumed units;
+  actual-coefficient primitivity follows from the scalar-top condition.
+  Both `d = 0` and `n = 0` are included. See the
+  [theorem](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean),
+  [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation/README.md)
+  and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FirstVariablePreparation.lean).
+- **Cofinal ideal-adic modules.** Under `I ≤ J`, `1 ≤ N` and `J ^ N ≤ I`,
+  separation, precompleteness and completeness are equivalent for any
+  `R`-module; this public generic support leaf requires no restricted series.
+  See its [standalone guide](FormalPowerSeries/AdicCompletion/README.md).
+
+These restricted-series theorems do not assert norm/radius or variable-adic
+restrictions, general base change, standard-basis existence, or source coverage.

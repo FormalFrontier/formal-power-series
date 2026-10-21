@@ -18,7 +18,7 @@ new carrier nor changes what ideal-adically restricted means: modulo each
   coefficientwise action.
 - `algebraAdicReduction I k` is an `R`-algebra homomorphism whose underlying
   ring homomorphism is the existing `adicReduction I k`.
-  `linearAdicReduction I k` is its `AlgHom.toLinearMap`; the simp lemmas
+  `linearAdicReduction I k` is its `AlgHom.toLinearMap`; the lemmas
   `linearAdicReduction_apply` and `coeff_linearAdicReduction` give its
   original value and coefficient law. `linearAdicReduction_surjective` applies
   for **every** ideal, variable type and natural-number level, including zero.

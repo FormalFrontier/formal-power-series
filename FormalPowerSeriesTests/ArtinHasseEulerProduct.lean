@@ -19,12 +19,10 @@ The composite parameter four shows that the coprime-index formula cannot be
 extended to every parameter at least two.
 -/
 
--- These private mathematical examples have no exported API.
-set_option linter.privateModule false
 
 open PowerSeries
 
-private theorem artinHasseExp_two_euler_coeff_three : coeff 3 (artinHasseExp 2) = (2 / 3 : ℚ) ∧
+example : coeff 3 (artinHasseExp 2) = (2 / 3 : ℚ) ∧
     coeff 3
       (∏ n ∈ (Finset.Icc 1 3).filter (fun n => Nat.Coprime n 2),
         subst ((X : PowerSeries ℚ) ^ n)
@@ -55,7 +53,7 @@ private theorem artinHasseExp_two_euler_coeff_three : coeff 3 (artinHasseExp 2) 
       coeff_subst_X_pow, coeff_rescale, binomialSeries_coeff, Ring.choose_neg',
       Ring.multichoose_one, Units.smul_def, zsmul_eq_mul, Int.cast_negOnePow_natCast]
 
-private theorem artinHasseExp_four_euler_coeff_two_ne : coeff 2 (artinHasseExp 4) ≠
+example : coeff 2 (artinHasseExp 4) ≠
     coeff 2
       (∏ n ∈ (Finset.Icc 1 2).filter (fun n => Nat.Coprime n 4),
         subst ((X : PowerSeries ℚ) ^ n)
