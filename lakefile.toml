@@ -1,6 +1,6 @@
 name = "formal-power-series"
 version = "0.1.0"
-defaultTargets = ["FormalPowerSeries", "Tests", "FormalPowerSeriesTests"]
+defaultTargets = ["FormalPowerSeries", "FormalPowerSeriesTests"]
 lintDriver = "batteries/runLinter"
 
 [leanOptions]
@@ -21,9 +21,6 @@ rev = "c8c241ff6c686368aac35f8c3b4eed502d714bbd"
 
 [[lean_lib]]
 name = "FormalPowerSeries"
-
-[[lean_lib]]
-name = "Tests"
 
 [[lean_lib]]
 name = "FormalPowerSeriesTests"

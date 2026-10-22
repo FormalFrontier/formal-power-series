@@ -14,6 +14,12 @@ into sums without dividing coefficients by natural numbers. Its naturality,
 finite coefficient formulas and the native factor `oneSubCXUnit` are provided
 below. No nontriviality, torsion-freeness or characteristic assumption is needed
 except where a characteristic-kernel statement explicitly requests one.
+
+## References
+
+The integral-unit formulas here are related to Charles A. Weibel,
+*The K-book: An Introduction to Algebraic K-theory* (2013), Section II.4
+and Exercise 4.6.
 -/
 
 set_option warningAsError true
@@ -111,7 +117,10 @@ public theorem negXLogDeriv_pow_char (p : ℕ) [CharP R p] (f : (PowerSeries R)�
     coeff 0 (negXLogDeriv f) = 0 := by
   simp [negXLogDeriv]
 
-/-- The unnormalized finite convolution formula, valid even if the constant term is not one. -/
+/-- The unnormalized finite convolution formula, valid even if the constant term is not one.
+
+For related integral-unit formulas, see Weibel, *The K-book* (2013), Section II.4
+and Exercise 4.6. -/
 public theorem coeff_negXLogDeriv_convolution (f : (PowerSeries R)ˣ) (n : ℕ) :
     ∑ p ∈ Finset.antidiagonal (n + 1),
       coeff p.1 (negXLogDeriv f) * coeff p.2 (f : PowerSeries R) =
@@ -120,7 +129,10 @@ public theorem coeff_negXLogDeriv_convolution (f : (PowerSeries R)ˣ) (n : ℕ) 
   rw [neg_mul, map_neg, coeff_succ_X_mul, coeff_derivative, coeff_mul] at h
   exact h
 
-/-- Integral coefficient recurrence, assuming exactly `coeff 0 f = 1`. -/
+/-- Integral coefficient recurrence, assuming exactly `coeff 0 f = 1`.
+
+For related integral-unit formulas, see Weibel, *The K-book* (2013), Section II.4
+and Exercise 4.6. -/
 public theorem coeff_negXLogDeriv_recurrence (f : (PowerSeries R)ˣ)
     (h0 : coeff 0 (f : PowerSeries R) = 1) (n : ℕ) :
     coeff (n + 1) (negXLogDeriv f) +
@@ -149,14 +161,20 @@ public noncomputable def oneSubCXUnit (a : R) : (PowerSeries R)ˣ :=
     coeff n ((oneSubCXUnit a)⁻¹ : (PowerSeries R)ˣ) = a ^ n := by
   simp [oneSubCXUnit, invOneSubPow, coeff_rescale]
 
-/-- The weighted derivative of a linear factor is `X * C a / (1 - C a * X)`. -/
+/-- The weighted derivative of a linear factor is `X * C a / (1 - C a * X)`.
+
+For related integral-unit formulas, see Weibel, *The K-book* (2013), Section II.4
+and Exercise 4.6. -/
 public theorem negXLogDeriv_oneSubCXUnit (a : R) :
     negXLogDeriv (oneSubCXUnit a) =
       X * (C a * (((oneSubCXUnit a)⁻¹ : (PowerSeries R)ˣ) : PowerSeries R)) := by
   simp [negXLogDeriv, derivative.leibniz, smul_eq_mul]
   ring
 
-/-- Positive-degree coefficients of the weighted derivative of a linear factor. -/
+/-- Positive-degree coefficients of the weighted derivative of a linear factor.
+
+For related integral-unit formulas, see Weibel, *The K-book* (2013), Section II.4
+and Exercise 4.6. -/
 public theorem coeff_succ_negXLogDeriv_oneSubCXUnit (a : R) (n : ℕ) :
     coeff (n + 1) (negXLogDeriv (oneSubCXUnit a)) = a ^ (n + 1) := by
   rw [negXLogDeriv_oneSubCXUnit, coeff_succ_X_mul, coeff_C_mul,

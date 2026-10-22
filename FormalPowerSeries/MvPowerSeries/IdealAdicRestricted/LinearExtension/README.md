@@ -50,7 +50,7 @@ Finite polynomial reductions at all levels are essential, especially with
 infinitely many variables. It does not define a new completion or claim
 intrinsic restricted-ring completeness.
 
-The [ordinary-import client](../../../../Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
+The [ordinary-import client](../../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
 checks addition, scalar multiplication, finite-level and polynomial laws,
 kernel preservation, uniqueness, identity, level zero, empty variables,
 the zero ideal and the zero ring `ZMod 1`.
@@ -65,8 +65,8 @@ fetch the matching precompiled mathlib cache **successfully before building**:
 ```sh
 lake exe cache get
 LEAN_NUM_THREADS=2 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearExtension
-LEAN_NUM_THREADS=2 lake build Tests.MvPowerSeries.IdealAdicRestricted.LinearExtension
-lake build FormalPowerSeries Tests
+LEAN_NUM_THREADS=2 lake build FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.LinearExtension
+lake build FormalPowerSeries FormalPowerSeriesTests
 ```
 
 See the [root build guidance](../../../../README.md#build-and-use) for

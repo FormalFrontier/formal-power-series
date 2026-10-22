@@ -28,7 +28,7 @@ filtration by `adicReduction_mul_eq_zero`; `restrictedGeometricInverse`
 then yields an inverse **in `T`**. The scalar unit criterion uses adic
 completeness and the Jacobson-radical criterion.
 
-The [ordinary-import client](../../../../Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean)
+The [ordinary-import client](../../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean)
 exercises arbitrary ideals and variable types, empty and infinite variables,
 the zero ideal and the zero ring. Its `ZMod 4` example demonstrates an
 existing polynomial-unit inclusion with a nonzero nilpotent linear

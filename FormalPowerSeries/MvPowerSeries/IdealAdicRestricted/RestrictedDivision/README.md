@@ -69,9 +69,9 @@ existential and imposes no finite-variable condition. The independent
 describes the additional leading-term-ideal premise needed for ideal generation.
 
 All ten ordinary-import clients live under
-`Tests/MvPowerSeries/IdealAdicRestricted/`; the cofinal comparisons, empty
-family and empty-variable cases are exercised there. The old
-`LinearExtension` and `KernelFiltration` clients remain in place.
+`FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/`; the cofinal comparisons, empty
+family and empty-variable cases are exercised there. The
+`LinearExtension` and `KernelFiltration` clients are also in this directory.
 
 ## Attribution and scope
 

@@ -56,19 +56,19 @@ example (I : Ideal ℤ) (k : ℕ)
 ```
 
 The ordinary-import client in
-[`Tests/MvPowerSeries/IdealAdicRestricted.lean`](../../../Tests/MvPowerSeries/IdealAdicRestricted.lean) additionally
+[`FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted.lean`](../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted.lean) additionally
 tests polynomial lifts and the cases `k = 0` (zero quotient), `I = ⊤` (every
 series), `I = ⊥` (polynomial example), and `σ = Fin 0` (every series). Nothing
 requires a nonzero quotient or a positive number of variables.
 
 With **finitely many variables**, the separate [degree-cutoff guide](DegreeDecay/README.md)
 characterizes restrictedness by an ideal-adic cutoff in total degree; its
-[ordinary-import client](../../../Tests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
+[ordinary-import client](../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
 proves the infinite-variable converse false. When `I.FG` also holds, the
 [finite-generation kernel guide](FinitelyGeneratedKernel/README.md) identifies
 the kernel of every `adicReduction I k` with the algebraic ideal generated
 by restricted constants from `I ^ k`, including `k = 0`. Its
-[client](../../../Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
+[client](../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
 checks the finite decomposition and degenerate/nonregular cases. Neither
 restriction is imposed on this base module or the separate regular-principal
 kernel result.
@@ -111,11 +111,11 @@ From the repository root, use the pinned Lean `v4.34.0-rc2`, mathlib
 ```sh
 lake exe cache get
 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted
-lake build Tests.MvPowerSeries.IdealAdicRestricted
+lake build FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted
 ```
 
 Both modules enable `warningAsError` and are imported by the
-`FormalPowerSeries` and `Tests` roots, respectively. The companion
+`FormalPowerSeries` and `FormalPowerSeriesTests` roots, respectively. The companion
 [degree cutoff](DegreeDecay/README.md),
 [finitely generated kernel](FinitelyGeneratedKernel/README.md),
 [regular-principal kernel](PrincipalKernel/README.md),

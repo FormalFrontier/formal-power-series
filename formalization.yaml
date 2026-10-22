@@ -129,9 +129,15 @@ automation:
     it does not establish existence of such a finite family or unique division.
 status:
   scope: >-
-    Two independent reusable families: the weighted negative logarithmic
-    derivative of power-series units over arbitrary commutative rings, and
-    coefficientwise ideal-adically restricted multivariate series, with a
+    Three independent reusable constructions: the weighted negative logarithmic
+    derivative of power-series units over arbitrary commutative rings;
+    coefficientwise ideal-adically restricted multivariate series; and the
+    rational Artin–Hasse exponential, including its finite Euler-prefix theorem
+    and separate p-integrality module. The rational recurrence holds for
+    2 ≤ p, including composite p; the Euler-prefix theorem and p-integrality
+    require prime p. The rational core does not import p-adic theory, and
+    p-integrality is proved independently of the Euler identity. The
+    restricted-series family comes with a
     generic cofinality support leaf. The curated main_results below locate
     21 scalar-linear quotient, eight generic linear-extension, four
     coefficientwise kernel-product and fourteen content/cofinality/

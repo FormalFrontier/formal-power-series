@@ -91,7 +91,7 @@ example (f : adicallyRestrictedSubring (σ := Fin 2) fourIdeal) :
 ```
 
 The ordinary-import client
-`Tests.MvPowerSeries.IdealAdicRestricted.LinearQuotient`
+`FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.LinearQuotient`
 exercises arbitrary `I`, `R`, `σ`, `k`, and scalar/coefficient laws; `σ = Unit`
 without any sequence transport; native integer kernel and quotient
 representatives at levels `0`, `1`, `2` with regular nonunit `4 : ℤ`;
@@ -117,8 +117,8 @@ Fetch its precompiled cache successfully before either build:
 ```sh
 lake exe cache get
 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient \
-  Tests.MvPowerSeries.IdealAdicRestricted.LinearQuotient
-lake build FormalPowerSeries Tests
+  FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.LinearQuotient
+lake build FormalPowerSeries FormalPowerSeriesTests
 ```
 
 Both modules enable `warningAsError` and are included in the two roots.

@@ -46,7 +46,7 @@ original restrictedness ensure that the assembled coefficient series remain
 restricted, without cancelling any generator. No completeness, separation,
 Noetherianity, domain, valuation, regularity, `Nontrivial`, proper-ideal,
 positive-level or nonempty-variable assumption is needed. The
-[ordinary-import client](../../../../Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
+[ordinary-import client](../../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
 checks finite decomposition, ideal membership, a quotient-ring equivalence,
 `k = 0`, zero/top ideals, empty variables, the zero ring and the nonregular
 `2 : ZMod 4` case. Its quotient equivalence is a private client, not an
@@ -61,7 +61,7 @@ fetch the matching precompiled mathlib cache successfully before building:
 ```sh
 lake exe cache get
 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel
-lake build Tests.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel
+lake build FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.FinitelyGeneratedKernel
 ```
 
 Both modules enable `warningAsError`; see the [repository README](../../../../README.md#build-and-use)

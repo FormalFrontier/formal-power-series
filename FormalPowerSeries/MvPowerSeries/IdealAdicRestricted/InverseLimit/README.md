@@ -63,7 +63,7 @@ example {σ R : Type*} [CommRing R] (I : Ideal R) [IsAdicComplete I R]
   MvPowerSeries.adicallyRestrictedEquivAdicCompletion_polynomial I p
 ```
 
-The [ordinary-import client](../../../../Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean)
+The [ordinary-import client](../../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean)
 tests both evaluation directions, polynomial
 representatives, identity and composition of level transitions, level zero,
 empty and infinite variable types, and the bottom-ideal complete ring
@@ -80,12 +80,12 @@ and mathlib
 ```sh
 lake exe cache get
 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit
-lake build Tests.MvPowerSeries.IdealAdicRestricted.InverseLimit
+lake build FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.InverseLimit
 ```
 
 Fetch the matching precompiled mathlib cache **before** either build. Both
 modules set `warningAsError` and are imported by the `FormalPowerSeries` and
-`Tests` roots, respectively. This equivalence makes no assertion of
+`FormalPowerSeriesTests` roots, respectively. This equivalence makes no assertion of
 arbitrary-ideal internal restricted kernels, restricted-subring adic or
 topological completeness, completion completeness at non-finitely-generated
 ideals, base-change functoriality, variable-adic equivalence, preparation or

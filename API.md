@@ -29,7 +29,7 @@ If `a_0=1`, the recurrence is
 This determines `b_(n+1)` with coefficient one; it **does not** divide by
 `n+1` to determine `a_(n+1)`.
 
-The default-built client `Tests/UnitLogDerivative.lean` exercises all API
+The default-built client `FormalPowerSeriesTests/UnitLogDerivative.lean` exercises all API
 families, including a nonnormalized integral unit; signed finite products
 `∏ i ∈ s, (oneSubCXUnit (a i)) ^ (z i)` with coefficients
 `∑ i ∈ s, (z i) • (a i) ^ (n+1)`; its empty family; independent-universe maps;
@@ -57,7 +57,7 @@ completeness, norm, or proper-ideal hypothesis is imposed.
 
 The result covers `k = 0`, empty or infinite variable types, and bottom or top
 ideals. See the [finite-reduction guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md)
-and its [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted.lean).
+and its [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted.lean).
 
 ## Ideal change and polynomial residue
 
@@ -132,7 +132,7 @@ Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.DegreeDecay` for
 above which every coefficient of degree at least `d` belongs to `I ^ k`.
 The finite-exception-to-cutoff direction needs no finite-variable assumption,
 but its helper is private; the converse really needs finite variables (the
-[ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
+[ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
 contains an infinite-variable counterexample). See the
 [degree guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/DegreeDecay/README.md).
 
@@ -148,7 +148,7 @@ These are algebraic, **intrinsic** restricted-series identities, not
 closures or ambient-series assertions. No regularity, domain, completeness,
 nontriviality, proper ideal, nonempty variables or positive `k` is assumed.
 The [FG guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel/README.md)
-and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
+and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
 give a practical kernel/quotient use and cover zero/top/zero-ring and nonregular
 cases. The quotient equivalence in that client is **private**. The separate
 regular-principal kernel theorem below works for arbitrary `σ`.
@@ -166,7 +166,7 @@ For `I = Ideal.span ({a} : Set R)` and **`ha : IsRegular a`**, the element
 `adicReduction I k` with the ideal spanned by `principalAdicConstant a k`
 in the restricted subring. No arbitrary-ideal internal division is asserted.
 See the [kernel guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrincipalKernel/README.md)
-and its [client](Tests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean).
+and its [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean).
 
 ## Scalar-linear reduction and principal quotients
 
@@ -198,7 +198,7 @@ and `principalIntLinearQuotientEquiv` for dependent `Submodule ℤ S` and
 quotient types; their `apply`, `coeff`, `surjective`, principal-kernel and
 representative lemmas match the generic laws without overriding module-instance
 priority. See the [linear quotient guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient/README.md)
-and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean)
+and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean)
 for both routes, including zero levels and a regular nonunit over `ℤ × ℤ`.
 
 ## Coefficientwise kernel products
@@ -218,7 +218,7 @@ is required. With `ρ n := adicReduction I n` on the restricted subring:
 These are statements about **coefficientwise** reduction kernels, not
 intrinsic ideal powers in the restricted subring. Levels may be zero; the
 [standalone guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration/README.md)
-and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
+and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
 also cover empty families and variables, bottom/top ideals and zero rings.
 The producer imports the restricted-series base and pinned mathlib ideal
 operations, independently of linear extension, quotients and completeness.
@@ -244,7 +244,7 @@ subring. The quotient-coefficient criterion transports `I ^ 1 = I` explicitly.
 No finite-variable, finitely generated ideal, domain, valuation, nontriviality
 or unproved identification with intrinsic restricted-ring ideal powers is
 assumed. See the [standalone guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/README.md)
-and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean).
+and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean).
 The client's `ZMod 4` witness uses the older polynomial-unit inclusion, not
 the new criterion for a nonzero nilpotent nonconstant coefficient.
 
@@ -270,7 +270,7 @@ finite-variable, Noetherian, domain nor nontriviality assumptions are added.
 No arbitrary-ideal identity with the intrinsic submodule `I ^ n • ⊤`, or
 intrinsic restricted-ring completeness, is claimed. See the
 [extension guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension/README.md)
-and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
+and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
 for the identity, level-zero, empty-variable, zero-ideal and zero-ring cases.
 
 ## Polynomial adic completion
@@ -291,7 +291,7 @@ ideals, are assumed adically complete.
 | Polynomial inclusion and native completion map agree | `adicallyRestrictedEquivAdicCompletion_polynomial` |
 
 See the [completion guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit/README.md)
-and [client](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean).
+and [client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean).
 These multivariate coefficient-adic APIs are independent of the single-variable
 unit logarithmic derivative. They do not provide norm/radius-weighted or
 variable-adic restrictions or general base change. Restricted division under
@@ -344,4 +344,4 @@ it concludes `J = Ideal.span (Set.range g)`. The latter is a *conditional*
 ideal-generation theorem, not existence of a standard basis, unique division,
 preparation or source-specific coverage. See the
 [precise theorem guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis/README.md)
-and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean).
+and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean).

@@ -31,7 +31,7 @@ example {σ R : Type*} [CommRing R] [Finite σ]
 
 No domain, valuation, norm, Noetherianity, completeness, proper-ideal,
 nonzero-ring, nonempty-variable or positive-level hypothesis is needed.
-The [ordinary-import client](../../../../Tests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
+The [ordinary-import client](../../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
 checks both directions, `k = 0`, empty variables, the top ideal and polynomials.
 It also contains a **formal counterexample** to the converse for infinite `σ`:
 over `ℤ` at the zero ideal, the series with coefficient one at every variable
@@ -45,7 +45,7 @@ fetch the matching precompiled mathlib cache successfully, then build:
 ```sh
 lake exe cache get
 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.DegreeDecay
-lake build Tests.MvPowerSeries.IdealAdicRestricted.DegreeDecay
+lake build FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.DegreeDecay
 ```
 
 These modules use `warningAsError`. The repository [README](../../../../README.md#build-and-use)

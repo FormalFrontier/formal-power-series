@@ -128,13 +128,13 @@ From the repository root:
 
 ```sh
 lake exe cache get
-lake build FormalPowerSeries Tests FormalPowerSeriesTests
+lake build FormalPowerSeries FormalPowerSeriesTests
 ```
 
 Fetch the matching precompiled mathlib cache successfully **before** any build;
 `lake build` alone is not a cache-fetch step. The default `lake build` also
-builds all three roots, including the ordinary-import examples under `Tests/`
-and `FormalPowerSeriesTests/`.
+builds both roots, including the ordinary-import examples under
+`FormalPowerSeriesTests/`.
 For a smaller check, use `lake build FormalPowerSeries.UnitLogDerivative` or
 `lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration`;
 its matching test module can be built separately. The `DegreeDecay` and
@@ -147,6 +147,14 @@ Fetch the matching precompiled cache to avoid building mathlib from source;
 for a narrower library check, build the relevant producer and test modules
 separately.
 
+### Client module migration
+
+Client modules `Tests.<suffix>` moved to `FormalPowerSeriesTests.<suffix>`.
+Replace `import Tests` and build target `Tests` with `FormalPowerSeriesTests`.
+Build with `lake build FormalPowerSeries FormalPowerSeriesTests`.
+Public declaration names and mathematical statements are unchanged; old client
+imports and the old build target are not preserved.
+
 Import `FormalPowerSeries` for these constructions and the generic cofinal
 helper, or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
 `FormalPowerSeries.ArtinHasse`, `FormalPowerSeries.ArtinHasseEulerProduct`,
@@ -158,23 +166,23 @@ helper, or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
 submodules, or `FormalPowerSeries.AdicCompletion.Cofinal`. See [API.md](API.md)
 for signatures and the
 [restricted-series guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md)
-for the navigable family of modules. The [unit](Tests/UnitLogDerivative.lean),
-[finite-reduction](Tests/MvPowerSeries/IdealAdicRestricted.lean),
-[principal-kernel](Tests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean),
-[linear-quotient](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean),
-[completion](Tests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean),
-[linear-extension](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
-and [filtration](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
+for the navigable family of modules. The [unit](FormalPowerSeriesTests/UnitLogDerivative.lean),
+[finite-reduction](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted.lean),
+[principal-kernel](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean),
+[linear-quotient](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean),
+[completion](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean),
+[linear-extension](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean)
+and [filtration](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
 clients demonstrate the API; the
 [Artin–Hasse client](FormalPowerSeriesTests/ArtinHasse.lean) computes initial
 rational coefficients from the recurrence. The
-[restricted-unit client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean)
+[restricted-unit client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean)
 exercises the four unit criteria, though its `ZMod 4` polynomial witness
 uses the polynomial-unit map rather than the coefficient criterion.
 The degree and FG
-[clients](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
+[clients](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean)
 extend its finite-variable boundaries, while the other leaves under the same
-`Tests/MvPowerSeries/IdealAdicRestricted/` directory exercise further APIs.
+`FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/` directory exercise further APIs.
 For example:
 
 ```lean

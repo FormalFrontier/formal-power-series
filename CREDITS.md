@@ -9,9 +9,10 @@ standard Dieudonné–Dwork method using Mathlib's p-adic divided powers, rather
 than by the book's Euler-product argument.
 Kazuhiro Fujiwara and Fumiharu Kato, *Foundations of Rigid Geometry I*, provide
 background for coefficientwise restricted series. These references do not
-imply formal coverage of the sources. Prism authored the original derivative
-proof expression; Formal Frontier AI contributors adapted its mathematical
-argument for this library and wrote its ordinary-import client and guides.
+imply formal coverage of the sources. Prism authored the original weighted
+unit logarithmic derivative formalization and its earlier boundary examples.
+Formal Frontier AI contributors adapted and extended these formalizations and
+examples for this library, added further examples and wrote the guides.
 Folio contributed the derivative headlines and documentation. Distinct Formal
 Frontier contributors developed the restricted carrier, principal kernel,
 completion, scalar-linear quotient, linear extension and coefficientwise
@@ -29,7 +30,13 @@ ordinary-import clients; these results reuse the published restricted-series
 foundation and polynomial lexicographic API.
 The antidiagonal coefficient-product method adapts Jz Pan's 2025 mathlib
 `PowerSeries.CoeffMulMem` argument,
-Apache-2.0, as credited in the [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).
+Apache-2.0, as credited in the [kernel-filtration formalization](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).
+The upstream copyright, license and author notices are retained for this
+adaptation, together with a separate description of the project's multivariate
+coefficient-ideal and restricted-series kernel-product modifications in that
+file. These notices and the modification description also accompany earlier
+published versions of the kernel-filtration development, its documentation
+and examples.
 Native mathlib polynomial, power-series, ideal, quotient and completion APIs
 retain their respective authors and license; using these methods is not a
 claim to their original proofs.

@@ -34,7 +34,7 @@ locates a componentwise divisor cone. `ValuationNormalizedDivision` then
 gives a restricted remainder with zero **actual** coefficients on those
 cones; a nonzero remainder in `J` would have a nonzero leading coefficient
 in one of the cones. Thus the remainder is zero. See the
-[`Tests` client](../../../../Tests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean)
+[`FormalPowerSeriesTests` client](../../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean)
 and the [division guide](../RestrictedDivision/README.md).
 
 The formal statement and proof are standalone mathematical library content;

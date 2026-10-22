@@ -69,8 +69,8 @@ The detailed module guides below give the corresponding signatures.
   `n`, and its weighted derivative has coefficient `a^(n+1)` in degree `n+1`.
   The product and integer-power laws yield a signed power-sum formula for
   finite products of these factors, including inverse factors and the empty
-  family. The [signed-product example](Tests/UnitLogDerivative.lean#L127) is a
-  client in the `Tests` root, not a theorem splitting arbitrary units. See the
+  family. The [signed-product example](FormalPowerSeriesTests/UnitLogDerivative.lean#L127) is a
+  client in the `FormalPowerSeriesTests` root, not a theorem splitting arbitrary units. See the
   [factor](FormalPowerSeries/UnitLogDerivative.lean#L139) and
   [coefficient formula](FormalPowerSeries/UnitLogDerivative.lean#L160).
 
@@ -78,7 +78,7 @@ This is weighted by **negative `X`**, not an unweighted analytic logarithmic
 derivative or a formal logarithm. Constant units lie in its kernel; under
 `[CharP R p]` for any natural `p`, so do `p`-th powers. Even a normalized
 nonidentity unit can lie in the kernel, as the
-[characteristic-two client](Tests/UnitLogDerivative.lean#L96) shows.
+[characteristic-two client](FormalPowerSeriesTests/UnitLogDerivative.lean#L96) shows.
 For `a_n = coeff n f` and `b_n = coeff n (negXLogDeriv f)`, the unnormalized
 identity is `∑ (i,j) ∈ antidiagonal (n+1), b_i * a_j = -(a_(n+1) * (n+1))`.
 **Only if** `a_0 = 1`, the forward recurrence is
@@ -158,7 +158,7 @@ structure, splitting extension or Adams operation here.
 - **Finite-variable degree cutoffs and FG intrinsic kernels.** For finite `σ`,
   coefficients are restricted exactly when they lie in `I ^ k` above some
   degree cutoff at each `k`; the converse fails for infinite `σ`, as the
-  [ordinary-import counterexample](Tests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
+  [ordinary-import counterexample](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/DegreeDecay.lean)
   demonstrates. If also `I.FG`, a restricted series with coefficients in
   `I ^ k` decomposes into finitely many restricted coefficient series times
   constants from `I ^ k`. Thus the kernel of `adicReduction I k` is the
@@ -166,7 +166,7 @@ structure, splitting extension or Adams operation here.
   this needs neither completeness nor regularity and makes no ambient-ideal
   or closure assertion. See the [degree guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/DegreeDecay/README.md),
   [FG kernel guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel/README.md)
-  and [FG client](Tests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean).
+  and [FG client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/FinitelyGeneratedKernel.lean).
 - **Regular-principal internal kernel.** When `I = Ideal.span {a}` and
   `ha : IsRegular a`, coefficientwise division by `a ^ k` constructs the
   quotient *inside the restricted subring*. The kernel of `adicReduction I k`
@@ -183,7 +183,7 @@ structure, splitting extension or Adams operation here.
   integer endpoint supports default `ℤ`-module quotient types without a
   priority override. See the [linear quotient module](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean),
   [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient/README.md)
-  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean).
+  and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean).
 - **Polynomial adic-completion equivalence.** With actual coefficient
   completeness `[IsAdicComplete I R]`,
   `adicallyRestrictedEquivAdicCompletion I` is a ring equivalence between
@@ -204,7 +204,7 @@ structure, splitting extension or Adams operation here.
   require completeness or finite generation. See the
   [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean),
   [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/KernelFiltration/README.md)
-  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).
+  and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean).
 
 - **Restricted-subring units.** For arbitrary variables and ideals with
   `[IsAdicComplete I R]`, `isUnit_adicallyRestricted_iff_adicReduction_one`
@@ -218,7 +218,7 @@ structure, splitting extension or Adams operation here.
   This requires no finite variables, finite generation, valuation or
   intrinsic `I*T` kernel identity. See the
   [unit guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/UnitDetection/README.md)
-  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean).
+  and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/UnitDetection.lean).
 
 - **Generic linear extension.** Over `[CommRing R]` and `[IsAdicComplete I R]`,
   `restrictedLinearExtension I F` extends any polynomial `R`-linear endomorphism
@@ -231,7 +231,7 @@ structure, splitting extension or Adams operation here.
   kernel, or intrinsic restricted-ring completeness claim is added. See the
   [producer](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean),
   [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearExtension/README.md)
-  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean).
+  and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearExtension.lean).
 
 - **Content and actual-ring leading terms.** Over separated prevaluation
   rings, restricted coefficient-content ideals have a generating coefficient
@@ -239,7 +239,7 @@ structure, splitting extension or Adams operation here.
   normalizing by content gives an intrinsic leading exponent; the leading
   **term itself is a polynomial over `R`**, not merely over the residue ring.
   See the [content and division guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/RestrictedDivision/README.md)
-  and [leading-term client](Tests/MvPowerSeries/IdealAdicRestricted/LeadingTerm.lean).
+  and [leading-term client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LeadingTerm.lean).
 - **Restricted division and conditional ideal generation.** Polynomial linear
   division and monic lifting are supplied by the pinned
   `multivariate-polynomials` library; this library extends/corrects division
@@ -248,7 +248,7 @@ structure, splitting extension or Adams operation here.
   full polynomial leading-term ideal**. No standard-basis existence,
   uniqueness, preparation or finite-variable assertion follows. See the
   [conditional-generation guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis/README.md)
-  and [ordinary-import client](Tests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean).
+  and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/PrimitiveStandardBasis.lean).
 - **Singleton and first-variable division.** The intrinsic leading exponent of
   a product of nonzero restricted series is additive over a Hausdorff principal
   valuation domain. For a nonzero singleton divisor, any two supplied division

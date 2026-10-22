@@ -6,7 +6,6 @@
       "path": ".",
       "targets": [
         "FormalPowerSeries",
-        "Tests",
         "FormalPowerSeriesTests"
       ]
     }

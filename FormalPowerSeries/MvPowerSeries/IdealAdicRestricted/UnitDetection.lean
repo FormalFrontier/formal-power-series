@@ -76,7 +76,7 @@ theorem isUnit_adicallyRestricted_iff_coeff_mod_ideal
 /-- In a complete coefficient ring, reduction modulo `I` reflects scalar units. -/
 theorem isUnit_iff_quotient_of_isAdicComplete (r : R) :
     IsUnit r ↔ IsUnit (Ideal.Quotient.mk I r) := by
-  haveI : IsLocalHom (Ideal.Quotient.mk I) :=
+  have : IsLocalHom (Ideal.Quotient.mk I) :=
     isLocalHom_of_le_jacobson_bot I (IsAdicComplete.le_jacobson_bot I)
   exact ⟨fun hr => hr.map _, fun hr => isUnit_of_map_unit _ r hr⟩
 

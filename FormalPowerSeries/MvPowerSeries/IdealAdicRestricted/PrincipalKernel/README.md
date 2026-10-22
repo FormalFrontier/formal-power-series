@@ -88,12 +88,12 @@ manifest. Fetch the matching mathlib cache **before** building:
 ```sh
 lake exe cache get
 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.PrincipalKernel \
-  Tests.MvPowerSeries.IdealAdicRestricted.PrincipalKernel
+  FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.PrincipalKernel
 ```
 
 Both modules enable `warningAsError`; the corresponding private client is
-[`Tests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean`](../../../../Tests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean).
-The `FormalPowerSeries` and `Tests` roots import the producer and client.
+[`FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean`](../../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean).
+The `FormalPowerSeries` and `FormalPowerSeriesTests` roots import the producer and client.
 
 ## Provenance
 

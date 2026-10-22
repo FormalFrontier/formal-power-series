@@ -27,21 +27,22 @@ power of an ideal of `T`. The product laws include level zero, empty families,
 empty variables, bottom/top ideals and zero rings. They do not construct a
 geometric inverse or division operator and do not depend on the completion,
 linear-extension or quotient modules. See the
-[ordinary-import client](../../../../Tests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
+[ordinary-import client](../../../../FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/KernelFiltration.lean)
 for eleven private usage examples.
 
 ## Reproduction and provenance
 
 Use the repository's `lean-toolchain` (Lean `v4.34.0-rc2`) and complete
-`lake-manifest.json` (sole direct dependency: mathlib
-`83abb3e776bdefcbc447a1e44d0debe4010039e5`). From the project root,
+`lake-manifest.json` (two direct dependencies: mathlib
+`83abb3e776bdefcbc447a1e44d0debe4010039e5` and released MultivariatePolynomials
+`c8c241ff6c686368aac35f8c3b4eed502d714bbd`). From the project root,
 first fetch the matching precompiled mathlib cache successfully:
 
 ```sh
 lake exe cache get
 LEAN_NUM_THREADS=2 lake build FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.KernelFiltration
-LEAN_NUM_THREADS=2 lake build Tests.MvPowerSeries.IdealAdicRestricted.KernelFiltration
-lake build FormalPowerSeries Tests
+LEAN_NUM_THREADS=2 lake build FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.KernelFiltration
+lake build FormalPowerSeries FormalPowerSeriesTests
 ```
 
 The original coefficientwise proof and eleven client examples were written
