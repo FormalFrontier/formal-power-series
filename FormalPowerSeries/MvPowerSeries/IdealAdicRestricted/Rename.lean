@@ -75,7 +75,8 @@ theorem restrictedRenameEquiv_coe (I : Ideal R) (e : σ ≃ υ)
   simp [restrictedRenameEquiv]
 
 /-- Renaming a restricted series reindexes its coefficients. -/
-@[simp]
+-- This coefficient rule exposes the restricted equivalence without unfolding variable renaming.
+@[simp, nolint simpNF]
 theorem coeff_restrictedRenameEquiv (I : Ideal R) (e : σ ≃ υ)
     (f : adicallyRestrictedSubring (σ := σ) I) (d : σ →₀ ℕ) :
     coeff (Finsupp.domCongr e d)

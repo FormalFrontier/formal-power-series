@@ -32,6 +32,7 @@ public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.Singleton
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.UnitDetection
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.ValuationNormalizedDivision
 public import FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.ValuationResidue
+public import FormalPowerSeriesTests.ScalarCoefficients
 public import FormalPowerSeriesTests.UnitLogDerivative
 
 /-! Ordinary-import examples and boundary tests for the power-series APIs. -/

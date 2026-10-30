@@ -97,7 +97,7 @@ public noncomputable def negXLogDerivHom :
   map_add' f g := negXLogDeriv_mul f.toMul g.toMul
 
 @[simp] public theorem negXLogDeriv_constant (a : Rˣ) :
-    negXLogDeriv (Units.map (C : R →+* PowerSeries R).toMonoidHom a) = 0 := by
+    negXLogDeriv (Units.map (↑(C : R →+* PowerSeries R) : R →* PowerSeries R) a) = 0 := by
   simp [negXLogDeriv]
 
 /-- Cancellation characterizes the image of a given unit without dividing by `n`. -/

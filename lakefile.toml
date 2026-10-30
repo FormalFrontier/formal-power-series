@@ -24,3 +24,6 @@ name = "FormalPowerSeries"
 
 [[lean_lib]]
 name = "FormalPowerSeriesTests"
+
+[lean_lib.leanOptions]
+weak.linter.privateModule = false

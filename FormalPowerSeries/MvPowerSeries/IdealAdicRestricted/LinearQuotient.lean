@@ -47,7 +47,6 @@ theorem coe_smul_adicallyRestricted (I : Ideal R) (r : R)
   rw [Algebra.smul_def, Subring.coe_mul, algebraMap_adicallyRestricted_coe]
   exact (smul_eq_C_mul (f : MvPowerSeries σ R) r).symm
 
-@[simp]
 theorem coeff_smul_adicallyRestricted (I : Ideal R) (r : R)
     (f : adicallyRestrictedSubring (σ := σ) I) (m : σ →₀ ℕ) :
     coeff m ((r • f : adicallyRestrictedSubring (σ := σ) I) : MvPowerSeries σ R) =
