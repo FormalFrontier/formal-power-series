@@ -281,10 +281,15 @@ For independent variable and coefficient universes, `[CommRing R]` and any
 from `AdicCompletion (I.map (algebraMap R (MvPolynomial σ R))) (MvPolynomial σ R)`
 to `MvPowerSeries.polynomialReductionSubalgebra σ
 (fun n => (AdicCompletion.evalₐ I n).toRingHom)`, over `AdicCompletion I R`.
-The source uses exactly the named `AdicCompletion.extendedAlgebra`; select it
-with a section-local instance attribute when writing algebra-map expressions.
-The target uses its stock coefficient algebra. No completeness, separation,
-finite-generation or finite-variable hypothesis is needed.
+The source retains the stock completion ring. Its scalar action is
+`ΦI.toAlgebra`, where `ΦI` is the completion of the original coefficient map
+`MvPolynomial.C`; this is the value named `AdicCompletion.extendedAlgebra` for
+that original polynomial algebra. It is non-global;
+`AdicCompletion.extendedAlgebra_isScalarTower` relates this named action to
+the original `R`-action. The target uses its stock completed-coefficient algebra.
+This does not apply completion a second time with the completed coefficient ring
+as a new original ring. No completeness,
+separation, finite-generation or finite-variable hypothesis is needed.
 
 | Use | Declaration in `MvPolynomial` |
 | --- | --- |
@@ -314,6 +319,136 @@ These multivariate coefficient-adic APIs are independent of the single-variable
 unit logarithmic derivative. They do not provide norm/radius-weighted or
 variable-adic restrictions or general base change. Restricted division under
 additional hypotheses, including first-variable preparation, is documented below.
+
+## Coefficient change, arbitrary variable maps and naturality
+
+Import
+`FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.Naturality` directly. Its
+[coefficient and joint maps](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean)
+use [arbitrary completed renaming](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletedRename.lean)
+and the [canonical polynomial-completion map](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletionMap.lean).
+The latter two leaves can also be imported separately.
+
+Let `R`, `T` be commutative rings, `I : Ideal R`, `J : Ideal T`,
+`f : R →+* T`, `hf : I ≤ J.comap f`, and **any** `g : σ → τ`. The coefficient
+rings and variable types have independent universes. The following are
+mathematical abbreviations, not additional declarations:
+
+- `A = AdicCompletion I R`, `B = AdicCompletion J T`, and
+  `fhat = AdicCompletion.mapRingHom I J f hf`, completing the **original** `f`.
+- `qI n = (AdicCompletion.evalₐ I n).toRingHom`, and `qJ n` similarly.
+  Write `S(σ,I) = MvPowerSeries.polynomialReductionSubalgebra σ qI` and
+  `redI n = MvPowerSeries.polynomialReduction σ qI n`; use `S(τ,J)`, `redJ`
+  for the target. These rows take values in the original quotients `R ⧸ I ^ n`
+  and `T ⧸ J ^ n`, not quotients of `A` and `B` by intrinsic ideal powers.
+- `K(σ,I) = I.map (MvPolynomial.C : R →+* MvPolynomial σ R)` and
+  `P(σ,I) = AdicCompletion K(σ,I) (MvPolynomial σ R)`, with analogous target
+  notation. Write `E(σ,I) = MvPolynomial.adicCompletionEquiv σ I`.
+- `f_n` is the induced quotient homomorphism
+  `Ideal.quotientMap (J ^ n) f
+  ((Ideal.pow_right_mono hf n).trans (Ideal.le_comap_pow f n))`, and
+  `μg d = Finsupp.mapDomain g d` is the map of monomial exponents.
+
+| Use | Declaration in `MvPowerSeries` |
+| --- | --- |
+| Coefficient change `S(σ,I) →+* S(σ,J)` | `completedRestrictedCoeffMap σ I J f hf` |
+| Ambient image and completed coefficient formula | `completedRestrictedCoeffMap_coe`, `coeff_completedRestrictedCoeffMap` |
+| Arbitrary renaming `S(σ,I) →ₐ[A] S(τ,I)` | `completedRestrictedRename I g` |
+| Joint map `F : S(σ,I) →+* S(τ,J)` | `completedRestrictedMap I J f hf g`, `completedRestrictedMap_apply` |
+| Every polynomial row and sparse fiber coefficient | `polynomialReduction_completedRestrictedMap`, `coeff_completedRestrictedMap_eval` |
+| Coefficient change commutes with renaming | `completedRestrictedCoeffMap_comp_completedRestrictedRename` |
+| Whole-map identity and composition | `completedRestrictedMap_id`, `completedRestrictedMap_comp` |
+| Polynomial inclusion over completed/original coefficients | `completedRestrictedMap_polynomial`, `completedRestrictedMap_original_polynomial` |
+| Variables, constants, completed scalars and original constants | `completedRestrictedMap_X`, `completedRestrictedMap_C`, `completedRestrictedMap_algebraMap`, `completedRestrictedMap_algebraMap_of` |
+| Exact completed-scalar square and scalar multiplication | `completedRestrictedMap_comp_algebraMap`, `completedRestrictedMap_smul` |
+| Support containment, all-row uniqueness and raw kernel containment | `support_polynomialReduction_completedRestrictedMap_subset`, `eq_completedRestrictedMap`, `ker_polynomialReduction_le_comap_completedRestrictedMap` |
+
+The coefficient map restricts the ambient `MvPowerSeries.map fhat`. Renaming
+is constructed independently of `E`: complete the finite `DFinsupp` monomial
+pushforward, then use the whole `AdicCompletion.dfinsuppEquiv` and the
+identity-on-coefficients bridge
+`MvPowerSeries.restrictedProductEquivPolynomialReduction`. The bridge is also
+used by `E`; its coefficient and inverse apply laws are
+`coeff_restrictedProductEquivPolynomialReduction` and
+`restrictedProductEquivPolynomialReduction_symm_apply`. This is neither
+conjugation by `E` nor unrestricted ambient power-series renaming, and uses no
+second reconstruction of compatible rows. The coefficient-only map and pure
+rename also have their own row, polynomial, scalar, identity, composition and
+uniqueness laws in the linked leaves.
+
+For every `n : ℕ`, **including zero**, the row law is
+
+`redJ n (F s) = MvPolynomial.rename g (MvPolynomial.map f_n (redI n s))`.
+
+For `b : τ →₀ ℕ`, the coefficient law is
+
+`qJ n (coeff b (F s).val) =
+  ∑ d ∈ (redI n s).support.filter (fun d => μg d = b),
+    f_n (qI n (coeff d s.val))`.
+
+Thus summation uses the finite support of the **reduced source polynomial**,
+not the entire possibly infinite fiber of `μg`. Coefficients killed by `f_n`
+can remain as zero terms. Collisions can cancel, so target support is only
+contained in `μg '' support (redI n s)`, not necessarily equal to it. The
+coefficient map need not be injective or surjective, and the variable map
+need not be injective or have finite fibers.
+
+| Use | Declaration in `MvPolynomial` |
+| --- | --- |
+| Canonical completed polynomial map `H : P(σ,I) →+* P(τ,J)` | `adicCompletionMap I J f hf g` |
+| Original polynomials, constants and variables | `adicCompletionMap_of`, `adicCompletionMap_of_C`, `adicCompletionMap_of_X` |
+| Raw evaluation, quotient-polynomial square and uniqueness | `evalₐ_adicCompletionMap`, `adicPolynomialLevelEquiv_evalₐ_adicCompletionMap`, `eq_adicCompletionMap` |
+| Whole-map identity and composition | `adicCompletionMap_id`, `adicCompletionMap_comp` |
+| Completed coefficient square and scalar law | `adicCompletionMap_comp_completedCoefficient`, `adicCompletionMap_completedCoefficient_mul`, `adicCompletionMap_smul` |
+| Raw quotient-kernel containment | `ker_evalₐ_le_comap_adicCompletionMap` |
+| Forward naturality, as ring maps and on every completion element | `adicCompletionEquiv_naturality`, `adicCompletionEquiv_naturality_apply` |
+| Inverse naturality, as ring maps and on every restricted series | `adicCompletionEquiv_symm_naturality`, `adicCompletionEquiv_symm_naturality_apply` |
+
+Here `H` is exactly `AdicCompletion.mapRingHom` of
+`(MvPolynomial.rename g).toRingHom.comp (MvPolynomial.map f)`. Its ideal
+containment follows from `hf` by `MvPolynomial.map_C_le_comap_rename_map`;
+it is not a further hypothesis. Its polynomial-level square uses the same
+`rename g ∘ map f_n` as `F`. In the composition laws, a further coefficient map
+`k : T →+* U` with `hk : J ≤ L.comap k` and variable map `h : τ → υ` give
+coefficient map `k.comp f` and variable map `h ∘ g`; the composite ideal bound
+is derived from `hf`, `hk`. The identity laws use identity maps for both.
+All coefficient and variable universes in these laws remain independent.
+Naturality holds on the **whole** source and target:
+
+`E(τ,J) (H x) = F (E(σ,I) x)`, and
+`(E(τ,J)).symm (F s) = H ((E(σ,I)).symm s)`.
+
+For scalars, set
+`ΦI = AdicCompletion.mapRingHom I K(σ,I) MvPolynomial.C Ideal.le_comap_map`
+and define `ΦJ` similarly. The polynomial completions retain their stock ring
+structures with exactly the non-global actions `ΦI.toAlgebra`, `ΦJ.toAlgebra`
+from `AdicCompletion.extendedAlgebra` for the original polynomial algebras,
+with the original-ring scalar towers supplied for those same actions. The
+series algebras retain their stock `A`- and `B`-coefficient actions. The scalar
+squares say
+`H.comp ΦI = ΦJ.comp fhat` and
+`F.comp (algebraMap A S(σ,I)) = (algebraMap B S(τ,J)).comp fhat`;
+in particular `F (a • s) = fhat a • F s`, and similarly for `H`. The varying-base
+maps are `RingHom`s with these compatibility laws, not common-base `AlgHom`s.
+Pure renaming is an `AlgHom` because its coefficient ring is unchanged.
+
+These results require no finite variables, finite generation, Noetherianity,
+original coefficient completeness or separation, proper ideals or nontrivial
+rings. The kernel containments state only that a zero source row at precision
+`n` gives a zero target row at that precision. They do not identify these raw
+kernels with intrinsic ideal powers or assert a full topological universal
+property or density theorem. The complete-original-coefficient
+`MvPowerSeries.adicallyRestrictedEquivAdicCompletion` remains available with
+its original `[IsAdicComplete I R]` hypothesis.
+
+The [infinite-fiber example](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/Naturality.lean)
+uses `R = ℤ`, `I = (2)` and `g : ℕ → Unit`. Its source has coefficient
+`AdicCompletion.of I ℤ (2 ^ i)` at `X i` and zero elsewhere, hence infinite
+support. Row `n` is the polynomial of terms `i < n` (empty at zero); after
+collapse its degree-one coefficient is `∑ i < n, 2 ^ i = -1` modulo `2 ^ n`.
+The image is the included polynomial `-X ()`, whose coefficient `-1` is already
+nonzero modulo `2`. This illustrates why finite support at each precision,
+rather than globally finite support or finite fibers, is the useful condition.
 
 ## Cofinal filtrations and coefficient content
 

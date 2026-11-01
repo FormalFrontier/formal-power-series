@@ -10,6 +10,11 @@ project:
     is the algebra of series over its adic completion with polynomial images at
     every original quotient precision; coefficient transport recovers the original
     restricted-series ring equivalence for adically complete coefficients.
+    Ideal-preserving coefficient maps and arbitrary variable maps on these
+    completed-coefficient series give functorial ring maps with finite source-row
+    fiber sums, including infinite fibers. The polynomial-completion comparison
+    is natural in both directions, with completed-scalar compatibility and raw
+    row-kernel containment, without original completeness or finiteness assumptions.
     The restricted subring also has a coefficient-ring
     algebra structure, all-level surjective scalar-linear polynomial reductions,
     and regular-principal module-quotient equivalences, including a separate
@@ -90,6 +95,10 @@ automation:
         generation. The completed-coefficient polynomial comparison reuses the full
         AdicModules direct-sum completion equivalence and its canonical
         restriction-of-scalars and completed coefficient-map interfaces.
+        Coefficient change uses Mathlib's coefficientwise power-series maps;
+        arbitrary variable maps use its polynomial renaming and finite dependent
+        direct-sum pushforward, completed through that same whole AdicModules
+        equivalence rather than through the polynomial-completion comparison.
         Contributors to the finite-variable degree criterion, its
         infinite-variable counterexample and the finite-generation kernel
         argument were distinct from those who formalized the results and wrote
@@ -108,6 +117,13 @@ automation:
     uses raw original quotient evaluations and the named completed coefficient
     action, without completeness hypotheses; the original-coefficient ring
     equivalence additionally assumes adic completeness of coefficients.
+    Maps between distinct completed coefficient rings are ring homomorphisms
+    compatible with the completed original coefficient map; only unchanged-base
+    renaming is packaged as an algebra homomorphism. Fiber sums use the finite
+    support of each reduced source polynomial, not the entire variable fiber;
+    collisions may cancel. The row kernels remain raw original-quotient kernels,
+    with no identification with intrinsic ideal powers or topological universal
+    property asserted.
     Scalar-linear reduction applies to
     every ideal and level; only the principal submodule-kernel and quotient
     equivalences assume a regular generator. The separate integer endpoints
@@ -146,20 +162,20 @@ status:
     2 ≤ p, including composite p; the Euler-prefix theorem and p-integrality
     require prime p. The rational core does not import p-adic theory, and
     p-integrality is proved independently of the Euler identity. The
-    restricted-series family comes with a
-    generic cofinality support leaf. The curated main_results below locate
-    21 scalar-linear quotient, eight generic linear-extension, four
-    coefficientwise kernel-product and fourteen content/cofinality/
-    division/conditional-generation declarations, plus four restricted-unit
-    declarations; derivative,
-    carrier, principal-kernel and inverse-limit interfaces are documented in
-    API.md. Generic reductions
+    restricted-series family comes with a generic cofinality support leaf.
+    The curated main_results below locate selected restricted-series,
+    completion-map, naturality, scalar-linear quotient, linear-extension,
+    kernel-product, unit, content, cofinality and division interfaces;
+    further declarations are documented in API.md. Generic reductions
     work for arbitrary ideals; internal division and principal quotients
     require a regular generator. The completed-coefficient polynomial algebra
-    equivalence has no completeness hypothesis. Its original-coefficient
-    specialization and generic linear extension require actual coefficient adic
-    completeness, and linear-extension uniqueness also assumes all-level kernel
-    preservation. Kernel products
+    equivalence has no completeness hypothesis. Its ideal-preserving coefficient
+    and arbitrary-variable naturality holds forward and inverse on all elements,
+    including infinite fibers and precision zero; identity, composition,
+    polynomial, scalar and raw-kernel laws use the original quotient rows.
+    Its original-coefficient specialization and generic linear extension require
+    coefficient adic completeness, and linear-extension uniqueness also assumes
+    all-level kernel preservation. Kernel products
     are coefficientwise, not intrinsic restricted-ring ideal powers.
     Unit criteria concern the existing restricted subring over arbitrary
     variables and ideals when the coefficient ring is I-adically complete;
@@ -185,6 +201,32 @@ status:
     supported below d. Radical equality and completeness reflect this to a
     unit; these results do not construct a division.
   main_results:
+    - declaration: MvPowerSeries.restrictedProductEquivPolynomialReduction
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean
+    - declaration: MvPolynomial.adicCompletionMap
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletionMap.lean
+    - declaration: MvPolynomial.adicPolynomialLevelEquiv_evalₐ_adicCompletionMap
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletionMap.lean
+    - declaration: MvPolynomial.adicCompletionMap_comp_completedCoefficient
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletionMap.lean
+    - declaration: MvPowerSeries.completedRestrictedRename
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletedRename.lean
+    - declaration: MvPowerSeries.completedRestrictedCoeffMap
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean
+    - declaration: MvPowerSeries.completedRestrictedMap
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean
+    - declaration: MvPowerSeries.coeff_completedRestrictedMap_eval
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean
+    - declaration: MvPowerSeries.completedRestrictedMap_comp
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean
+    - declaration: MvPowerSeries.completedRestrictedMap_comp_algebraMap
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean
+    - declaration: MvPowerSeries.ker_polynomialReduction_le_comap_completedRestrictedMap
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean
+    - declaration: MvPolynomial.adicCompletionEquiv_naturality
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean
+    - declaration: MvPolynomial.adicCompletionEquiv_symm_naturality
+      file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean
     - declaration: MvPowerSeries.IsAdicallyRestricted.mono
       file: FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/IdealChange.lean
     - declaration: MvPowerSeries.restrictAlongIdeal

@@ -96,6 +96,63 @@ end MvPowerSeries
 
 section CompletedCoefficients
 
+namespace MvPowerSeries
+
+variable {R : Type u} [CommRing R] {σ : Type v}
+
+private theorem evalₐ_eq_zero_iff (I : Ideal R) (n : ℕ) (a : AdicCompletion I R) :
+    AdicCompletion.evalₐ I n a = 0 ↔ AdicCompletion.eval I R n a = 0 := by
+  let e := Ideal.quotientEquivAlgOfEq R (Ideal.mul_top (I ^ n))
+  change e (AdicCompletion.eval I R n a) = 0 ↔ _
+  constructor
+  · intro h
+    apply e.injective
+    simpa only [map_zero] using h
+  · intro h
+    rw [h, map_zero]
+
+/-- Identification of the existing restricted product with the series subalgebra;
+only normalization of the equal-ideal quotient changes the support condition. -/
+@[expose]
+noncomputable def restrictedProductEquivPolynomialReduction (σ : Type v) (I : Ideal R) :
+    AdicCompletion.restrictedProduct I (fun _ : σ →₀ ℕ => R) ≃ₗ[AdicCompletion I R]
+      polynomialReductionSubalgebra σ (fun n => (AdicCompletion.evalₐ I n :
+        AdicCompletion I R →+* (R ⧸ I ^ n))) where
+  toFun x := ⟨x.val, by
+    apply (mem_polynomialReductionSubalgebra_iff_finite_support σ _ _).2
+    intro n
+    change Set.Finite {d : σ →₀ ℕ | AdicCompletion.evalₐ I n (x.val d) ≠ 0}
+    simpa only [ne_eq, evalₐ_eq_zero_iff] using
+      (AdicCompletion.mem_restrictedProduct I (fun _ : σ →₀ ℕ => R) _).1 x.property n⟩
+  invFun f := ⟨f.val, by
+    apply (AdicCompletion.mem_restrictedProduct I (fun _ : σ →₀ ℕ => R) _).2
+    intro n
+    simpa only [AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom, MvPowerSeries.coeff_apply,
+      ne_eq, evalₐ_eq_zero_iff] using
+      (mem_polynomialReductionSubalgebra_iff_finite_support σ _ _).1 f.property n⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- The restricted-product comparison preserves each completed coefficient. -/
+@[simp]
+theorem coeff_restrictedProductEquivPolynomialReduction (σ : Type v) (I : Ideal R)
+    (a : AdicCompletion.restrictedProduct I (fun _ : σ →₀ ℕ => R)) (d : σ →₀ ℕ) :
+    coeff d (restrictedProductEquivPolynomialReduction σ I a).val = a.val d :=
+  rfl
+
+/-- The inverse comparison reads off the completed coefficients of the series. -/
+@[simp]
+theorem restrictedProductEquivPolynomialReduction_symm_apply (σ : Type v) (I : Ideal R)
+    (s : polynomialReductionSubalgebra σ
+      (fun n => (AdicCompletion.evalₐ I n : AdicCompletion I R →+* R ⧸ I ^ n)))
+    (d : σ →₀ ℕ) :
+    ((restrictedProductEquivPolynomialReduction σ I).symm s).val d = coeff d s.val :=
+  rfl
+
+end MvPowerSeries
+
 namespace MvPolynomial
 
 open MvPowerSeries
@@ -119,40 +176,6 @@ private theorem completedPolynomialAlgebra_eq (σ : Type v) (I : Ideal R) :
   rfl
 
 attribute [local instance] completedPolynomialAlgebra
-
-private theorem evalₐ_eq_zero_iff (I : Ideal R) (n : ℕ) (a : AdicCompletion I R) :
-    AdicCompletion.evalₐ I n a = 0 ↔ AdicCompletion.eval I R n a = 0 := by
-  let e := Ideal.quotientEquivAlgOfEq R (Ideal.mul_top (I ^ n))
-  change e (AdicCompletion.eval I R n a) = 0 ↔ _
-  constructor
-  · intro h
-    apply e.injective
-    simpa only [map_zero] using h
-  · intro h
-    rw [h, map_zero]
-
-/-- Identification of the existing restricted product with the series subalgebra;
-only normalization of the equal-ideal quotient changes the support condition. -/
-private noncomputable def restrictedCoefficientsEquiv (σ : Type v) (I : Ideal R) :
-    AdicCompletion.restrictedProduct I (fun _ : σ →₀ ℕ => R) ≃ₗ[AdicCompletion I R]
-      polynomialReductionSubalgebra σ (fun n => (AdicCompletion.evalₐ I n :
-        AdicCompletion I R →+* (R ⧸ I ^ n))) where
-  toFun x := ⟨x.val, by
-    apply (mem_polynomialReductionSubalgebra_iff_finite_support σ _ _).2
-    intro n
-    change Set.Finite {d : σ →₀ ℕ | AdicCompletion.evalₐ I n (x.val d) ≠ 0}
-    simpa only [ne_eq, evalₐ_eq_zero_iff] using
-      (AdicCompletion.mem_restrictedProduct I (fun _ : σ →₀ ℕ => R) _).1 x.property n⟩
-  invFun f := ⟨f.val, by
-    apply (AdicCompletion.mem_restrictedProduct I (fun _ : σ →₀ ℕ => R) _).2
-    intro n
-    simpa only [AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom, MvPowerSeries.coeff_apply,
-      ne_eq, evalₐ_eq_zero_iff] using
-      (mem_polynomialReductionSubalgebra_iff_finite_support σ _ _).1 f.property n⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
-  map_add' _ _ := rfl
-  map_smul' _ _ := rfl
 
 private noncomputable def polynomialCoefficients (σ : Type v) :
     MvPolynomial σ R ≃ₗ[R] Π₀ (_ : σ →₀ ℕ), R := by
@@ -185,7 +208,7 @@ private noncomputable def completionCoefficients (σ : Type v) (I : Ideal R) :
   (restrictPolynomialScalars σ I).trans
     ((AdicCompletion.congr I (polynomialCoefficients σ)).trans
       ((AdicCompletion.dfinsuppEquiv I (fun _ : σ →₀ ℕ => R)).trans
-        (restrictedCoefficientsEquiv σ I)))
+        (restrictedProductEquivPolynomialReduction σ I)))
 
 private theorem completionCoefficients_coeff (I : Ideal R)
     (x : AdicCompletion (I.map (MvPolynomial.C : R →+* MvPolynomial σ R)) (MvPolynomial σ R))

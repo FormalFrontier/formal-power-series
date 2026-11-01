@@ -5,7 +5,8 @@ logarithmic derivative of native power-series units, the rational Artin–Hasse
 exponential, and ideal-adically restricted native multivariate power series.
 [Detailed results](RESULTS.md) gives detailed result descriptions, formulas,
 material hypotheses, boundary cases and module links. For weighted-unit-derivative conventions, see
-[API.md](API.md); for the other families, use the results and module guides.
+[API.md](API.md), which also describes the restricted-series maps and completion
+comparison; for the other families, use the results and module guides.
 
 ## Headline results
 
@@ -83,6 +84,19 @@ to `q k = Ideal.Quotient.mk (I ^ k)`.
   completeness, a restricted series `f` is a unit exactly when `adicReduction I 1 f` is a unit,
   equivalently when its constant coefficient is a unit and every other
   coefficient lies in `I.radical`.
+- **Coefficient and variable maps.** For commutative rings `R`, `T`, ideals
+  `I`, `J`, a homomorphism `f : R →+* T`, `hf : I ≤ J.comap f`, and any variable
+  map `g : σ → τ`, the completed-coefficient series above admit a ring map
+  `MvPowerSeries.completedRestrictedMap I J f hf g`. Infinite fibers are
+  allowed: at each precision its coefficients are finite sums over the source
+  polynomial reduction's support. Coefficient change is coefficientwise along
+  `AdicCompletion.mapRingHom I J f hf`; renaming completes a finite direct-sum
+  pushforward using the whole completion/restricted-product equivalence,
+  independently of the polynomial-completion comparison. Identity, composition,
+  polynomial and scalar laws hold, and `MvPolynomial.adicCompletionEquiv`
+  commutes with these maps in both directions on all elements. No completeness,
+  separation, finite generation or finite-variable hypothesis is required.
+  See the [map API](API.md#coefficient-change-arbitrary-variable-maps-and-naturality).
 - **Linear extension.** Under `[IsAdicComplete I R]`, every polynomial
   `R`-linear endomorphism extends to an `R`-linear restricted-series operator
   with finite-level equations. Uniqueness needs **both** agreement on
@@ -119,6 +133,15 @@ See the [complete restricted-series results and limitations](RESULTS.md#ideal-ad
 and [module guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md).
 These results do not assert norm/radius or variable-adic restrictions, general
 base change, standard-basis existence, or source coverage.
+
+For completed-coefficient maps, choose one of these direct imports; paths are
+relative to `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted`.
+
+| Module | Use |
+| --- | --- |
+| [`CompletionMap`](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletionMap.lean) | Canonical map between polynomial completions, quotient squares and completed-scalar compatibility |
+| [`CompletedRename`](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletedRename.lean) | Arbitrary variable maps on series over completed coefficients, including infinite fibers |
+| [`Naturality`](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean) | Coefficient change, joint maps, functoriality and forward/inverse naturality of the completion comparison |
 
 ## Build and use
 
@@ -182,9 +205,16 @@ helper, or import a producer directly: `FormalPowerSeries.UnitLogDerivative`,
 `LinearQuotient`, `InverseLimit`, `LinearExtension`, `KernelFiltration`,
 `UnitDetection`, `PrimitiveStandardBasis` or other restricted-series
 submodules, or `FormalPowerSeries.AdicCompletion.Cofinal`. See [API.md](API.md)
-for signatures and the
+for the API and the
 [restricted-series guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/README.md)
-for the navigable family of modules. The [unit](FormalPowerSeriesTests/UnitLogDerivative.lean),
+for the navigable family of modules. For coefficient change and arbitrary
+variable maps on completed-coefficient series, import
+`FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.Naturality` directly;
+it also imports `CompletionMap` and `CompletedRename`. The
+[infinite-variable client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/Naturality.lean)
+collapses the series with coefficient `2 ^ i` at `X i` over the completion of
+`ℤ` at `(2)` to the included polynomial `-X ()`.
+The [unit](FormalPowerSeriesTests/UnitLogDerivative.lean),
 [finite-reduction](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted.lean),
 [principal-kernel](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/PrincipalKernel.lean),
 [linear-quotient](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean),

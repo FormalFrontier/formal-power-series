@@ -32,8 +32,13 @@ a unit constant coefficient and radical containment of all other coefficients.
 Over finitely many variables it additionally characterizes restrictedness by
 degree cutoffs and identifies the **intrinsic algebraic** reduction kernel
 for finitely generated coefficient ideals at every level.
-A separately importable generic support leaf compares cofinal ideal-adic
-filtrations for arbitrary modules. These constructions are independent.
+For series over completed coefficients, ideal-preserving coefficient maps and
+arbitrary variable maps, including maps with infinite fibers, give functorial
+ring maps with finite source-row fiber sums. The polynomial-completion
+comparison commutes with these maps in both directions on every element,
+without completeness or finiteness assumptions. A separately importable generic
+support leaf compares cofinal ideal-adic filtrations for arbitrary modules.
+These constructions are independent.
 
 The intrinsic-leading-term construction uses a valuation domain separated
 for the principal ideal of a parameter in its maximal ideal. Conditional
@@ -200,6 +205,61 @@ structure, splitting extension or Adams operation here.
   of arbitrary polynomial completions is **not** asserted. See the
   [equivalence and evaluation](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean)
   and [completion guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit/README.md).
+
+- **Coefficient maps and arbitrary variable maps.** Let `R`, `T` be commutative
+  rings, `I : Ideal R`, `J : Ideal T`, `f : R →+* T`, `hf : I ≤ J.comap f`,
+  and any `g : σ → τ`, with independent coefficient and variable universes.
+  On series over `AdicCompletion I R` and `AdicCompletion J T` whose original
+  quotient evaluations are polynomial, `MvPowerSeries.completedRestrictedMap`
+  is coefficient change followed by arbitrary renaming. Coefficient change
+  restricts `MvPowerSeries.map (AdicCompletion.mapRingHom I J f hf)`.
+  Renaming completes the finite `DFinsupp` monomial pushforward and uses the
+  whole AdicModules completion/restricted-product equivalence, not the
+  polynomial-completion comparison or ambient power-series renaming. The
+  shared `restrictedProductEquivPolynomialReduction` bridge preserves every
+  coefficient in both directions.
+  At each `n : ℕ`, including zero, the resulting polynomial is
+  `rename g (map f_n (redI n s))`, where `f_n` is the induced original quotient
+  map. The coefficient of monomial `b` is the sum of mapped source coefficients
+  over `support (redI n s)` with `Finsupp.mapDomain g d = b`. Thus infinite
+  fibers cause no infinite sum; coefficient annihilation or cancellation can
+  shrink target support. Identity, composition, commutation of coefficient
+  change with renaming, polynomial agreement, constants, variables and
+  all-row uniqueness are supplied. No finite variables, finite generation,
+  Noetherianity, original completeness or separation, injectivity,
+  finite-fiber, proper-ideal or nontrivial-ring hypothesis is added.
+  See [renaming](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletedRename.lean),
+  [joint maps](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean)
+  and the [API](API.md#coefficient-change-arbitrary-variable-maps-and-naturality).
+- **Naturality of polynomial completion, forward and inverse.** The canonical
+  `MvPolynomial.adicCompletionMap I J f hf g` is
+  `AdicCompletion.mapRingHom` of polynomial `rename g ∘ map f`; its ideal bound
+  is derived from `hf`. It satisfies the same all-level polynomial square,
+  identity, composition and original-polynomial laws. Writing `H` for this map,
+  `F` for the independently constructed series map and `E` for
+  `MvPolynomial.adicCompletionEquiv`, the equations are
+  `E(τ,J) (H x) = F (E(σ,I) x)` for every completed polynomial `x`, and
+  `E(τ,J).symm (F s) = H (E(σ,I).symm s)` for every restricted series `s`.
+  The polynomial completions retain their stock ring structures and the
+  non-global algebra actions obtained by completing the original coefficient
+  maps, with the scalar towers for those same actions; the series retain their
+  stock completed-coefficient actions. Both maps satisfy the scalar square
+  along exactly `AdicCompletion.mapRingHom I J f hf`, not an asserted
+  common-base algebra-map structure. Pure renaming is an algebra homomorphism
+  over the unchanged completed coefficient ring. The raw row kernels map into
+  the corresponding target row kernels, with no intrinsic-power, density or
+  topological universal-property assertion. See the
+  [polynomial map](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/CompletionMap.lean)
+  and [both naturality squares](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/Naturality.lean).
+
+The [infinite-fiber example](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/Naturality.lean)
+over `ℤ` at `(2)` uses the constant variable map `ℕ → Unit`. Its source has
+coefficient `of (2 ^ i)`
+at `X i` and zero elsewhere, so its support is infinite; row `n` consists of
+the finitely many terms `i < n`, including the empty row at zero. Collapsing
+variables gives degree-one coefficient `∑ i < n, 2 ^ i = -1` modulo `2 ^ n`,
+hence the included polynomial `-X ()`, with `-1` nonzero modulo `2`. Thus
+infinitely many variable terms can be combined using finite sums at each precision.
 
 - **Coefficientwise kernel filtration.** For arbitrary variables, ideals and
   commutative coefficient rings, multiplying series whose coefficients lie in `J`
