@@ -234,17 +234,12 @@ private theorem adicRestrictedForward_eval (I : Ideal R) (n : ℕ)
 private theorem adicReduction_jointly_injective (I : Ideal R) [IsHausdorff I R]
     {f g : adicallyRestrictedSubring (σ := σ) I}
     (h : ∀ n, adicReduction I n f = adicReduction I n g) : f = g := by
-  apply Subtype.ext
-  apply MvPowerSeries.ext
-  intro index
-  have heq := IsHausdorff.funext' I
-    (f := fun index : σ →₀ ℕ => coeff index (f : MvPowerSeries σ R))
-    (g := fun index : σ →₀ ℕ => coeff index (g : MvPowerSeries σ R))
-    (by
-      intro n index
-      simpa only [coeff_adicReduction] using
-        congrArg (fun p : MvPolynomial σ (R ⧸ I ^ n) => p.coeff index) (h n))
-  exact congrFun heq index
+  apply ((polynomialReduction_jointly_injective_iff (σ := σ)
+    (q := fun n : ℕ => Ideal.Quotient.mk (I ^ n))).2 ?_) (funext h)
+  intro a b hab
+  exact congrFun (IsHausdorff.funext' I
+    (f := fun _ : Unit => a) (g := fun _ : Unit => b)
+    (fun n _ => congrFun hab n)) ()
 
 private theorem adicRestrictedForward_injective (I : Ideal R) [IsAdicComplete I R] :
     Function.Injective (adicRestrictedForward (σ := σ) I) := by

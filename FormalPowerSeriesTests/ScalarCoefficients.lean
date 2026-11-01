@@ -22,7 +22,7 @@ example (I : Ideal R) (r : R)
         ((r • f : MvPowerSeries.adicallyRestrictedSubring (σ := σ) I) :
           MvPowerSeries σ R) =
       r * MvPowerSeries.coeff m (f : MvPowerSeries σ R) := by
-  simp
+  exact MvPowerSeries.coeff_smul_adicallyRestricted I r f m
 
 example :
     let I : Ideal ℤ := Ideal.span ({4} : Set ℤ)

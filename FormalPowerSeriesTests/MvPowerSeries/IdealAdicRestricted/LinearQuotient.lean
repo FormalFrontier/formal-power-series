@@ -2,10 +2,17 @@
 Authors: Formal Frontier Agents -/
 module
 
-public import FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.LinearQuotient
+public import FormalPowerSeries
 import Mathlib.Algebra.Regular.Prod
 import Mathlib.Algebra.Ring.Regular
 import Mathlib.Data.Int.Order.Units
+
+/-!
+# Scalar actions and polynomial reductions of restricted series
+
+The polynomial-reduction subalgebra and the intrinsic restricted-series algebra share
+polynomial inclusion and linear reduction under the aggregate import.
+-/
 
 set_option warningAsError true
 
@@ -13,6 +20,28 @@ namespace FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.LinearQuotien
 
 open _root_.MvPowerSeries
 open scoped Pointwise
+
+/-- Generic polynomial inclusion commutes with intrinsic scalar multiplication and reduction. -/
+public theorem generic_inclusion_linear_reduction {σ R : Type*} [CommRing R]
+    (I : Ideal R) (k : ℕ) (r : R) (p : MvPolynomial σ R) :
+    linearAdicReduction I k
+        (r • (polynomialToReductionSubalgebra σ
+          (fun n : ℕ => Ideal.Quotient.mk (I ^ n)) :
+            MvPolynomial σ R →ₐ[R] adicallyRestrictedSubring (σ := σ) I) p) =
+      r • MvPolynomial.map (Ideal.Quotient.mk (I ^ k)) p := by
+  let f : adicallyRestrictedSubring (σ := σ) I :=
+    (polynomialToReductionSubalgebra σ
+      (fun n : ℕ => Ideal.Quotient.mk (I ^ n)) :
+        MvPolynomial σ R →ₐ[R] adicallyRestrictedSubring (σ := σ) I) p
+  calc
+    linearAdicReduction I k (r • f) = r • linearAdicReduction I k f :=
+      map_smul (linearAdicReduction (σ := σ) I k) r f
+    _ = r • adicReduction I k f :=
+      congrArg (fun q : MvPolynomial σ (R ⧸ I ^ k) => r • q)
+        (linearAdicReduction_apply I k f)
+    _ = r • MvPolynomial.map (Ideal.Quotient.mk (I ^ k)) p :=
+      congrArg (fun q : MvPolynomial σ (R ⧸ I ^ k) => r • q)
+        (polynomialReduction_polynomial σ (fun n : ℕ => Ideal.Quotient.mk (I ^ n)) k p)
 
 private theorem general_scalar_coefficient {σ R : Type*} [CommRing R]
     (I : Ideal R) (r : R) (f : adicallyRestrictedSubring (σ := σ) I)

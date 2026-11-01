@@ -9,12 +9,13 @@ new carrier nor changes what ideal-adically restricted means: modulo each
 
 ## Public interface
 
-- `MvPowerSeries.adicallyRestrictedAlgebra I` gives the subtype its `Algebra R`
-  structure using `(polynomialToRestricted I).comp MvPolynomial.C`. This is the
-  only new global scalar structure; no second `SMul` or `Module` is separately
-  registered. `algebraMap_adicallyRestricted_coe`,
+- `MvPowerSeries.adicallyRestrictedAlgebra I` is the canonical `Algebra R`
+  structure inherited from the polynomial-reduction subalgebra for the maps
+  `Ideal.Quotient.mk (I ^ k)`. Thus generic polynomial algebra homomorphisms
+  also use the intrinsic restricted-series algebra without changing scalar
+  structures. `algebraMap_adicallyRestricted_coe`,
   `coe_smul_adicallyRestricted` and `coeff_smul_adicallyRestricted` identify
-  its constants and scalar action with the native ambient constant series and
+  its constants and scalar action with ambient constant series and the
   coefficientwise action.
 - `algebraAdicReduction I k` is an `R`-algebra homomorphism whose underlying
   ring homomorphism is the existing `adicReduction I k`.

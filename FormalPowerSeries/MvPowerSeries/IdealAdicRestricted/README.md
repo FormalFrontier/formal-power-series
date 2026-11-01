@@ -2,10 +2,59 @@
 
 SPDX-License-Identifier: Apache-2.0
 
-Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted` to work with the
-coefficientwise ideal-adically restricted subring of the **native**
-`MvPowerSeries σ R`. For any `σ : Type*`, `R : Type*`, `[CommRing R]`, and
-`I : Ideal R`, the predicate `MvPowerSeries.IsAdicallyRestricted I f` means
+Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted` for series that
+become polynomials under a specified family of coefficient homomorphisms,
+and for their ideal-adic specialization. Variables, coefficients, reduction
+indices and target coefficients may inhabit four independent universes.
+
+## Polynomiality under coefficient maps
+
+For commutative semirings `C` and `Q i` and any family `q : ∀ i, C →+* Q i`,
+`MvPowerSeries.polynomialReductionSubalgebra σ q` is the `C`-subalgebra of
+`MvPowerSeries σ C` with carrier
+
+```lean
+∀ i, MvPowerSeries.map (q i) f ∈
+  Set.range (MvPolynomial.coeToMvPowerSeries.ringHom (σ := σ) (R := Q i))
+```
+
+Equivalently, each set `{m | q i (MvPowerSeries.coeff m f) ≠ 0}` is finite.
+No algebra structures on `Q i`, compatibility or surjectivity of `q`, finite
+variable type, or inhabited index type are needed. The ambient and subtype
+algebra structures are the usual coefficient algebra structures.
+
+- `mem_polynomialReductionSubalgebra` and
+  `mem_polynomialReductionSubalgebra_iff_finite_support` characterize membership;
+  `polynomialReductionSubalgebra.ext` compares ambient coefficients, and
+  `polynomialReductionSubalgebra.coe_algebraMap` identifies coefficient constants.
+- `map_polynomial_coe` works over commutative semirings.
+  `polynomialToReductionSubalgebra σ q` codomain-restricts the stock polynomial
+  algebra inclusion; its `_coe` and `val_comp_polynomialToReductionSubalgebra`
+  laws identify the ambient map.
+- `polynomialReduction σ q i` is a semiring homomorphism to
+  `MvPolynomial σ (Q i)`. Its `_coe`, `coeff_polynomialReduction`, `_polynomial`
+  and `_algebraMap` laws compute series, coefficients, polynomials and constants.
+  It is surjective when the single row `q i` is surjective.
+- `polynomialReduction_jointly_injective_iff` characterizes when all row reductions
+  determine a restricted series: exactly when the coefficient homomorphisms jointly
+  determine coefficients.
+- `polynomialReduction_transition` commutes with a specified
+  `t : Q j →+* Q i` provided `t.comp (q j) = q i`; no transitions are presumed.
+- For maps into ambient series whose reduced coefficient supports are finite,
+  use `AlgHom.codRestrict`; `polynomialReductionSubalgebra.val_comp_codRestrict`
+  gives its factorization equation with the subalgebra inclusion.
+
+The boundary laws are mathematical characterizations: an empty reduction-index
+type gives the whole algebra (`polynomialReductionSubalgebra_eq_top`), while one
+identity row gives exactly the polynomial-inclusion subalgebra
+(`polynomialReductionSubalgebra_id`). For that row, reduction and polynomial
+inclusion are mutual inverses, by `polynomialReduction_id_polynomial` and
+`polynomialToReductionSubalgebra_id_reduction`.
+
+## Ideal-adic specialization
+
+For any `σ : Type*`, `R : Type*`, `[CommRing R]`, and `I : Ideal R`,
+the predicate `MvPowerSeries.IsAdicallyRestricted I f` means
 
 ```lean
 ∀ k : ℕ, {m : σ →₀ ℕ | MvPowerSeries.coeff m f ∉ I ^ k}.Finite
@@ -13,10 +62,13 @@ coefficientwise ideal-adically restricted subring of the **native**
 
 No norm, finite variable type, finite generation, proper ideal, completeness,
 domain, separatedness, or assumption on `k` is required. The corresponding
-`MvPowerSeries.adicallyRestrictedSubring I` is the intersection of the preimages
-of the **native** polynomial-inclusion subrings under quotient coefficient maps;
-`mem_adicallyRestrictedSubring` identifies its carrier with the displayed
-predicate.
+`MvPowerSeries.adicallyRestrictedSubring I` is the underlying subring of
+`polynomialReductionSubalgebra σ (fun k => Ideal.Quotient.mk (I ^ k))`.
+The public equality `polynomialReductionSubalgebra_toSubring` identifies these
+bundled structures; `mem_adicallyRestrictedSubring` identifies the carrier
+with the displayed predicate. The polynomial inclusion and reductions below
+specialize the same family construction, without a second support or
+polynomial-selection implementation.
 
 ## Polynomial reduction
 
@@ -146,6 +198,8 @@ Carneiro and Anne Baanen. Native mathlib remains separately authored work.
 
 Formal Frontier AI contributors developed the restricted-series definition,
 proofs, client and guide, later adapted here as a source-independent native
-series API. This does not newly prove the native mathlib results or assert
+series API. The coefficient-homomorphism family construction generalizes that
+same restricted-series core, retaining its ideal-adic specialization.
+This does not newly prove the native mathlib results or assert
 source-specific coverage. See [repository metadata](../../../formalization.yaml)
 for sources, license and contributors.

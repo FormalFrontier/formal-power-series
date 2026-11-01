@@ -13,9 +13,9 @@ public section
 /-!
 # Linear quotients of restricted power series
 
-The polynomial constant map gives the existing restricted-series subring its
-coefficient-ring algebra structure. Polynomial reduction is linear over this
-structure. For a regular principal ideal its linear kernel is the corresponding
+The restricted-series subring inherits the coefficient-ring algebra structure
+from the polynomial-reduction subalgebra. Polynomial reduction is linear over
+this structure. For a regular principal ideal its linear kernel is the corresponding
 ideal-power submodule, giving a module quotient by the first isomorphism theorem.
 -/
 
@@ -25,27 +25,26 @@ namespace MvPowerSeries
 
 variable {σ R : Type*} [CommRing R]
 
-/-- The coefficient-ring algebra structure on the existing restricted subring. -/
+/-- The coefficient-ring algebra inherited from the polynomial-reduction subalgebra. -/
+@[reducible]
 noncomputable instance adicallyRestrictedAlgebra (I : Ideal R) :
     Algebra R (adicallyRestrictedSubring (σ := σ) I) :=
-  ((polynomialToRestricted I).comp (MvPolynomial.C : R →+* MvPolynomial σ R)).toAlgebra
+  inferInstanceAs (Algebra R (polynomialReductionSubalgebra σ
+    (fun n : ℕ => Ideal.Quotient.mk (I ^ n))))
 
-@[simp]
 theorem algebraMap_adicallyRestricted_coe (I : Ideal R) (r : R) :
     ((algebraMap R (adicallyRestrictedSubring (σ := σ) I) r :
-      adicallyRestrictedSubring (σ := σ) I) : MvPowerSeries σ R) = C r := by
-  change ((polynomialToRestricted I (MvPolynomial.C r) :
-    adicallyRestrictedSubring (σ := σ) I) : MvPowerSeries σ R) = C r
-  rw [polynomialToRestricted_coe, MvPolynomial.coe_C]
+      adicallyRestrictedSubring (σ := σ) I) : MvPowerSeries σ R) = C r :=
+  polynomialReductionSubalgebra.coe_algebraMap σ
+    (fun n : ℕ => Ideal.Quotient.mk (I ^ n)) r
 
-/-- The new scalar action is the existing coefficientwise action on ambient series. -/
-@[simp]
+/-- The inherited scalar action is coefficientwise multiplication on ambient series. -/
 theorem coe_smul_adicallyRestricted (I : Ideal R) (r : R)
     (f : adicallyRestrictedSubring (σ := σ) I) :
     ((r • f : adicallyRestrictedSubring (σ := σ) I) : MvPowerSeries σ R) =
-      r • (f : MvPowerSeries σ R) := by
-  rw [Algebra.smul_def, Subring.coe_mul, algebraMap_adicallyRestricted_coe]
-  exact (smul_eq_C_mul (f : MvPowerSeries σ R) r).symm
+      r • (f : MvPowerSeries σ R) :=
+  Subalgebra.coe_smul (S := polynomialReductionSubalgebra σ
+    (fun n : ℕ => Ideal.Quotient.mk (I ^ n))) r f
 
 theorem coeff_smul_adicallyRestricted (I : Ideal R) (r : R)
     (f : adicallyRestrictedSubring (σ := σ) I) (m : σ →₀ ℕ) :
@@ -57,10 +56,8 @@ theorem coeff_smul_adicallyRestricted (I : Ideal R) (r : R)
 noncomputable def algebraAdicReduction (I : Ideal R) (k : ℕ) :
     adicallyRestrictedSubring (σ := σ) I →ₐ[R] MvPolynomial σ (R ⧸ I ^ k) where
   __ := adicReduction I k
-  commutes' r := by
-    change adicReduction I k (polynomialToRestricted I (MvPolynomial.C r)) =
-      MvPolynomial.C (Ideal.Quotient.mk (I ^ k) r)
-    simp
+  commutes' r := polynomialReduction_algebraMap σ
+    (fun n : ℕ => Ideal.Quotient.mk (I ^ n)) k r
 
 /-- The linear reduction has the original polynomial reduction as its function. -/
 noncomputable def linearAdicReduction (I : Ideal R) (k : ℕ) :

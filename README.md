@@ -46,11 +46,22 @@ the [rational core](FormalPowerSeries/ArtinHasse.lean),
 
 ### Ideal-adically restricted multivariate series
 
+For any family `q : ∀ i, C →+* Q i` of homomorphisms between commutative
+semirings, `MvPowerSeries.polynomialReductionSubalgebra σ q` consists of
+series whose coefficientwise image under each `q i` is polynomial, equivalently
+has finite coefficient support. It uses the usual coefficient-`C` algebra and
+needs no compatibility, surjectivity, nonempty index type or finite variable
+type. Its polynomial inclusion and finite reductions are homomorphisms;
+a surjective row gives a surjective reduction. An empty family gives the whole
+series algebra, and one identity row gives precisely the polynomial subalgebra,
+with reduction inverse to inclusion.
+
 For arbitrary variable types, commutative coefficient rings and ideals `I`,
 restrictedness requires that, at each `k`, only finitely many **monomial indices**
 have coefficients outside `I ^ k`. The restricted subring has surjective polynomial reductions, including
 `k = 0`, ideal-change maps, and residue maps for parameters in a local ring's
-maximal ideal.
+maximal ideal. This subring and its reductions specialize the same construction
+to `q k = Ideal.Quotient.mk (I ^ k)`.
 
 - **Regrouping and kernels.** First-variable regrouping is injective, not an
   equivalence with all iterated restricted series. Finite variables give a
