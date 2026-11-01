@@ -7,7 +7,67 @@ import Mathlib.Data.ZMod.Basic
 
 set_option warningAsError true
 
+universe u v
+
 namespace FormalPowerSeriesTests.MvPowerSeries.IdealAdicRestricted.InverseLimit
+
+section CompletedCoefficients
+
+attribute [local instance] AdicCompletion.extendedAlgebra
+
+/-- A scalar-variable polynomial over completed coefficients lifts to the product
+of the canonical completed scalar and original variable, without coefficient completeness. -/
+public theorem completed_scalar_variable {R : Type u} {σ : Type v} [CommRing R]
+    (I : Ideal R)
+    (a : AdicCompletion I R) (i : σ) :
+    (@AlgEquiv.toEquiv (AdicCompletion I R)
+      (AdicCompletion (I.map (MvPolynomial.C : R →+* MvPolynomial σ R)) (MvPolynomial σ R))
+      (MvPowerSeries.polynomialReductionSubalgebra σ
+        (fun n => (AdicCompletion.evalₐ I n : AdicCompletion I R →+* R ⧸ I ^ n)))
+      (CommRing.toCommSemiring (α := AdicCompletion I R))
+      (CommRing.toCommSemiring
+        (α := AdicCompletion (I.map (MvPolynomial.C : R →+* MvPolynomial σ R))
+          (MvPolynomial σ R))).toSemiring
+      (Subalgebra.toSemiring
+        (MvPowerSeries.polynomialReductionSubalgebra σ
+          (fun n => (AdicCompletion.evalₐ I n : AdicCompletion I R →+* R ⧸ I ^ n))))
+      (AdicCompletion.extendedAlgebra (T := MvPolynomial σ R) I :
+        Algebra (AdicCompletion I R)
+          (AdicCompletion (I.map (MvPolynomial.C : R →+* MvPolynomial σ R))
+            (MvPolynomial σ R)))
+      (Subalgebra.algebra
+        (MvPowerSeries.polynomialReductionSubalgebra σ
+          (fun n => (AdicCompletion.evalₐ I n : AdicCompletion I R →+* R ⧸ I ^ n))))
+      (MvPolynomial.adicCompletionEquiv σ I)).symm
+        (MvPowerSeries.polynomialToReductionSubalgebra σ
+          (fun n => (AdicCompletion.evalₐ I n).toRingHom)
+          (MvPolynomial.C a * MvPolynomial.X i)) =
+      algebraMap (AdicCompletion I R)
+          (AdicCompletion (I.map (algebraMap R (MvPolynomial σ R))) (MvPolynomial σ R)) a *
+        AdicCompletion.of (I.map (algebraMap R (MvPolynomial σ R)))
+          (MvPolynomial σ R) (MvPolynomial.X i) := by
+  let _ : Algebra (AdicCompletion I R)
+      (AdicCompletion (I.map (MvPolynomial.C : R →+* MvPolynomial σ R))
+        (MvPolynomial σ R)) :=
+    AdicCompletion.extendedAlgebra (T := MvPolynomial σ R) I
+  exact (MvPolynomial.adicCompletionEquiv_symm_polynomial I
+    (MvPolynomial.C a * MvPolynomial.X i)).trans
+      ((map_mul
+        (MvPolynomial.aeval (R := AdicCompletion I R) (fun j : σ =>
+          AdicCompletion.of (I.map (MvPolynomial.C : R →+* MvPolynomial σ R))
+            (MvPolynomial σ R) (MvPolynomial.X j))).toRingHom
+        (MvPolynomial.C a) (MvPolynomial.X i)).trans
+        (congrArg₂
+          (fun x y : AdicCompletion
+            (I.map (MvPolynomial.C : R →+* MvPolynomial σ R)) (MvPolynomial σ R) => x * y)
+          (MvPolynomial.aeval_C (fun j : σ =>
+            AdicCompletion.of (I.map (MvPolynomial.C : R →+* MvPolynomial σ R))
+              (MvPolynomial σ R) (MvPolynomial.X j)) a)
+          (MvPolynomial.aeval_X (R := AdicCompletion I R) (fun j : σ =>
+            AdicCompletion.of (I.map (MvPolynomial.C : R →+* MvPolynomial σ R))
+              (MvPolynomial σ R) (MvPolynomial.X j)) i)))
+
+end CompletedCoefficients
 
 private theorem generic_forward {σ R : Type*} [CommRing R] (I : Ideal R)
     [IsAdicComplete I R] (n : ℕ)

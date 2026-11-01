@@ -72,11 +72,15 @@ to `q k = Ideal.Quotient.mk (I ^ k)`.
   `n`, `k` into level `n + k`, without completeness or finite generation; this
   does **not** identify intrinsic ideal powers or give an arbitrary-ideal
   intrinsic kernel identity.
-- **Completion and units.** Actual coefficient completeness
-  `[IsAdicComplete I R]` gives a ring equivalence with the polynomial adic
-  completion, for arbitrary variables and ideals; completeness of arbitrary
-  polynomial completions is not asserted. Under the same hypothesis, a
-  restricted series `f` is a unit exactly when `adicReduction I 1 f` is a unit,
+- **Completion and units.** For arbitrary `R`, `I` and `σ`,
+  `MvPolynomial.adicCompletionEquiv σ I` identifies polynomial completion with
+  the algebra of series over `AdicCompletion I R` that become polynomials under
+  every original quotient evaluation. It uses the named
+  `AdicCompletion.extendedAlgebra` on the source, not a new global instance.
+  Under `[IsAdicComplete I R]`, coefficient transport recovers the original
+  ring equivalence with restricted series over `R`. Neither assertion assumes
+  intrinsic completeness of arbitrary polynomial completions. Under coefficient
+  completeness, a restricted series `f` is a unit exactly when `adicReduction I 1 f` is a unit,
   equivalently when its constant coefficient is a unit and every other
   coefficient lies in `I.radical`.
 - **Linear extension.** Under `[IsAdicComplete I R]`, every polynomial
@@ -134,7 +138,10 @@ explicitly.
 Install Git and `elan`; `lean-toolchain` pins Lean `v4.34.0-rc2`, and
 `lake-manifest.json` pins mathlib to
 `83abb3e776bdefcbc447a1e44d0debe4010039e5` and
-MultivariatePolynomials to `c8c241ff6c686368aac35f8c3b4eed502d714bbd`.
+MultivariatePolynomials to `5d58abb977f3281238ee5b4f37303a275b1b2426`,
+AdicModules to `5fbe4fe95f2970d885cbaf98934404b55eb77bd7`, and the direct
+CoherentModules override to `3ecdd76a4a629991718f6bf3f4d290fffb81973f`.
+The override resolves the shared dependency explicitly.
 From the repository root:
 
 ```sh

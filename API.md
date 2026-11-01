@@ -276,12 +276,30 @@ for the identity, level-zero, empty-variable, zero-ideal and zero-ring cases.
 ## Polynomial adic completion
 
 Import `FormalPowerSeries.MvPowerSeries.IdealAdicRestricted.InverseLimit`.
-For any `σ`, `[CommRing R]`, `I : Ideal R` and **`[IsAdicComplete I R]`**,
-`adicallyRestrictedEquivAdicCompletion I` identifies
-`adicallyRestrictedSubring (σ := σ) I` with the native
-`AdicCompletion (I.map MvPolynomial.C) (MvPolynomial σ R)` as rings. The
-coefficients, not the polynomial completion at arbitrary non-finitely-generated
-ideals, are assumed adically complete.
+For independent variable and coefficient universes, `[CommRing R]` and any
+`I : Ideal R`, `MvPolynomial.adicCompletionEquiv σ I` is an algebra equivalence
+from `AdicCompletion (I.map (algebraMap R (MvPolynomial σ R))) (MvPolynomial σ R)`
+to `MvPowerSeries.polynomialReductionSubalgebra σ
+(fun n => (AdicCompletion.evalₐ I n).toRingHom)`, over `AdicCompletion I R`.
+The source uses exactly the named `AdicCompletion.extendedAlgebra`; select it
+with a section-local instance attribute when writing algebra-map expressions.
+The target uses its stock coefficient algebra. No completeness, separation,
+finite-generation or finite-variable hypothesis is needed.
+
+| Use | Declaration in `MvPolynomial` |
+| --- | --- |
+| Completed polynomial coefficient projections | `coeff_adicCompletionEquiv` |
+| Raw reduction square at every precision, including zero | `polynomialReduction_adicCompletionEquiv` |
+| Inverse evaluation and completed coefficient projections | `adicCompletionEquiv_symm_eval`, `adicCompletionEquiv_symm_coeff` |
+| Original polynomial representatives | `adicCompletionEquiv_of` |
+| Inverse on polynomials over completed coefficients is stock evaluation | `adicCompletionEquiv_symm_polynomial` |
+| Exact completed coefficient map becomes the series constant map | `adicCompletionEquiv_algebraMap` |
+
+Under **`[IsAdicComplete I R]`**, the original ring equivalence
+`MvPowerSeries.adicallyRestrictedEquivAdicCompletion I` is recovered by
+transport through `AdicCompletion.ofAlgEquiv I`. Its public type is unchanged.
+`adicCompletionEquiv_adicallyRestrictedEquivAdicCompletion` expresses agreement
+of the two comparisons after coefficient transport.
 
 | Use | Declaration in `MvPowerSeries` |
 | --- | --- |

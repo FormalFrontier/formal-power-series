@@ -37,6 +37,14 @@ coefficient-ideal and restricted-series kernel-product modifications in that
 file. These notices and the modification description also accompany earlier
 published versions of the kernel-filtration development, its documentation
 and examples.
+The completed-coefficient polynomial comparison reuses the entire AdicModules
+completion-of-dependent-direct-sums equivalence and inverse, its canonical
+restriction-of-scalars comparison, and its named completed coefficient algebra.
+Mathlib supplies the coefficient linear equivalences and completion functor,
+including the completion and completed scalar formalizations of Judith Ludwig,
+Christian Merten and Jiedong Jiang. The complete-original-coefficient comparison
+is a coefficient transport of this same equivalence, using the existing
+polynomial-reduction API of this library.
 Native mathlib polynomial, power-series, ideal, quotient and completion APIs
 retain their respective authors and license; using these methods is not a
 claim to their original proofs.

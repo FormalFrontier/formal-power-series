@@ -184,14 +184,20 @@ structure, splitting extension or Adams operation here.
   priority override. See the [linear quotient module](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean),
   [guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/LinearQuotient/README.md)
   and [ordinary-import client](FormalPowerSeriesTests/MvPowerSeries/IdealAdicRestricted/LinearQuotient.lean).
-- **Polynomial adic-completion equivalence.** With actual coefficient
-  completeness `[IsAdicComplete I R]`,
-  `adicallyRestrictedEquivAdicCompletion I` is a ring equivalence between
-  the restricted subring and native
-  `AdicCompletion (I.map MvPolynomial.C) (MvPolynomial σ R)`. It preserves
-  finite-level evaluation and polynomial inclusion. Neither finite variables
-  nor finite generation of `I` is assumed; completeness of arbitrary
-  non-finitely-generated polynomial completions is **not** asserted. See the
+- **Polynomial adic-completion equivalence.** For arbitrary commutative `R`,
+  ideal `I` and variable type `σ`, `MvPolynomial.adicCompletionEquiv σ I`
+  identifies polynomial completion with the coefficient algebra of series over
+  `AdicCompletion I R` whose original quotient evaluations have finite support
+  at every level, including zero. The source action is exactly the named,
+  non-global `AdicCompletion.extendedAlgebra`. The full direct-sum completion
+  comparison of AdicModules supplies the linear bijection and its inverse.
+  With `[IsAdicComplete I R]`, transport of coefficients through
+  `AdicCompletion.ofAlgEquiv I` recovers the original ring equivalence
+  `adicallyRestrictedEquivAdicCompletion I`, with its evaluation and polynomial
+  inclusion laws unchanged. Neither finite variables nor finite generation of
+  `I` is assumed. The raw quotient kernels are not replaced by intrinsic
+  ideal powers in the completed coefficient ring, and intrinsic completeness
+  of arbitrary polynomial completions is **not** asserted. See the
   [equivalence and evaluation](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit.lean)
   and [completion guide](FormalPowerSeries/MvPowerSeries/IdealAdicRestricted/InverseLimit/README.md).
 

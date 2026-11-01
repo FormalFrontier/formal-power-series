@@ -6,8 +6,11 @@ project:
     units over arbitrary commutative rings, with group laws, naturality and finite
     coefficient formulas; and coefficientwise ideal-adically restricted native
     multivariate power series with finite polynomial reductions, regular-principal
-    internal kernels and a polynomial-adic-completion equivalence for adically
-    complete coefficient rings. The restricted subring also has a coefficient-ring
+    internal kernels. Polynomial completion over any commutative coefficient ring
+    is the algebra of series over its adic completion with polynomial images at
+    every original quotient precision; coefficient transport recovers the original
+    restricted-series ring equivalence for adically complete coefficients.
+    The restricted subring also has a coefficient-ring
     algebra structure, all-level surjective scalar-linear polynomial reductions,
     and regular-principal module-quotient equivalences, including a separate
     native-integer API for default module instances. Over adically complete
@@ -84,7 +87,10 @@ automation:
         extension and kernel-filtration proofs; others developed content,
         selected factorization, leading terms, monic parameters, restricted
         division, cofinal comparison and conditional primitive ideal
-        generation. Contributors to the finite-variable degree criterion, its
+        generation. The completed-coefficient polynomial comparison reuses the full
+        AdicModules direct-sum completion equivalence and its canonical
+        restriction-of-scalars and completed coefficient-map interfaces.
+        Contributors to the finite-variable degree criterion, its
         infinite-variable counterexample and the finite-generation kernel
         argument were distinct from those who formalized the results and wrote
         ordinary-import clients. Further contributors developed and formalized
@@ -98,8 +104,11 @@ automation:
     finite formulas replace source-only experimental names. The independent
     multivariate family uses finite sets of surviving monomial indices rather
     than norm/radius bounds or variable-adic restrictions; principal division
-    assumes a regular generator, and the completion equivalence assumes
-    adic completeness of coefficients. Scalar-linear reduction applies to
+    assumes a regular generator. The completed-coefficient algebra equivalence
+    uses raw original quotient evaluations and the named completed coefficient
+    action, without completeness hypotheses; the original-coefficient ring
+    equivalence additionally assumes adic completeness of coefficients.
+    Scalar-linear reduction applies to
     every ideal and level; only the principal submodule-kernel and quotient
     equivalences assume a regular generator. The separate integer endpoints
     target native default module/quotient types, not merely the generic
@@ -146,9 +155,11 @@ status:
     carrier, principal-kernel and inverse-limit interfaces are documented in
     API.md. Generic reductions
     work for arbitrary ideals; internal division and principal quotients
-    require a regular generator. Completion and generic linear extension
-    require actual coefficient adic completeness, and linear-extension
-    uniqueness also assumes all-level kernel preservation. Kernel products
+    require a regular generator. The completed-coefficient polynomial algebra
+    equivalence has no completeness hypothesis. Its original-coefficient
+    specialization and generic linear extension require actual coefficient adic
+    completeness, and linear-extension uniqueness also assumes all-level kernel
+    preservation. Kernel products
     are coefficientwise, not intrinsic restricted-ring ideal powers.
     Unit criteria concern the existing restricted subring over arbitrary
     variables and ideals when the coefficient ring is I-adically complete;
